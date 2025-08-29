@@ -1,0 +1,13 @@
+.btn-pri {
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    background-color: #3B82F6;
+    color: white;
+}
+
+.custom-dropdown:active,
+.custom-dropdown.active {
+    background-color: #000 !important;
+    color: #fff !important;
+}

@@ -1,0 +1,56 @@
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import './App.css'
+import DesktopPage from './pages/desktop/DesktopPage';
+
+import MobilePage from './pages/mobile/MobilePage';
+import useDeviceType from './utils/useDeviceType';
+
+import { DealerSignup } from "./pages/desktop/Dealer_Signup/DealerSignup";
+import { DealerOTP } from "./pages/desktop/Dealer_Signup/DealerOTP";
+import { DealerSetpassword } from "./pages/desktop/Dealer_Signup/DealerSetpassword";
+import { DealerLogin } from "./pages/desktop/Dealer_Signin/DealerLogin";
+import { DealerAddproduct } from "./pages/desktop/Dealer_Admin_Page/DealerAddproduct";
+
+import { MDealerSignup } from "./pages/mobile/Dealer_Signup/MDealerSignup";
+import { MDealerOTP } from "./pages/mobile/Dealer_Signup/MDealerOTP";
+import { MDealerSetpassword } from "./pages/mobile/Dealer_Signup/MDealerSetpassword";
+import { MDealerLogin } from "./pages/mobile/Dealer_Signin/MDealerLogin";
+import MDealerAddproduct from "./pages/mobile/Dealer_Admin_Page/DealerAddproduct";
+
+function App() {
+  const deviceType = useDeviceType();
+
+  return (
+    <Router>
+      <Routes>
+        {deviceType === "mobile" ? (
+          <>
+            <Route path="/" element={<MobilePage />} />
+            <Route path="/dealer-signup" element={<MDealerSignup />} />
+            <Route path="/dealer-signup-otp" element={<MDealerOTP />} />
+            <Route path="/dealer-signup-setpassword" element={<MDealerSetpassword />} />
+            <Route path="/dealer-signin" element={<MDealerLogin />} />
+
+            <Route path="/dealer-admin-page" element={<MDealerAddproduct />} />
+          </>
+        ) : (
+          <>
+            <Route path="/" element={<DesktopPage />} />
+            <Route path="/dealer-signup" element={<DealerSignup />} />
+            <Route path="/dealer-signup-otp" element={<DealerOTP />} />
+            <Route path="/dealer-signup-setpassword" element={<DealerSetpassword />} />
+            <Route path="/dealer-signin" element={<DealerLogin />} />
+
+            <Route path="/dealer-admin-page" element={<DealerAddproduct />} />
+          </>
+        )}
+
+
+        {/* fallback route */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App
