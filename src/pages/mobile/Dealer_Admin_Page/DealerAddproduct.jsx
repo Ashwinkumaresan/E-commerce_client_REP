@@ -110,6 +110,15 @@ export default function MDealerAddproduct() {
     const [features, setFeatures] = useState([])
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [token, setToken] = useState(true)
+
+    const getToken = () => {
+        const token = localStorage.getItem("accessTokenDealer")
+        if (!token) navigate("/home")
+    }
+    useEffect(() => {
+        getToken()
+    }, [])
 
 
     // Predefined color 

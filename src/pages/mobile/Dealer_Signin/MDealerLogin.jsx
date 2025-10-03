@@ -41,7 +41,7 @@ export const MDealerLogin = () => {
 
       // Axios request to backend
       const res = await axios.post(
-        "http://192.168.43.56:8000/accesstoken/",
+        "https://api.lancer.drmcetit.com/api/login/",
         { username, password },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -50,6 +50,10 @@ export const MDealerLogin = () => {
       await saveAccessToken(res.data.access);
       const token = await getAccessToken();
       console.log("Stored token in localforage:", token);
+
+      // Store in localStorage
+      localStorage.setItem("username", username);
+      localStorage.setItem("accessTokenDealer", res.data.access);
 
       // Save email in localStorage
       localStorage.setItem("email", email);
