@@ -34,7 +34,7 @@ function App() {
       <Routes>
         {deviceType === "mobile" ? (
           <>
-            <Route path="/" element={<MobilePage />} />
+            <Route path="/" element={<Home />} />
             <Route path="/dealer-signup" element={<MDealerSignup />} />
             <Route path="/dealer-signup-otp" element={<MDealerOTP />} />
             <Route path="/dealer-signup-setpassword" element={<MDealerSetpassword />} />
