@@ -22,7 +22,7 @@ export const DealerOTP = () => {
     //Redirect to email page if no email is found
       useEffect(() => {
         if (!email) {
-          navigate("/signup")
+          navigate("/dealer-signup")
         }
       }, [email, navigate])
 

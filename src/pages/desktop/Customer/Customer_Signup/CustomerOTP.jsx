@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
 
-export const MDealerOTP = () => {
+export const CustomerOTP = () => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""])
     const [otpError, setOtpError] = useState("")
     const [timer, setTimer] = useState(() => {
@@ -18,12 +18,11 @@ export const MDealerOTP = () => {
     const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)]
 
     const email = localStorage.getItem("email")
-    const purpose = localStorage.getItem("purpose")
 
-    // Redirect to email page if no email is found
+    //Redirect to email page if no email is found
       useEffect(() => {
         if (!email) {
-          navigate("/dealer-signup")
+          navigate("/customer-signup")
         }
       }, [email, navigate])
 
@@ -98,8 +97,9 @@ export const MDealerOTP = () => {
             console.log("Server Response:", res.data);
             // Store OTP verification status
             localStorage.setItem("otpVerified", otp);
+            console.log("ori", otp);
             // Navigate to password reset page
-            navigate("/dealer-signup-setpassword");
+            navigate("/customer-signup-setpassword");
         } catch (error) {
             console.error("OTP verification error:", error);
             console.log(otp)
@@ -107,7 +107,10 @@ export const MDealerOTP = () => {
             setOtpError("Invalid OTP or verification failed. Please try again.");
         } finally {
             setIsLoading(false);
+
         }
+        console.log("local", localStorage.getItem("otpVerified"));
+
     };
 
     // Resend OTP
@@ -128,7 +131,7 @@ export const MDealerOTP = () => {
 
                 // API call to request a new OTP
                 const res = await axios.post(
-                    "https://api.lancer.drmcetit.com/api/user/sendEmail/",
+                    "https://api.lancer.drmcetit.com/api/Snapdeal/email/",
                     { email, purpose },
                     {
                         headers: { "Content-Type": "application/json" },
@@ -158,13 +161,13 @@ export const MDealerOTP = () => {
     }
 
     return (
-        <div className="container pt-0 pt-md-5 mt-0 mt-md-5 d-flex d-md-block justify-content-center align-items-center mt-5">
+        <div className="container pt-0 pt-md-5 mt-0 mt-md-5 d-flex d-md-block justify-content-center align-items-center" style={{ minHeight: "90vh" }}>
             <div className="row justify-content-center">
                 <div className="col-md-6 col-lg-5">
                     <div>
-                        <div className="py-3">
-                            <h3 className="mb-4">Enter 6 digit OTP we've sent to your email</h3>
-                            <div className="text-center">
+                        <div className=" text-center py-3">
+                            <h3 className="text-muted text-center mb-4">Enter 6 digit OTP we've sent to your email</h3>
+                            <div>
                                 {/* <AiOutlineInfoCircle size={15} color="black" />   */}
                                 <p> Check your inbox or junk or spam folder for the OTP.</p>
                             </div>

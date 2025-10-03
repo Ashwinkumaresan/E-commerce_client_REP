@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getAccessToken, saveAccessToken } from "../../component/Localforage/LocalForage";
 import { GoogleLogin } from "@react-oauth/google";
+import { saveAccessToken } from "../../../component/Localforage/LocalForage";
 
-export const DealerLogin = () => {
+export const CustomerLogin = () => {
     const [username, setUsername] = useState("");
     const [usernameError, setUsernameError] = useState("");
     const [password, setPassword] = useState("");
@@ -43,10 +43,7 @@ export const DealerLogin = () => {
 
             // Store in localStorage
             localStorage.setItem("username", username);
-            localStorage.setItem("accessTokenDealer", res.data.access);
-
-            const token = await getAccessToken();
-            console.log("Retrieved Token:", token);
+            localStorage.setItem("accessTokenCustomer", res.data.access);
 
             navigate("/");
         } catch (error) {
@@ -78,7 +75,7 @@ export const DealerLogin = () => {
 
     return (
         <div className="container">
-            <h1 className="mt-5 ms-2 ms-lg-5">Sign in to continue as dealer.</h1>
+            <h1 className="mt-5 ms-2 ms-lg-5">Sign in to faster Checkout.</h1>
             <div
                 className="d-flex flex-column justify-content-center align-items-center"
                 style={{ height: "70vh" }}
@@ -147,7 +144,7 @@ export const DealerLogin = () => {
 
                     <div className="text-center py-3">
                         <p className="mb-0 text-muted">
-                            Don't Have an Account <Link to="/dealer-signup" className="text-dark">Sign up</Link>
+                            Don't Have an Account <Link to="/customer-signup" className="text-dark">Sign up</Link>
                         </p>
                     </div>
                 </div>

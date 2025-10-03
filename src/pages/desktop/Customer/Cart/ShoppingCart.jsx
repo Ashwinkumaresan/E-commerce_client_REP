@@ -5,6 +5,7 @@ import CartLoading from "../../../component/Loading/CartLoading"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { getAccessToken } from "../../../component/Localforage/LocalForage"
+import CartEmpty from "../../../component/Cart Empty/CartEmpty"
 
 export default function ShoppingCart() {
     const navigate = useNavigate()
@@ -12,6 +13,16 @@ export default function ShoppingCart() {
     const [loading, setLoading] = useState(true)
     const [checkoutLoading, setCheckoutLoading] = useState(false)
 
+    const getToken = () => {
+        const tokenOfDealerAdmin = localStorage.getItem("accessTokenDealer")
+        const tokenOfCustomer  = localStorage.getItem("accessTokenCustomer")
+        if (!tokenOfDealerAdmin && !tokenOfCustomer) {
+            navigate("/")
+        }
+    }
+    useEffect(()=>{
+        getToken()
+    },[])
 
     const fetchCartItems = async () => {
         try {
@@ -22,12 +33,16 @@ export default function ShoppingCart() {
                 "https://api.lancer.drmcetit.com/api/Snapdeal/cart/list/",
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`, // attach token
+                        Authorization: `Bearer ${token}`, 
                     },
                 }
             )
             console.log(res.data);
-            setCartItems(res.data) // adjust based on API response
+            if (res.data?.error === "Nothing in cart") {
+                setCartItems([]); 
+            } else {
+                setCartItems(res.data); 
+            }
         } catch (error) {
             console.error("Error fetching cart items:", error)
         } finally {
@@ -72,7 +87,7 @@ export default function ShoppingCart() {
     }
 
     if (loading) return <CartLoading />
-    if (cartItems.length === 0) return <div className="text-center py-5">Your cart is empty.</div>
+    if (cartItems.length === 0) return <CartEmpty/>
 
     return (
         <div className="min-vh-100">
@@ -90,7 +105,7 @@ export default function ShoppingCart() {
                                                 style={{ width: "100px", height: "100px" }}
                                             >
                                                 <img
-                                                    src={item.image ? `https://api.lancer.drmcetit.com${item.image}`: "/placeholder.svg"}
+                                                    src={item.image ? `https://api.lancer.drmcetit.com${item.image}` : "/placeholder.svg"}
                                                     alt={item.productTitle}
                                                     className="img-fluid rounded-3"
                                                     style={{ width: "100%", height: "100%", objectFit: "cover" }}

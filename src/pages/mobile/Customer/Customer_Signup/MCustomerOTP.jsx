@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
 
-export const MDealerOTP = () => {
+export const MCustomerOTP = () => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""])
     const [otpError, setOtpError] = useState("")
     const [timer, setTimer] = useState(() => {
@@ -23,7 +23,7 @@ export const MDealerOTP = () => {
     // Redirect to email page if no email is found
       useEffect(() => {
         if (!email) {
-          navigate("/dealer-signup")
+          navigate("/customer-signup")
         }
       }, [email, navigate])
 
@@ -99,7 +99,7 @@ export const MDealerOTP = () => {
             // Store OTP verification status
             localStorage.setItem("otpVerified", otp);
             // Navigate to password reset page
-            navigate("/dealer-signup-setpassword");
+            navigate("/customer-signup-setpassword");
         } catch (error) {
             console.error("OTP verification error:", error);
             console.log(otp)

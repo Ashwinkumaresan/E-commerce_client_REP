@@ -26,6 +26,8 @@ export const MHome = () => {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
     const [tokenDealerAdmin, setTokenDealerAdmin] = useState(false)
+    const [tokenCustomer, setTokenCustomer] = useState(true)
+    const [commonToken, setCommonToken] = useState(true)
 
     useEffect(() => {
         if (openPopUp) {
@@ -94,12 +96,20 @@ export const MHome = () => {
         )
 
 
-    const getTokenDealerAdmin = () => {
+    const getToken = () => {
         const tokenOfDealerAdmin = localStorage.getItem("accessTokenDealer")
         if (tokenOfDealerAdmin) {
             setTokenDealerAdmin(true)
         }
+        const tokenOfCustomer = localStorage.getItem("accessTokenCustomer")
+        if (tokenOfCustomer) {
+            setTokenCustomer(false)
+        }
+        if (tokenOfCustomer || tokenOfDealerAdmin) {
+            setCommonToken(false)
+        }
     }
+
 
     const fetchProducts = async () => {
         setLoading(true);
@@ -119,7 +129,7 @@ export const MHome = () => {
     };
 
     useEffect(() => {
-        getTokenDealerAdmin()
+        getToken()
         fetchProducts()
     }, [])
 
@@ -446,7 +456,7 @@ export const MHome = () => {
                                         </Link>
 
 
-                                        {!tokenDealerAdmin &&
+                                        {commonToken &&
                                             <button className="btn btn-dark btn-sm" onClick={() => setOpenPopUp(true)}>
                                                 <span className="d-none d-sm-inline">Sign In</span>
                                                 <i className="bi bi-person d-sm-none"></i>

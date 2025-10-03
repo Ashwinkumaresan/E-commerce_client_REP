@@ -24,6 +24,14 @@ import OrderPlacedPage from "./pages/desktop/Customer/Order Place/OrderPlacedPag
 import { Home } from "./pages/desktop/Home/Home";
 import ScrollToTop from "./pages/component/ScrollToTop";
 import { MHome } from "./pages/mobile/Customer/Home/MHome";
+import { CustomerLogin } from "./pages/desktop/Customer/Customer_Signin/CustomerLogin";
+import { CustomerSignup } from "./pages/desktop/Customer/Customer_Signup/CustomerSignup";
+import { CustomerOTP } from "./pages/desktop/Customer/Customer_Signup/CustomerOTP";
+import { CustomerSetpassword } from "./pages/desktop/Customer/Customer_Signup/CustomerSetpassword";
+import { MCustomerLogin } from "./pages/mobile/Customer/Customer_Signin/MCustomerLogin";
+import { MCustomerSignup } from "./pages/mobile/Customer/Customer_Signup/MCustomerSignup";
+import { MCustomerOTP } from "./pages/mobile/Customer/Customer_Signup/MCustomerOTP";
+import { MCustomerSetpassword } from "./pages/mobile/Customer/Customer_Signup/MCustomerSetpassword";
 
 
 function App() {
@@ -43,6 +51,11 @@ function App() {
 
             <Route path="/dealer-admin-page" element={<MDealerAddproduct />} />
 
+            <Route path="/customer-signin" element={<MCustomerLogin />} />
+            <Route path="/customer-signup" element={<MCustomerSignup />} />
+            <Route path="/customer-signup-otp" element={<MCustomerOTP />} />
+            <Route path="/customer-signup-setpassword" element={<MCustomerSetpassword />} />
+
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/product-detail/:id" element={<ProductDetail />} />
             <Route path="/product-cart-checkout" element={<CheckoutPage />} />
@@ -57,6 +70,11 @@ function App() {
             <Route path="/dealer-signin" element={<DealerLogin />} />
 
             <Route path="/dealer-admin-page" element={<DealerAddproduct />} />
+
+            <Route path="/customer-signin" element={<CustomerLogin />} />
+            <Route path="/customer-signup" element={<CustomerSignup />} />
+            <Route path="/customer-signup-otp" element={<CustomerOTP />} />
+            <Route path="/customer-signup-setpassword" element={<CustomerSetpassword />} />
 
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/product-detail/:id" element={<ProductDetail />} />

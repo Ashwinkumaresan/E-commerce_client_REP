@@ -2,7 +2,7 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
-export const MDealerSetpassword = () => {
+export const MCustomerSetpassword = () => {
     const [username, setusername] = useState("")
     const [password, setpassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -16,7 +16,7 @@ export const MDealerSetpassword = () => {
 
     useEffect(() => {
         if (!email || !otp) {
-            navigate("/dealer-signup")
+            navigate("/customer-signup")
         }
     }, [email, otp, navigate])
 
@@ -74,7 +74,7 @@ export const MDealerSetpassword = () => {
         setIsLoading(true)
 
         try {
-            const customerType = "seller"
+            const customerType = "buyer"
             const res = await axios.post(
                 "https://api.lancer.drmcetit.com/api/Snapdeal/setPassword/ ",
                 {
@@ -89,7 +89,7 @@ export const MDealerSetpassword = () => {
                 }
             )
             alert("Account created successful! You can now login with your new account.")
-            navigate("/login")
+            navigate("/customer-signin")
             localStorage.clear();
         } catch (error) {
             console.log(error);

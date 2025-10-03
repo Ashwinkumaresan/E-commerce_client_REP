@@ -2,7 +2,7 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
-export const MDealerSetpassword = () => {
+export const CustomerSetpassword = () => {
     const [username, setusername] = useState("")
     const [password, setpassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -16,7 +16,7 @@ export const MDealerSetpassword = () => {
 
     useEffect(() => {
         if (!email || !otp) {
-            navigate("/dealer-signup")
+            navigate("/customer-signup")
         }
     }, [email, otp, navigate])
 
@@ -50,11 +50,6 @@ export const MDealerSetpassword = () => {
     const handleResetPassword = async (e) => {
         e.preventDefault()
 
-        // if (!username) {
-        //     setPasswordError("Please enter a username")
-        //     return
-        // }
-
         if (!password) {
             setPasswordError("Please enter a new password")
             return
@@ -72,9 +67,11 @@ export const MDealerSetpassword = () => {
 
         setPasswordError("")
         setIsLoading(true)
+        const customerType = "buyer"
 
         try {
-            const customerType = "seller"
+            console.log(customerType);
+
             const res = await axios.post(
                 "https://api.lancer.drmcetit.com/api/Snapdeal/setPassword/ ",
                 {
@@ -89,12 +86,12 @@ export const MDealerSetpassword = () => {
                 }
             )
             alert("Account created successful! You can now login with your new account.")
-            navigate("/login")
+            navigate("/customer-signin")
             localStorage.clear();
         } catch (error) {
             console.log(error);
             console.log(error.response);
-            console.log(username);
+            console.log(customerType);
             console.log(email);
             console.log(otp);
             console.log(password);
@@ -107,13 +104,13 @@ export const MDealerSetpassword = () => {
     }
 
     return (
-        <div className="container pt-0 pt-md-5 mt-0 mt-md-5 d-flex d-md-block justify-content-center align-items-center mt-5">
+        <div className="container pt-0 pt-md-5 mt-0 mt-md-5 d-flex d-md-block justify-content-center align-items-center" style={{ minHeight: "90vh" }}>
             <div className="row justify-content-center">
                 <div className="col-md-6 col-lg-5">
                     <div>
                         <div>
-                            <div>
-                                <h3 className="m-0 mb-5">Your identity has been verified.</h3>
+                            <div className="text-center">
+                                <h3 className="m-0 text-muted mb-5">Your identity has been verified.</h3>
                             </div>
 
                             <form onSubmit={handleResetPassword}>

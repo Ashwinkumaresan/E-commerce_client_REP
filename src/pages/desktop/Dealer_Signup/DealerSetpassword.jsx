@@ -16,7 +16,7 @@ export const DealerSetpassword = () => {
 
     useEffect(() => {
         if (!email || !otp) {
-            navigate("/login")
+            navigate("/dealer-signup")
         }
     }, [email, otp, navigate])
 
@@ -86,7 +86,7 @@ export const DealerSetpassword = () => {
                 }
             )
             alert("Account created successful! You can now login with your new account.")
-            navigate("/login")
+            navigate("/dealer-signin")
             localStorage.clear();
         } catch (error) {
             console.log(error);
