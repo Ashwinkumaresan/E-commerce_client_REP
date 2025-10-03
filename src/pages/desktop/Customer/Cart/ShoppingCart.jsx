@@ -3,6 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { getCartItems, checkoutCart } from "./dummyCartApi"
 import CartLoading from "../../../component/Loading/CartLoading"
 import { useNavigate } from "react-router-dom"
+import axios from "axios"
+import { getAccessToken } from "../../../component/Localforage/LocalForage"
 
 export default function ShoppingCart() {
     const navigate = useNavigate()
@@ -10,11 +12,22 @@ export default function ShoppingCart() {
     const [loading, setLoading] = useState(true)
     const [checkoutLoading, setCheckoutLoading] = useState(false)
 
+
     const fetchCartItems = async () => {
         try {
             setLoading(true)
-            const res = await getCartItems()
-            setCartItems(res.data)
+            const token = await getAccessToken()
+            console.log("Access Token:", token)
+            const res = await axios.get(
+                "https://api.lancer.drmcetit.com/api/Snapdeal/cart/list/",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // attach token
+                    },
+                }
+            )
+            console.log(res.data);
+            setCartItems(res.data) // adjust based on API response
         } catch (error) {
             console.error("Error fetching cart items:", error)
         } finally {
@@ -58,14 +71,13 @@ export default function ShoppingCart() {
         }
     }
 
-    if (loading) return <CartLoading/>
+    if (loading) return <CartLoading />
     if (cartItems.length === 0) return <div className="text-center py-5">Your cart is empty.</div>
 
     return (
         <div className="min-vh-100">
             <div className="container py-5">
                 <h4 className="mb-3 fw-bold">Shopping Cart</h4>
-
                 <div className="card shadow-sm border-0">
                     <div className="card-body p-4">
                         {cartItems.map((item, index) => (
@@ -78,21 +90,20 @@ export default function ShoppingCart() {
                                                 style={{ width: "100px", height: "100px" }}
                                             >
                                                 <img
-                                                    src={item.image || "/placeholder.svg"}
-                                                    alt={item.name}
+                                                    src={item.image ? `https://api.lancer.drmcetit.com${item.image}`: "/placeholder.svg"}
+                                                    alt={item.productTitle}
                                                     className="img-fluid rounded-3"
                                                     style={{ width: "100%", height: "100%", objectFit: "cover" }}
                                                 />
                                             </div>
                                             <div>
-                                                {/* ✅ Clickable product name */}
                                                 <h5
                                                     className="mb-1 fw-semibold"
                                                     style={{ cursor: "pointer", color: "#000" }}
-                                                    onClick={() => navigate("/product-detail")}
-                                                    //onClick={() => navigate(`/product-detail/${item.id}`)}
+                                                    // onClick={() => navigate("/product-detail")}
+                                                    onClick={() => navigate(`/product-detail/${item.productId}`)}
                                                 >
-                                                    {item.name}
+                                                    {item.productTitle}
                                                 </h5>
                                                 <p className="text-muted mb-2">${item.price.toFixed(2)}</p>
                                                 <button

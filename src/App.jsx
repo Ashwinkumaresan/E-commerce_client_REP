@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import './App.css'
 import DesktopPage from './pages/desktop/DesktopPage';
 
@@ -21,11 +21,16 @@ import ProductDetail from "./pages/desktop/Customer/Product Detail page/ProductD
 import CheckoutPage from "./pages/desktop/Customer/Check out/CheckoutPage";
 import OrderPlacedPage from "./pages/desktop/Customer/Order Place/OrderPlacedPage";
 
+import { Home } from "./pages/desktop/Home/Home";
+import ScrollToTop from "./pages/component/ScrollToTop";
+
+
 function App() {
   const deviceType = useDeviceType();
 
   return (
     <Router>
+      <ScrollToTop/>
       <Routes>
         {deviceType === "mobile" ? (
           <>
@@ -36,24 +41,28 @@ function App() {
             <Route path="/dealer-signin" element={<MDealerLogin />} />
 
             <Route path="/dealer-admin-page" element={<MDealerAddproduct />} />
+            
+            <Route path="/shopping-cart" element={<ShoppingCart />} />
+            <Route path="/product-detail/:id" element={<ProductDetail />} />
+            <Route path="/product-cart-checkout" element={<CheckoutPage />} />
+            <Route path="/product-order-placed" element={<OrderPlacedPage/>} />
           </>
         ) : (
           <>
-            <Route path="/" element={<DesktopPage />} />
+            <Route path="/" element={<Home />} />
             <Route path="/dealer-signup" element={<DealerSignup />} />
             <Route path="/dealer-signup-otp" element={<DealerOTP />} />
             <Route path="/dealer-signup-setpassword" element={<DealerSetpassword />} />
-            <Route path="/dealer-signin" element={<DealerLogin />} />
+            <Route path="/customer-signin" element={<DealerLogin />} />
 
             <Route path="/dealer-admin-page" element={<DealerAddproduct />} />
 
             <Route path="/shopping-cart" element={<ShoppingCart />} />
-            <Route path="/product-detail" element={<ProductDetail />} />
+            <Route path="/product-detail/:id" element={<ProductDetail />} />
             <Route path="/product-cart-checkout" element={<CheckoutPage />} />
             <Route path="/product-order-placed" element={<OrderPlacedPage/>} />
           </>
         )}
-
 
         {/* fallback route */}
         <Route path="*" element={<Navigate to="/" replace />} />

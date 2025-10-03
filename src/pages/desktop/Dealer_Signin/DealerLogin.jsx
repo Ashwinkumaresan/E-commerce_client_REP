@@ -5,8 +5,8 @@ import { getAccessToken, saveAccessToken } from "../../component/Localforage/Loc
 import { GoogleLogin } from "@react-oauth/google";
 
 export const DealerLogin = () => {
-    const [email, setEmail] = useState("");
-    const [emailError, setEmailError] = useState("");
+    const [username, setUsername] = useState("");
+    const [usernameError, setUsernameError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -16,12 +16,8 @@ export const DealerLogin = () => {
     const handleButtonSubmit = async (e) => {
         e.preventDefault();
 
-        if (!email.trim()) {
-            setEmailError("Email is required");
-            return;
-        }
-        if (!email.endsWith(".com") || !email.includes("@gmail")) {
-            setEmailError("Please enter a valid email");
+        if (!username.trim()) {
+            setUsernameError("Username is required");
             return;
         }
         if (!password.trim()) {
@@ -30,32 +26,35 @@ export const DealerLogin = () => {
         }
 
         setPasswordError("");
-        setEmailError("");
+        setUsernameError("");
         setIsLoading(true);
 
         try {
-            const username = email;
             const res = await axios.post(
-                "http://192.168.43.56:8000/accesstoken/",
+                "https://api.lancer.drmcetit.com/api/login/",
                 { username, password },
                 { headers: { "Content-Type": "application/json" } }
             );
 
-            console.log("Email Login Response:", res.data);
+            console.log("Username Login Response:", res.data);
 
             await saveAccessToken(res.data.access);
-            localStorage.setItem("email", email);
+            localStorage.setItem("username", username);
 
-            // navigate("/");
+            const token = await getAccessToken()
+            console.log(token);
+            
+
+            navigate("/home");
         } catch (error) {
             console.log(error);
-            setEmailError("Invalid credentials");
+            setUsernameError("Invalid credentials");
         } finally {
             setIsLoading(false);
         }
     };
 
-    //Google Login
+    // Google Login
     const handleGoogleSuccess = async (credentialResponse) => {
         try {
             const id_token = credentialResponse.credential;
@@ -66,10 +65,10 @@ export const DealerLogin = () => {
             await saveAccessToken(res.data.access);
             localStorage.setItem("user", JSON.stringify(res.data.user));
 
-            // navigate("/");
+            navigate("/home");
         } catch (err) {
             console.error("Google login error:", err.response?.data || err);
-            setEmailError("Google login failed, try again.");
+            setUsernameError("Google login failed, try again.");
         }
     };
 
@@ -83,19 +82,20 @@ export const DealerLogin = () => {
                 <div style={{ width: "100%", minWidth: "300px", maxWidth: "500px" }}>
                     <h3 className="text-muted text-center mb-4">Sign in for snapdeal</h3>
 
-                    {/* ---------- Email/Password Form ---------- */}
                     <form onSubmit={handleButtonSubmit}>
                         <div className="mb-3">
                             <input
-                                type="email"
-                                className={`form-control rounded-1 ${emailError ? "is-invalid" : ""}`}
-                                id="email"
-                                placeholder="Enter your email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                type="text"
+                                className={`form-control rounded-1 ${usernameError ? "is-invalid" : ""}`}
+                                id="username"
+                                placeholder="Enter your username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                                 required
                             />
-                            {emailError && <div className="invalid-feedback fs-14">{emailError}</div>}
+                            {usernameError && (
+                                <div className="invalid-feedback fs-14">{usernameError}</div>
+                            )}
                         </div>
                         <div className="mb-4">
                             <input
@@ -107,7 +107,9 @@ export const DealerLogin = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
-                            {passwordError && <div className="invalid-feedback fs-14">{passwordError}</div>}
+                            {passwordError && (
+                                <div className="invalid-feedback fs-14">{passwordError}</div>
+                            )}
                         </div>
 
                         <div className="d-grid">
@@ -132,11 +134,10 @@ export const DealerLogin = () => {
                         </div>
                     </form>
 
-                    {/* ---------- Google Button ---------- */}
                     <div className="text-center mt-4">
                         <GoogleLogin
                             onSuccess={handleGoogleSuccess}
-                            onError={() => setEmailError("Google login failed")}
+                            onError={() => setUsernameError("Google login failed")}
                         />
                     </div>
 
