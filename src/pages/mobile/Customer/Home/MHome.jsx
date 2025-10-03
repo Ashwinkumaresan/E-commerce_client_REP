@@ -1,9 +1,9 @@
 import { useState, useMemo, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import ProductGrid from "../../component/Loading/ProductGrid"
 import axios from "axios"
+import ProductGrid from "../../../component/Loading/ProductGrid"
 
-export const Home = () => {
+export const MHome = () => {
     const navigate = useNavigate("")
     const [viewMode, setViewMode] = useState("grid")
     const [sortBy, setSortBy] = useState("featured")
@@ -404,69 +404,77 @@ export const Home = () => {
                 <div className="container-fluid py-3">
                     <div className="row g-3 align-items-center">
                         {/* Logo and Categories Button */}
-                        <div className="col-12 col-md-auto">
+                        <div className="col-12">
                             <div className="d-flex align-items-center justify-content-between gap-2">
-                                <div className="d-flex align-items-center gap-2">
-                                    <div className="bg-danger bg-opacity-10 p-2 rounded">
-                                        <i className="bi bi-shop text-danger fs-5"></i>
-                                    </div>
-                                    <h5 className="mb-0 fw-bold">What a Market!</h5>
+
+                                <div className="gap-1 p-2 d-flex align-items-center">
+                                    <i className="bi bg-dark rounded  bg-opacity-10 p-1 bi-shop text-dark fs-6"></i>
+                                    <h5 className="mb-0 fw-bold fw-6">What a Market!</h5>
+                                </div>
+
+                                {/* Action Buttons */}
+                                <div className="d-flex align-items-center justify-content-end gap-2 gap-md-3">
+
+                                    <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2">
+                                        <i className="bi bi-heart me-1"></i>
+                                        <span className="d-none d-lg-inline">Favorites</span>
+                                    </button>
+
+                                    <Link to={"/shopping-cart"}>
+                                        <button className="btn btn-link text-decoration-none text-secondary position-relative p-1 p-md-2">
+                                            <i className="bi bi-cart3 me-1"></i>
+                                            <span className="d-none d-lg-inline">Cart</span>
+                                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                3
+                                            </span>
+                                        </button>
+                                    </Link>
+
+
+                                    {!tokenDealerAdmin && <Link to={"/dealer-signin"}>
+                                        <button className="btn btn-dark btn-sm">
+                                            <span className="d-none d-sm-inline">Sign In</span>
+                                            <i className="bi bi-person d-sm-none"></i>
+                                        </button>
+                                    </Link>}
+
                                 </div>
                             </div>
-                        </div>
 
-                        {/* Search Bar */}
-                        <div className="col-12 col-md">
-                            <div className="input-group">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Search products..."
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                />
-                                <button className="btn btn-outline-secondary" type="button">
-                                    <i className="bi bi-search"></i>
-                                </button>
-                            </div>
-                        </div>
+                            {/* Action Buttons */}
+                            <div className="col-1">
+                                {/* <div className="d-flex align-items-center justify-content-end gap-2 gap-md-3">
 
-                        {/* Action Buttons */}
-                        <div className="col-12 col-md-auto">
-                            <div className="d-flex align-items-center justify-content-end justify-content-md-start gap-2 gap-md-3">
-                                <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2">
-                                    <i className="bi bi-box-seam me-1"></i>
-                                    <span className="d-none d-lg-inline">Orders</span>
-                                </button>
+                                            <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2">
+                                                <i className="bi bi-heart me-1"></i>
+                                                <span className="d-none d-lg-inline">Favorites</span>
+                                            </button>
 
-                                <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2">
-                                    <i className="bi bi-heart me-1"></i>
-                                    <span className="d-none d-lg-inline">Favorites</span>
-                                </button>
-
-                                <Link to={"/shopping-cart"}>
-                                    <button className="btn btn-link text-decoration-none text-secondary position-relative p-1 p-md-2">
-                                        <i className="bi bi-cart3 me-1"></i>
-                                        <span className="d-none d-lg-inline">Cart</span>
-                                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            3
-                                        </span>
-                                    </button>
-                                </Link>
+                                            <Link to={"/shopping-cart"}>
+                                                <button className="btn btn-link text-decoration-none text-secondary position-relative p-1 p-md-2">
+                                                    <i className="bi bi-cart3 me-1"></i>
+                                                    <span className="d-none d-lg-inline">Cart</span>
+                                                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                        3
+                                                    </span>
+                                                </button>
+                                            </Link>
 
 
-                                {!tokenDealerAdmin && <Link to={"/dealer-signin"}>
-                                    <button className="btn btn-dark btn-sm">
-                                        <span className="d-none d-sm-inline">Sign In</span>
-                                        <i className="bi bi-person d-sm-none"></i>
-                                    </button>
-                                </Link>}
+                                            {!tokenDealerAdmin && <Link to={"/dealer-signin"}>
+                                                <button className="btn btn-dark btn-sm">
+                                                    <span className="d-none d-sm-inline">Sign In</span>
+                                                    <i className="bi bi-person d-sm-none"></i>
+                                                </button>
+                                            </Link>}
 
+                                        </div> */}
                             </div>
                         </div>
                     </div>
                 </div>
 
+                {/* Location */}
                 <div className="container-fluid bg-light py-2">
                     <div className="d-flex align-items-center">
                         <button className="btn btn-sm btn-link text-decoration-none text-secondary">
@@ -475,6 +483,23 @@ export const Home = () => {
                         </button>
                     </div>
                 </div>
+
+                {/* Search Bar */}
+                <div className="col-12 col-md">
+                    <div className="input-group">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search products..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <button className="btn btn-outline-secondary" type="button">
+                            <i className="bi bi-search"></i>
+                        </button>
+                    </div>
+                </div>
+
             </header>
 
             {/* Navigation Bar */}
@@ -540,14 +565,9 @@ export const Home = () => {
                                 )}
                             </h6> */}
 
-                            <div className="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-2 w-100 w-md-auto">
-                                {/* Mobile Filter Button */}
-                                <button className="btn btn-outline-dark d-md-none" onClick={() => setShowFilters(true)}>
-                                    <i className="bi bi-funnel me-2"></i>
-                                    Filters
-                                </button>
+                            <div className="row w-100 w-md-auto">
 
-                                <div className="d-flex align-items-center gap-2">
+                                <div className="d-flex align-items-center gap-2 col-10">
                                     <span className="text-muted text-nowrap">Sort by</span>
                                     <select
                                         className="form-select form-select-sm"
@@ -561,7 +581,12 @@ export const Home = () => {
                                     </select>
                                 </div>
 
-                                <div className="btn-group" role="group">
+                                {/* Mobile Filter Button */}
+                                <button className="btn btn-outline-dark d-md-none p-0 col-2" onClick={() => setShowFilters(true)}>
+                                    <i className="bi bi-funnel fs-6"></i>
+                                </button>
+
+                                {/* <div className="btn-group" role="group">
                                     <button
                                         type="button"
                                         className={`btn btn-sm ${viewMode === "grid" ? "btn-dark" : "btn-outline-secondary"}`}
@@ -576,7 +601,7 @@ export const Home = () => {
                                     >
                                         <i className="bi bi-list"></i>
                                     </button>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
 

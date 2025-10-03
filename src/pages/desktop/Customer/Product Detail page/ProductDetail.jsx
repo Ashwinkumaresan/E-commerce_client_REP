@@ -12,8 +12,9 @@ export default function ProductDetail() {
     const [quantity, setQuantity] = useState(1)
     const [selectedImage, setSelectedImage] = useState(0)
     const [loading, setLoading] = useState(true)
+    const [cartLoading, setCartLoading] = useState(false);
 
-   
+
 
     const fetchProduct = async () => {
         try {
@@ -38,9 +39,30 @@ export default function ProductDetail() {
         fetchProduct()
     }, [id])
 
-    const handleAddToCart = () => {
-        navigate("/shopping-cart")
-    }
+    const handleAddToCart = async () => {
+        try {
+            setCartLoading(true); // start loading
+
+            const token = localStorage.getItem("accessTokenDealer");
+
+            const res = await axios.post(
+                `https://api.lancer.drmcetit.com/api/Snapdeal/cart/add/${id}/`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            console.log("Add to Cart response:", res.data);
+            navigate("/shopping-cart");
+        } catch (error) {
+            console.error("Error adding to cart:", error);
+        } finally {
+            setCartLoading(false); // stop loading
+        }
+    };
+
 
     const handleBuyNow = () => {
         navigate("/product-cart-checkout")
@@ -157,8 +179,17 @@ export default function ProductDetail() {
                             <button
                                 className="btn btn-dark flex-grow-1 d-flex align-items-center justify-content-center gap-2"
                                 onClick={handleAddToCart}
+                                disabled={cartLoading}
                             >
-                                <ShoppingCart size={20} />
+                                {cartLoading ? (
+                                    <span
+                                        className="spinner-border spinner-border-sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span>
+                                ) : (
+                                    <ShoppingCart size={20} />
+                                )}
                                 Add to Cart
                             </button>
                             <button
@@ -215,7 +246,7 @@ export default function ProductDetail() {
             <footer className="bg-light py-4 mt-5">
                 <div className="container">
                     <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
-                        <p className="mb-0 text-muted">© 2025 StyleHub. All rights reserved.</p>
+                        <p className="mb-0 text-muted">© 2025 Snapdeal. All rights reserved.</p>
                         <div className="d-flex gap-4">
                             <a href="#" className="text-decoration-none text-muted">About</a>
                             <a href="#" className="text-decoration-none text-muted">Contact</a>

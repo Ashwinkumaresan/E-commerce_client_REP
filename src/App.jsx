@@ -23,6 +23,7 @@ import OrderPlacedPage from "./pages/desktop/Customer/Order Place/OrderPlacedPag
 
 import { Home } from "./pages/desktop/Home/Home";
 import ScrollToTop from "./pages/component/ScrollToTop";
+import { MHome } from "./pages/mobile/Customer/Home/MHome";
 
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
       <Routes>
         {deviceType === "mobile" ? (
           <>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<MHome />} />
             <Route path="/dealer-signup" element={<MDealerSignup />} />
             <Route path="/dealer-signup-otp" element={<MDealerOTP />} />
             <Route path="/dealer-signup-setpassword" element={<MDealerSetpassword />} />
