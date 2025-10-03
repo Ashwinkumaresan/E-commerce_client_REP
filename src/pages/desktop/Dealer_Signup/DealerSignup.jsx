@@ -75,7 +75,7 @@ export const DealerSignup = () => {
 
   return (
     <div className="container">
-      <h1 className="mt-5 ms-2 ms-lg-5">Sign up for faster checkout.</h1>
+      <h1 className="mt-5 ms-2 ms-lg-5">Sign up for Become a Dealer.</h1>
       <div
         className="d-flex flex-column justify-content-center align-items-center"
         style={{ height: "70vh" }}

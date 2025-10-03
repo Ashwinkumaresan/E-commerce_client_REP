@@ -78,7 +78,7 @@ export const DealerLogin = () => {
 
     return (
         <div className="container">
-            <h1 className="mt-5 ms-2 ms-lg-5">Sign in to continue your purchase.</h1>
+            <h1 className="mt-5 ms-2 ms-lg-5">Sign in to continue as dealer.</h1>
             <div
                 className="d-flex flex-column justify-content-center align-items-center"
                 style={{ height: "70vh" }}
@@ -147,10 +147,7 @@ export const DealerLogin = () => {
 
                     <div className="text-center py-3">
                         <p className="mb-0 text-muted">
-                            Already have an account?{" "}
-                            <Link to="/login" className="text-dark">
-                                Login
-                            </Link>
+                            Don't Have an Account <Link to="/dealer-signup" className="text-dark">Sign up</Link>
                         </p>
                     </div>
                 </div>

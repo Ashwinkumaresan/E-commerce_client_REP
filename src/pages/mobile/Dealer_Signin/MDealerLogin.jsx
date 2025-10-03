@@ -100,7 +100,7 @@ export const MDealerLogin = () => {
         style={{ height: "70vh" }}
       >
         <div style={{ width: "100%", minWidth: "300px", maxWidth: "500px" }}>
-          <h3 className="text-muted text-center mb-4">Sign in for Snapdeal</h3>
+          <h3 className="text-muted text-center mb-4">Sign in as dealer</h3>
 
           {/* Email / Password Form */}
           <form onSubmit={handleButtonSubmit}>
@@ -149,7 +149,7 @@ export const MDealerLogin = () => {
 
           <div className="text-center py-3">
             <p className="mb-0 text-muted">
-              Already have an account? <Link to="/login" className="text-dark">Login</Link>
+              Don't Have an Account <Link to="/dealer-signup" className="text-dark">Sign up</Link>
             </p>
           </div>
         </div>
