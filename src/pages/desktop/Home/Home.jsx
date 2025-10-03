@@ -20,12 +20,25 @@ export const Home = () => {
     const [selectedColors, setSelectedColors] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
 
+    const [openPopUp, setOpenPopUp] = useState(false)
 
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
     const [tokenDealerAdmin, setTokenDealerAdmin] = useState(false)
 
+    useEffect(() => {
+        if (openPopUp) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+
+        // Cleanup when component unmounts
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, [openPopUp]);
 
     const categories = [
         "Best Sellers",
@@ -398,139 +411,140 @@ export const Home = () => {
 
 
     return (
-        <div className="min-vh-100 bg-light">
-            {/* Header */}
-            <header className="bg-white border-bottom">
-                <div className="container-fluid py-3">
-                    <div className="row g-3 align-items-center">
-                        {/* Logo and Categories Button */}
-                        <div className="col-12 col-md-auto">
-                            <div className="d-flex align-items-center justify-content-between gap-2">
-                                <div className="d-flex align-items-center gap-2">
-                                    <div className="bg-danger bg-opacity-10 p-2 rounded">
-                                        <i className="bi bi-shop text-danger fs-5"></i>
+        <>
+            <div className="min-vh-100 bg-light">
+                {/* Header */}
+                <header className="bg-white border-bottom">
+                    <div className="container-fluid py-3">
+                        <div className="row g-3 align-items-center">
+                            {/* Logo and Categories Button */}
+                            <div className="col-12 col-md-auto">
+                                <div className="d-flex align-items-center justify-content-between gap-2">
+                                    <div className="d-flex align-items-center gap-2">
+                                        <div className="bg-danger bg-opacity-10 p-2 rounded">
+                                            <i className="bi bi-shop text-danger fs-5"></i>
+                                        </div>
+                                        <h5 className="mb-0 fw-bold">What a Market!</h5>
                                     </div>
-                                    <h5 className="mb-0 fw-bold">What a Market!</h5>
+                                </div>
+                            </div>
+
+                            {/* Search Bar */}
+                            <div className="col-12 col-md">
+                                <div className="input-group">
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Search products..."
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                    />
+                                    <button className="btn btn-outline-secondary" type="button">
+                                        <i className="bi bi-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className="col-12 col-md-auto">
+                                <div className="d-flex align-items-center justify-content-end justify-content-md-start gap-2 gap-md-3">
+                                    <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2">
+                                        <i className="bi bi-box-seam me-1"></i>
+                                        <span className="d-none d-lg-inline">Orders</span>
+                                    </button>
+
+                                    <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2">
+                                        <i className="bi bi-heart me-1"></i>
+                                        <span className="d-none d-lg-inline">Favorites</span>
+                                    </button>
+
+                                    <Link to={"/shopping-cart"}>
+                                        <button className="btn btn-link text-decoration-none text-secondary position-relative p-1 p-md-2">
+                                            <i className="bi bi-cart3 me-1"></i>
+                                            <span className="d-none d-lg-inline">Cart</span>
+                                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                3
+                                            </span>
+                                        </button>
+                                    </Link>
+
+
+                                    {!tokenDealerAdmin &&
+                                        <button className="btn btn-dark btn-sm" onClick={() => setOpenPopUp(true)}>
+                                            <span className="d-none d-sm-inline">Sign In</span>
+                                            <i className="bi bi-person d-sm-none"></i>
+                                        </button>
+                                    }
+
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        {/* Search Bar */}
-                        <div className="col-12 col-md">
-                            <div className="input-group">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Search products..."
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                />
-                                <button className="btn btn-outline-secondary" type="button">
-                                    <i className="bi bi-search"></i>
-                                </button>
+                    <div className="container-fluid bg-light py-2">
+                        <div className="d-flex align-items-center">
+                            <button className="btn btn-sm btn-link text-decoration-none text-secondary">
+                                <i className="bi bi-geo-alt me-1"></i>
+                                Pollachi
+                            </button>
+                        </div>
+                    </div>
+                </header>
+
+                {/* Navigation Bar */}
+                <nav className="bg-white border-bottom">
+                    <div className="container-fluid">
+                        <div className="d-flex justify-content-between align-items-center py-2">
+                            <div className="overflow-auto flex-grow-1">
+                                <ul className="nav flex-nowrap">
+                                    {categories.map((category) => (
+                                        <li className="nav-item" key={category}>
+                                            <a className="nav-link text-dark text-nowrap" href="#">
+                                                {category}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            {tokenDealerAdmin && <Link to={"/dealer-admin-page"} className="btn btn-dark"> Admin</Link>}
+
+                        </div>
+                    </div>
+                </nav>
+
+                {/* Main Content */}
+                <div className="container-fluid py-4">
+                    <div className="row">
+                        {/* Filter Sidebar */}
+                        <div className="col-lg-3 col-md-4 mb-4 d-none d-md-block">
+                            <div className="bg-white p-4 rounded shadow-sm">
+                                <FilterSection />
                             </div>
                         </div>
 
-                        {/* Action Buttons */}
-                        <div className="col-12 col-md-auto">
-                            <div className="d-flex align-items-center justify-content-end justify-content-md-start gap-2 gap-md-3">
-                                <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2">
-                                    <i className="bi bi-box-seam me-1"></i>
-                                    <span className="d-none d-lg-inline">Orders</span>
-                                </button>
-
-                                <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2">
-                                    <i className="bi bi-heart me-1"></i>
-                                    <span className="d-none d-lg-inline">Favorites</span>
-                                </button>
-
-                                <Link to={"/shopping-cart"}>
-                                    <button className="btn btn-link text-decoration-none text-secondary position-relative p-1 p-md-2">
-                                        <i className="bi bi-cart3 me-1"></i>
-                                        <span className="d-none d-lg-inline">Cart</span>
-                                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            3
-                                        </span>
-                                    </button>
-                                </Link>
-
-
-                                {!tokenDealerAdmin && <Link to={"/dealer-signin"}>
-                                    <button className="btn btn-dark btn-sm">
-                                        <span className="d-none d-sm-inline">Sign In</span>
-                                        <i className="bi bi-person d-sm-none"></i>
-                                    </button>
-                                </Link>}
-
+                        {/* Mobile Offcanvas Filter */}
+                        <div
+                            className={`offcanvas offcanvas-start ${showFilters ? "show" : ""}`}
+                            tabIndex={-1}
+                            style={{ visibility: showFilters ? "visible" : "hidden" }}
+                        >
+                            <div className="offcanvas-header">
+                                <h5 className="offcanvas-title">Filters</h5>
+                                <button type="button" className="btn-close" onClick={() => setShowFilters(false)}></button>
+                            </div>
+                            <div className="offcanvas-body">
+                                <FilterSection />
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div className="container-fluid bg-light py-2">
-                    <div className="d-flex align-items-center">
-                        <button className="btn btn-sm btn-link text-decoration-none text-secondary">
-                            <i className="bi bi-geo-alt me-1"></i>
-                            Pollachi
-                        </button>
-                    </div>
-                </div>
-            </header>
+                        {/* Backdrop for mobile offcanvas */}
+                        {showFilters && <div className="offcanvas-backdrop fade show" onClick={() => setShowFilters(false)}></div>}
 
-            {/* Navigation Bar */}
-            <nav className="bg-white border-bottom">
-                <div className="container-fluid">
-                    <div className="d-flex justify-content-between align-items-center py-2">
-                        <div className="overflow-auto flex-grow-1">
-                            <ul className="nav flex-nowrap">
-                                {categories.map((category) => (
-                                    <li className="nav-item" key={category}>
-                                        <a className="nav-link text-dark text-nowrap" href="#">
-                                            {category}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        {tokenDealerAdmin && <Link to={"/dealer-admin-page"} className="btn"> Admin</Link>}
-
-                    </div>
-                </div>
-            </nav>
-
-            {/* Main Content */}
-            <div className="container-fluid py-4">
-                <div className="row">
-                    {/* Filter Sidebar */}
-                    <div className="col-lg-3 col-md-4 mb-4 d-none d-md-block">
-                        <div className="bg-white p-4 rounded shadow-sm">
-                            <FilterSection />
-                        </div>
-                    </div>
-
-                    {/* Mobile Offcanvas Filter */}
-                    <div
-                        className={`offcanvas offcanvas-start ${showFilters ? "show" : ""}`}
-                        tabIndex={-1}
-                        style={{ visibility: showFilters ? "visible" : "hidden" }}
-                    >
-                        <div className="offcanvas-header">
-                            <h5 className="offcanvas-title">Filters</h5>
-                            <button type="button" className="btn-close" onClick={() => setShowFilters(false)}></button>
-                        </div>
-                        <div className="offcanvas-body">
-                            <FilterSection />
-                        </div>
-                    </div>
-
-                    {/* Backdrop for mobile offcanvas */}
-                    {showFilters && <div className="offcanvas-backdrop fade show" onClick={() => setShowFilters(false)}></div>}
-
-                    {/* Product Grid */}
-                    <div className="col-lg-9 col-md-8">
-                        <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
-                            {/* <h6 className="mb-0">
+                        {/* Product Grid */}
+                        <div className="col-lg-9 col-md-8">
+                            <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
+                                {/* <h6 className="mb-0">
                                 <span>Found {filteredProducts.length} results</span>
                                 {searchQuery && (
                                     <>
@@ -540,145 +554,200 @@ export const Home = () => {
                                 )}
                             </h6> */}
 
-                            <div className="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-2 w-100 w-md-auto">
-                                {/* Mobile Filter Button */}
-                                <button className="btn btn-outline-dark d-md-none" onClick={() => setShowFilters(true)}>
-                                    <i className="bi bi-funnel me-2"></i>
-                                    Filters
-                                </button>
-
-                                <div className="d-flex align-items-center gap-2">
-                                    <span className="text-muted text-nowrap">Sort by</span>
-                                    <select
-                                        className="form-select form-select-sm"
-                                        value={sortBy}
-                                        onChange={(e) => setSortBy(e.target.value)}
-                                    >
-                                        <option value="featured">Featured</option>
-                                        <option value="price-low">Price: Low to High</option>
-                                        <option value="price-high">Price: High to Low</option>
-                                        <option value="rating">Rating</option>
-                                    </select>
-                                </div>
-
-                                <div className="btn-group" role="group">
-                                    <button
-                                        type="button"
-                                        className={`btn btn-sm ${viewMode === "grid" ? "btn-dark" : "btn-outline-secondary"}`}
-                                        onClick={() => setViewMode("grid")}
-                                    >
-                                        <i className="bi bi-grid-3x3-gap-fill"></i>
+                                <div className="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-2 w-100 w-md-auto">
+                                    {/* Mobile Filter Button */}
+                                    <button className="btn btn-outline-dark d-md-none" onClick={() => setShowFilters(true)}>
+                                        <i className="bi bi-funnel me-2"></i>
+                                        Filters
                                     </button>
-                                    <button
-                                        type="button"
-                                        className={`btn btn-sm ${viewMode === "list" ? "btn-dark" : "btn-outline-secondary"}`}
-                                        onClick={() => setViewMode("list")}
-                                    >
-                                        <i className="bi bi-list"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
 
-                        {/* Product Cards */}
-                        {filteredProducts.length === 0 ? (
-                            <div className="text-center py-5">
-                                <i className="bi bi-search fs-1 text-muted"></i>
-                                <h5 className="mt-3 text-muted">No products found</h5>
-                                <p className="text-muted">Try adjusting your filters or search query</p>
-                            </div>
-                        ) : (
-                            <div className={viewMode === "grid" ? "row g-3 g-md-4" : "row g-3"}>
-                                {filteredProducts.map((product) => {
-                                    const displayPrice = product.price?.discount?.finalPrice || product.price?.amount || 0;
-                                    const hasDiscount = product.price?.discount && product.price.discount.percentage > 0;
-
-                                    return (
-                                        <div
-                                            key={product.productId}
-                                            className={viewMode === "grid" ? "col-12 col-sm-6 col-lg-4" : "col-12"}
+                                    <div className="d-flex align-items-center gap-2">
+                                        <span className="text-muted text-nowrap">Sort by</span>
+                                        <select
+                                            className="form-select form-select-sm"
+                                            value={sortBy}
+                                            onChange={(e) => setSortBy(e.target.value)}
                                         >
-                                            <div className="card h-100 position-relative">
-                                                {product.offer > 0 && (
-                                                    <div className="position-absolute top-0 start-0 p-2" style={{ zIndex: 10 }}>
-                                                        <span className="badge bg-danger"> {product.offer} % OFF</span>
-                                                    </div>
-                                                )}
+                                            <option value="featured">Featured</option>
+                                            <option value="price-low">Price: Low to High</option>
+                                            <option value="price-high">Price: High to Low</option>
+                                            <option value="rating">Rating</option>
+                                        </select>
+                                    </div>
 
-                                                <div
-                                                    className="position-absolute top-0 end-0 p-2 d-flex flex-column gap-2"
-                                                    style={{ zIndex: 10 }}
-                                                >
-                                                    <button className="btn btn-sm btn-light rounded-circle p-2" aria-label="Add to favorites">
-                                                        <i className="bi bi-heart"></i>
-                                                    </button>
-                                                    <button className="btn btn-sm btn-light rounded-circle p-2" aria-label="Compare">
-                                                        <i className="bi bi-arrow-left-right"></i>
-                                                    </button>
-                                                </div>
+                                    <div className="btn-group" role="group">
+                                        <button
+                                            type="button"
+                                            className={`btn btn-sm ${viewMode === "grid" ? "btn-dark" : "btn-outline-secondary"}`}
+                                            onClick={() => setViewMode("grid")}
+                                        >
+                                            <i className="bi bi-grid-3x3-gap-fill"></i>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className={`btn btn-sm ${viewMode === "list" ? "btn-dark" : "btn-outline-secondary"}`}
+                                            onClick={() => setViewMode("list")}
+                                        >
+                                            <i className="bi bi-list"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
 
-                                                <div className="card-body text-center">
-                                                    <img
-                                                        src={product.image ? `https://api.lancer.drmcetit.com${product.image}` : "/placeholder.svg"}
-                                                        alt={product.title || "Product"}
-                                                        className="img-fluid mb-3"
-                                                        style={{ maxHeight: "200px", objectFit: "fit" }}
-                                                    />
+                            {/* Product Cards */}
+                            {filteredProducts.length === 0 ? (
+                                <div className="text-center py-5">
+                                    <i className="bi bi-search fs-1 text-muted"></i>
+                                    <h5 className="mt-3 text-muted">No products found</h5>
+                                    <p className="text-muted">Try adjusting your filters or search query</p>
+                                </div>
+                            ) : (
+                                <div className={viewMode === "grid" ? "row g-3 g-md-4" : "row g-3"}>
+                                    {filteredProducts.map((product) => {
+                                        const displayPrice = product.price?.discount?.finalPrice || product.price?.amount || 0;
+                                        const hasDiscount = product.price?.discount && product.price.discount.percentage > 0;
 
-                                                    <h6
-                                                        className="card-title text-start"
-                                                        onClick={() => navigate(`/product-detail/${product.productId}`)}
+                                        return (
+                                            <div
+                                                key={product.productId}
+                                                className={viewMode === "grid" ? "col-12 col-sm-6 col-lg-4" : "col-12"}
+                                            >
+                                                <div className="card h-100 position-relative">
+                                                    {product.offer > 0 && (
+                                                        <div className="position-absolute top-0 start-0 p-2" style={{ zIndex: 10 }}>
+                                                            <span className="badge bg-danger"> {product.offer} % OFF</span>
+                                                        </div>
+                                                    )}
+
+                                                    <div
+                                                        className="position-absolute top-0 end-0 p-2 d-flex flex-column gap-2"
+                                                        style={{ zIndex: 10 }}
                                                     >
-                                                        {product.title || "Unnamed Product"}
-                                                    </h6>
-
-                                                    <div className="text-start mb-2">
-                                                        {product.offer > 0 ? (
-                                                            <>
-                                                                <span className="fw-bold fs-5 text-dark">₹{product.offerPrice}</span>
-                                                                <span className="text-muted text-decoration-line-through ms-2">₹{product.price}</span>
-                                                            </>
-                                                        ) : (
-                                                            <span className="fw-bold fs-5">₹{product.price}</span>
-                                                        )}
+                                                        <button className="btn btn-sm btn-light rounded-circle p-2" aria-label="Add to favorites">
+                                                            <i className="bi bi-heart"></i>
+                                                        </button>
+                                                        <button className="btn btn-sm btn-light rounded-circle p-2" aria-label="Compare">
+                                                            <i className="bi bi-arrow-left-right"></i>
+                                                        </button>
                                                     </div>
 
-                                                    <div className="d-flex align-items-center gap-2 text-start mb-2">
-                                                        <div className="d-flex">{renderStars(product.rating || 0)}</div>
-                                                        <span className="text-muted small">({product.review?.length || 0})</span>
-                                                    </div>
+                                                    <div className="card-body text-center">
+                                                        <img
+                                                            src={product.image ? `https://api.lancer.drmcetit.com${product.image}` : "/placeholder.svg"}
+                                                            alt={product.title || "Product"}
+                                                            className="img-fluid mb-3"
+                                                            style={{ maxHeight: "200px", objectFit: "fit" }}
+                                                        />
 
-                                                    <div className="text-start">
-                                                        <small className="text-muted d-block">
-                                                            • {product.category || ""}
-                                                        </small>
+                                                        <h6
+                                                            className="card-title text-start"
+                                                            onClick={() => navigate(`/product-detail/${product.productId}`)}
+                                                        >
+                                                            {product.title || "Unnamed Product"}
+                                                        </h6>
 
-                                                        {product.offer > 0 && (
-                                                            <small className="text-dark d-block">
-                                                                <i className="bi bi-truck me-1"></i>
-                                                                Free Shipping
+                                                        <div className="text-start mb-2">
+                                                            {product.offer > 0 ? (
+                                                                <>
+                                                                    <span className="fw-bold fs-5 text-dark">₹{product.offerPrice}</span>
+                                                                    <span className="text-muted text-decoration-line-through ms-2">₹{product.price}</span>
+                                                                </>
+                                                            ) : (
+                                                                <span className="fw-bold fs-5">₹{product.price}</span>
+                                                            )}
+                                                        </div>
+
+                                                        <div className="d-flex align-items-center gap-2 text-start mb-2">
+                                                            <div className="d-flex">{renderStars(product.rating || 0)}</div>
+                                                            <span className="text-muted small">({product.review?.length || 0})</span>
+                                                        </div>
+
+                                                        <div className="text-start">
+                                                            <small className="text-muted d-block">
+                                                                • {product.category || ""}
                                                             </small>
-                                                        )}
 
-                                                        {product.price === 0 && (
-                                                            <small className="text-danger d-block">Out of Stock</small>
-                                                        )}
+                                                            {product.offer > 0 && (
+                                                                <small className="text-dark d-block">
+                                                                    <i className="bi bi-truck me-1"></i>
+                                                                    Free Shipping
+                                                                </small>
+                                                            )}
+
+                                                            {product.price === 0 && (
+                                                                <small className="text-danger d-block">Out of Stock</small>
+                                                            )}
+                                                        </div>
+                                                        <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${product.productId}`)}>
+                                                            Buy Now
+                                                        </button>
                                                     </div>
-                                                    <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${product.productId}`)}>
-                                                        Buy Now
-                                                    </button>
                                                 </div>
                                             </div>
-                                        </div>
-                                    );
+                                        );
 
-                                })}
-                            </div>
-                        )}
+                                    })}
+                                </div>
+                            )}
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+            {/* Sign in model */}
+            {openPopUp && <div
+                className="w-100 h-100 bg-dark bg-opacity-10 blur position-fixed top-0 start-0 d-flex justify-content-center align-items-center"
+                style={{ zIndex: 99 }}
+            >
+                <div className="bg-white p-4 rounded shadow" style={{ maxWidth: "500px", width: "90%" }}>
+                    <div className="text-center mb-4">
+                        <h2 className="fw-bold">Sign In As</h2>
+                        <p>Select your role to continue</p>
+                    </div>
+                    <div className="row g-3">
+                        {/* Dealer / Seller Option */}
+                        <div className="col-6 d-flex justify-content-center">
+                            <div
+                                className="border rounded p-4 text-center w-100"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                    navigate("/dealer-signin");
+                                }}
+                            >
+                                <h5>Dealer</h5>
+                                <i className="bi bi-shop fs-1"></i> {/* Bootstrap icon, optional */}
+                            </div>
+                        </div>
+
+                        {/* Customer Option */}
+                        <div className="col-6 d-flex justify-content-center">
+                            <div
+                                className="border rounded p-4 text-center w-100"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                    navigate("/customer-signin");
+                                }}
+                            >
+                                <h5>Customer</h5>
+                                <i className="bi bi-person fs-1"></i> {/* Bootstrap icon, optional */}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="text-end mt-3">
+                        <button
+                            className="btn btn-outline-dark w-100"
+                            onClick={() => {
+                                setOpenPopUp(false)
+                            }}
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>}
+
+        </>
     )
 }

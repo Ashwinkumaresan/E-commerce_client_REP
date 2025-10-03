@@ -177,7 +177,7 @@ export default function ProductDetail() {
 
                         <div className="d-flex gap-3">
                             <button
-                                className="btn btn-dark flex-grow-1 d-flex align-items-center justify-content-center gap-2"
+                                className="btn btn-outline-dark flex-grow-1 d-flex align-items-center justify-content-center gap-2"
                                 onClick={handleAddToCart}
                                 disabled={cartLoading}
                             >
@@ -193,7 +193,7 @@ export default function ProductDetail() {
                                 Add to Cart
                             </button>
                             <button
-                                className="btn btn-outline-dark flex-grow-1 d-flex align-items-center justify-content-center gap-2"
+                                className="btn btn-dark flex-grow-1 d-flex align-items-center justify-content-center gap-2"
                                 onClick={handleBuyNow}
                             >
                                 <ShoppingCart size={20} />
