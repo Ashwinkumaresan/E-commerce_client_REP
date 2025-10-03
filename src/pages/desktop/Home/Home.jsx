@@ -24,7 +24,7 @@ export const Home = () => {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
-    const [tokenDealer, setTokenDealer] = useState(false)
+    const [tokenDealerAdmin, setTokenDealerAdmin] = useState(false)
 
 
     const categories = [
@@ -80,10 +80,11 @@ export const Home = () => {
         )
 
 
-    const getTokenDealer = () => {
-        const tokenDealer = localStorage.getItem("accessTokenDealerDealer")
-        if (tokenDealer) setTokenDealer(true)
-        else setTokenDealer(false)
+    const getTokenDealerAdmin = () => {
+        const tokenOfDealerAdmin = localStorage.getItem("accessTokenDealer")
+        if (tokenOfDealerAdmin) {
+            setTokenDealerAdmin(true)
+        }
     }
 
     const fetchProducts = async () => {
@@ -104,7 +105,7 @@ export const Home = () => {
     };
 
     useEffect(() => {
-        getTokenDealer()
+        getTokenDealerAdmin()
         fetchProducts()
     }, [])
 
@@ -454,8 +455,8 @@ export const Home = () => {
                                 </Link>
 
 
-                                {tokenDealer && <Link to={"/dealer-signin"}>
-                                    <button className="btn btn-outline-secondary btn-sm">
+                                {!tokenDealerAdmin && <Link to={"/dealer-signin"}>
+                                    <button className="btn btn-dark btn-sm">
                                         <span className="d-none d-sm-inline">Sign In</span>
                                         <i className="bi bi-person d-sm-none"></i>
                                     </button>
@@ -492,7 +493,7 @@ export const Home = () => {
                             </ul>
                         </div>
 
-                        {tokenDealer && <Link to={"/dealer-admin-page"} className="btn"> Admin</Link>}
+                        {tokenDealerAdmin && <Link to={"/dealer-admin-page"} className="btn"> Admin</Link>}
 
                     </div>
                 </div>
