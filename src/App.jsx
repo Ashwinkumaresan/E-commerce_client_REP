@@ -30,7 +30,7 @@ function App() {
 
   return (
     <Router>
-      <ScrollToTop/>
+      <ScrollToTop />
       <Routes>
         {deviceType === "mobile" ? (
           <>
@@ -41,11 +41,11 @@ function App() {
             <Route path="/dealer-signin" element={<MDealerLogin />} />
 
             <Route path="/dealer-admin-page" element={<MDealerAddproduct />} />
-            
+
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/product-detail/:id" element={<ProductDetail />} />
             <Route path="/product-cart-checkout" element={<CheckoutPage />} />
-            <Route path="/product-order-placed" element={<OrderPlacedPage/>} />
+            <Route path="/product-order-placed" element={<OrderPlacedPage />} />
           </>
         ) : (
           <>
@@ -53,14 +53,14 @@ function App() {
             <Route path="/dealer-signup" element={<DealerSignup />} />
             <Route path="/dealer-signup-otp" element={<DealerOTP />} />
             <Route path="/dealer-signup-setpassword" element={<DealerSetpassword />} />
-            <Route path="/customer-signin" element={<DealerLogin />} />
+            <Route path="/dealer-signin" element={<DealerLogin />} />
 
             <Route path="/dealer-admin-page" element={<DealerAddproduct />} />
 
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/product-detail/:id" element={<ProductDetail />} />
             <Route path="/product-cart-checkout" element={<CheckoutPage />} />
-            <Route path="/product-order-placed" element={<OrderPlacedPage/>} />
+            <Route path="/product-order-placed" element={<OrderPlacedPage />} />
           </>
         )}
 

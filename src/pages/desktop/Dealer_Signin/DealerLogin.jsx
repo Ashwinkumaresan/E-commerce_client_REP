@@ -38,12 +38,15 @@ export const DealerLogin = () => {
 
             console.log("Username Login Response:", res.data);
 
+            // Save token in indexedDB/localforage
             await saveAccessToken(res.data.access);
-            localStorage.setItem("username", username);
 
-            const token = await getAccessToken()
-            console.log(token);
-            
+            // Store in localStorage
+            localStorage.setItem("username", username);
+            localStorage.setItem("accessTokenDealer", res.data.access);
+
+            const token = await getAccessToken();
+            console.log("Retrieved Token:", token);
 
             navigate("/home");
         } catch (error) {
@@ -52,6 +55,7 @@ export const DealerLogin = () => {
         } finally {
             setIsLoading(false);
         }
+
     };
 
     // Google Login

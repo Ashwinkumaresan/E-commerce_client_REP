@@ -2,7 +2,6 @@ import { useState, useMemo, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import ProductGrid from "../../component/Loading/ProductGrid"
 import axios from "axios"
-import { getAccessToken } from "../../component/Localforage/LocalForage"
 
 export const Home = () => {
     const navigate = useNavigate("")
@@ -25,7 +24,7 @@ export const Home = () => {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
-    const [token, setToken] = useState(true)
+    const [tokenDealer, setTokenDealer] = useState(false)
 
 
     const categories = [
@@ -80,11 +79,13 @@ export const Home = () => {
             </div>
         )
 
-    const getToken = () => {
-        const token = getAccessToken()
-        if (token) setToken(false)
-        else setToken(true)
+
+    const getTokenDealer = () => {
+        const tokenDealer = localStorage.getItem("accessTokenDealerDealer")
+        if (tokenDealer) setTokenDealer(true)
+        else setTokenDealer(false)
     }
+
     const fetchProducts = async () => {
         setLoading(true);
         setError("");
@@ -103,7 +104,7 @@ export const Home = () => {
     };
 
     useEffect(() => {
-        getToken()
+        getTokenDealer()
         fetchProducts()
     }, [])
 
@@ -452,13 +453,14 @@ export const Home = () => {
                                     </button>
                                 </Link>
 
-                                {
-                                    token &&
+
+                                {tokenDealer && <Link to={"/dealer-signin"}>
                                     <button className="btn btn-outline-secondary btn-sm">
                                         <span className="d-none d-sm-inline">Sign In</span>
                                         <i className="bi bi-person d-sm-none"></i>
                                     </button>
-                                }
+                                </Link>}
+
                             </div>
                         </div>
                     </div>
@@ -490,9 +492,8 @@ export const Home = () => {
                             </ul>
                         </div>
 
-                        {/* <a href="/dealer-signup" className="text-decoration-none text-dark text-nowrap ms-3 d-none d-md-block">
-                            Become a seller
-                        </a> */}
+                        {tokenDealer && <Link to={"/dealer-admin-page"} className="btn"> Admin</Link>}
+
                     </div>
                 </div>
             </nav>

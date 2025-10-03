@@ -14,11 +14,11 @@ export const DealerSetpassword = () => {
     const email = localStorage.getItem("email")
     const otp = localStorage.getItem("otpVerified")
 
-    // useEffect(() => {
-    //     if (!email || !otp) {
-    //         navigate("/login")
-    //     }
-    // }, [email, otp, navigate])
+    useEffect(() => {
+        if (!email || !otp) {
+            navigate("/login")
+        }
+    }, [email, otp, navigate])
 
     const getPasswordStrength = (password) => {
         if (!password) return { strength: 0, text: "", class: "" }
@@ -71,9 +71,9 @@ export const DealerSetpassword = () => {
 
         try {
             console.log(customerType);
-            
+
             const res = await axios.post(
-                "http://127.0.0.1:8000/user/setPassword/",
+                "https://api.lancer.drmcetit.com/api/Snapdeal/setPassword/ ",
                 {
                     customerType,
                     password,

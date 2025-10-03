@@ -30,7 +30,7 @@ export const DealerSignup = () => {
     try {
       // Axios request to backend
       await axios.post(
-        "http://127.0.0.1:8000/user/email/",
+        "https://api.lancer.drmcetit.com/api/Snapdeal/email/",
         { email },
         { headers: { "Content-Type": "application/json" } }
       );

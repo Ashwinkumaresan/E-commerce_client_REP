@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Sidebar from "../../component/Sidebar/Sidebar"
 import { useNavigate } from "react-router-dom"
 
@@ -97,8 +97,6 @@ export const DealerAddproduct = () => {
         },
     ]);
 
-
-
     const navigate = useNavigate()
     const [activePage, setActivePage] = useState("products")
     const [selectedColors, setSelectedColors] = useState([])
@@ -108,8 +106,15 @@ export const DealerAddproduct = () => {
     const [features, setFeatures] = useState([])
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [token, setToken] = useState(true)
 
-
+    const getToken = () => {
+        const token = localStorage.getItem("accessTokenDealer")
+        if (!token) navigate("/home")
+    }
+    useEffect(()=>{
+        getToken()
+    },[])
     // Predefined color 
     const colors = [
         { name: "Red", value: "#dc3545" },
