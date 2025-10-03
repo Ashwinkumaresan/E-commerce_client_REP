@@ -16,6 +16,10 @@ import { MDealerOTP } from "./pages/mobile/Dealer_Signup/MDealerOTP";
 import { MDealerSetpassword } from "./pages/mobile/Dealer_Signup/MDealerSetpassword";
 import { MDealerLogin } from "./pages/mobile/Dealer_Signin/MDealerLogin";
 import MDealerAddproduct from "./pages/mobile/Dealer_Admin_Page/DealerAddproduct";
+import ShoppingCart from "./pages/desktop/Customer/Cart/ShoppingCart";
+import ProductDetail from "./pages/desktop/Customer/Product Detail page/ProductDetail";
+import CheckoutPage from "./pages/desktop/Customer/Check out/CheckoutPage";
+import OrderPlacedPage from "./pages/desktop/Customer/Order Place/OrderPlacedPage";
 
 function App() {
   const deviceType = useDeviceType();
@@ -42,6 +46,11 @@ function App() {
             <Route path="/dealer-signin" element={<DealerLogin />} />
 
             <Route path="/dealer-admin-page" element={<DealerAddproduct />} />
+
+            <Route path="/shopping-cart" element={<ShoppingCart />} />
+            <Route path="/product-detail" element={<ProductDetail />} />
+            <Route path="/product-cart-checkout" element={<CheckoutPage />} />
+            <Route path="/product-order-placed" element={<OrderPlacedPage/>} />
           </>
         )}
 

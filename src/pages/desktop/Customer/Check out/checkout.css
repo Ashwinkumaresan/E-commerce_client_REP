@@ -1,0 +1,80 @@
+.checkout-page {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.breadcrumb {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: "/";
+  color: #6c757d;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.address-box {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+.delivery-option,
+.payment-option {
+  border: 2px solid #e9ecef;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delivery-option:hover,
+.payment-option:hover {
+  border-color: black;
+}
+
+.delivery-option.selected,
+.payment-option.selected {
+  border-color: black;
+  background-color: #f0f7ff;
+}
+
+.form-check-input {
+  cursor: pointer;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid #dee2e6;
+}
+
+.form-check-input:checked {
+  background-color: black;
+  border-color: black;
+}
+
+/* .btn-primary {
+  background-color: black;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+}
+
+.text-primary {
+  color: black !important;
+} */
+
+@media (max-width: 991px) {
+  .position-sticky {
+    position: relative !important;
+    top: 0 !important;
+  }
+}
