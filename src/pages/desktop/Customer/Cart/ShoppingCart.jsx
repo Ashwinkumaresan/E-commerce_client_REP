@@ -27,7 +27,7 @@ export default function ShoppingCart() {
     const fetchCartItems = async () => {
         try {
             setLoading(true)
-            const token = await getAccessToken()
+            const token = localStorage.getItem("accessTokenCustomer")
             console.log("Access Token:", token)
             const res = await axios.get(
                 "https://api.lancer.drmcetit.com/api/Snapdeal/cart/list/",
@@ -84,7 +84,7 @@ export default function ShoppingCart() {
     }
 
     const calculateSubtotal = () => {
-        return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+        return cartItems.reduce((sum, item) => sum + item.offerPrice * item.quantity, 0)
     }
 
     const handleCheckout = async () => {
@@ -135,7 +135,7 @@ export default function ShoppingCart() {
                                                 >
                                                     {item.productTitle}
                                                 </h5>
-                                                <p className="text-muted mb-2">${item.price.toFixed(2)}</p>
+                                                <p className="text-muted mb-2">${item.offerPrice.toFixed(2)}</p>
                                                 <button
                                                     className="btn btn-link text-danger p-0 text-decoration-none"
                                                     onClick={() => removeItem(item.productId)}

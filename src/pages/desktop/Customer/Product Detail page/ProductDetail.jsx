@@ -41,6 +41,8 @@ export default function ProductDetail() {
     }, [id])
 
     const handleAddToCart = async () => {
+        const token  = localStorage.getItem("accessTokenCustomer")
+        if(!token) navigate("/customer-signin")
         try {
             setCartLoading(true); 
             const token = localStorage.getItem("accessTokenCustomer");
