@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import ProductGrid from "../../component/Loading/ProductGrid"
 import axios from "axios"
+import ProductNotFound from "../../component/Product Not Found/ProductNotFound "
 
 export const Home = () => {
     const navigate = useNavigate("")
@@ -462,7 +463,7 @@ export const Home = () => {
                                         <span className="d-none d-lg-inline">Orders</span>
                                     </button>
 
-                                    <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2">
+                                    <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2" onClick={() => localStorage.clear()}>
                                         <i className="bi bi-heart me-1"></i>
                                         <span className="d-none d-lg-inline">Favorites</span>
                                     </button>
@@ -605,10 +606,11 @@ export const Home = () => {
 
                             {/* Product Cards */}
                             {filteredProducts.length === 0 ? (
-                                <div className="text-center py-5">
-                                    <i className="bi bi-search fs-1 text-muted"></i>
+                                <div className="text-center">
+                                    {/* <i className="bi bi-search fs-1 text-muted"></i>
                                     <h5 className="mt-3 text-muted">No products found</h5>
-                                    <p className="text-muted">Try adjusting your filters or search query</p>
+                                    <p className="text-muted">Try adjusting your filters or search query</p> */}
+                                    <ProductNotFound/>
                                 </div>
                             ) : (
                                 <div className={viewMode === "grid" ? "row g-3 g-md-4" : "row g-3"}>

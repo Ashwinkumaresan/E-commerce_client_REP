@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import Sidebar from "../../component/Sidebar/Sidebar"
 import { useNavigate } from "react-router-dom"
+import axios from "axios";
 
 export const DealerAddproduct = () => {
 
@@ -106,15 +107,41 @@ export const DealerAddproduct = () => {
     const [features, setFeatures] = useState([])
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showModal, setShowModal] = useState(false);
+
+    const [fetchProduct, setFetchProduct] = useState([])
+
+
     const [token, setToken] = useState(true)
 
     const getToken = () => {
         const token = localStorage.getItem("accessTokenDealer")
         if (!token) navigate("/home")
     }
-    useEffect(()=>{
+    useEffect(() => {
         getToken()
-    },[])
+    }, [])
+
+    const fetchProducts = async () => {
+        //setLoading(true);
+        //setError("");
+        try {
+            const response = await axios.get(
+                "https://api.lancer.drmcetit.com/api/Snapdeal/product/"
+            );
+            console.log(response.data)
+            setFetchProduct(response.data);
+        } catch (err) {
+            console.error("Error fetching products:", err);
+            //setError("Failed to fetch products");
+        } finally {
+            //setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchProducts()
+    }, [])
+
     // Predefined color 
     const colors = [
         { name: "Red", value: "#dc3545" },
@@ -157,16 +184,30 @@ export const DealerAddproduct = () => {
     };
 
 
-    const handleImageUpload = (e) => {
-        if (e.target.files) {
-            const newFiles = Array.from(e.target.files)
-            setUploadedImages((prev) => [...prev, ...newFiles])
-        }
-    }
+    // const handleImageUpload = (e) => {
+    //     if (e.target.files) {
+    //         const newFiles = Array.from(e.target.files)
+    //         setUploadedImages((prev) => [...prev, ...newFiles])
+    //     }
+    // }
 
-    const removeImage = (index) => {
-        setUploadedImages((prev) => prev.filter((_, i) => i !== index))
-    }
+    // const removeImage = (index) => {
+    //     setUploadedImages((prev) => prev.filter((_, i) => i !== index))
+    // }
+
+    const [uploadedImage, setUploadedImage] = useState(null);
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file instanceof File) {
+            setUploadedImage(file);
+        }
+    };
+
+    const removeImage = () => {
+        setUploadedImage(null);
+    };
+
 
     // Feature Handlers
     const handleFeatureChange = (index, field, value) => {
@@ -183,24 +224,51 @@ export const DealerAddproduct = () => {
         setFeatures(features.filter((_, i) => i !== index))
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        const productData = {
-            title: e.target.title.value,
-            brand: e.target.brand.value,
-            category: e.target.category.value,
-            price: e.target.price.value,
-            offer: e.target.offer.value,
-            stockCount: e.target.stockCount.value,
-            description: e.target.description.value,
-            colors: selectedColors,
-            sizes: selectedSizes,
-            features,
-            images: uploadedImages,
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const token = localStorage.getItem("accessTokenDealer");
+
+        // Create FormData for file upload
+        const formData = new FormData();
+        formData.append("title", e.target.title.value);
+        formData.append("brand", e.target.brand.value);
+        formData.append("category", e.target.category.value);
+        formData.append("price", e.target.price.value);
+        formData.append("offer", e.target.offer.value);
+        formData.append("stockCount", e.target.stockCount.value);
+        formData.append("description", e.target.description.value);
+        formData.append("colors", JSON.stringify(selectedColors));
+        formData.append("sizes", JSON.stringify(selectedSizes));
+        formData.append("features", JSON.stringify(features));
+
+        // 👇 append single image file
+        if (uploadedImage) {
+            formData.append("images", uploadedImage);
         }
-        console.log("Product Data:", productData)
-        alert("Product submitted! Check console for details.")
-    }
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+
+        try {
+            const res = await axios.post(
+                "https://api.lancer.drmcetit.com/api/Snapdeal/product/create/",
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+
+            console.log("✅ Product Created:", res.data);
+            alert("Product created successfully!");
+        } catch (error) {
+            console.error("❌ Error creating product:", error);
+            alert("Failed to create product!");
+        }
+    };
 
     // Handel order view
     const handleView = (product) => {
@@ -259,8 +327,12 @@ export const DealerAddproduct = () => {
                         </div>
                     </div>
                 )
-
             case "products":
+                return (
+                    <></>
+
+                )
+            case "productsAdd":
                 return (
                     <div className="card shadow-sm" style={{ borderRadius: "12px" }}>
                         <div className="card-header bg-white border-0 py-3">
@@ -312,7 +384,7 @@ export const DealerAddproduct = () => {
                                     </div>
 
                                     {/* Images */}
-                                    <div className="col-12 mb-4">
+                                    {/* <div className="col-12 mb-4">
                                         <label htmlFor="images" className="form-label fw-semibold">Images</label>
                                         <input type="file" className="form-control mb-3 rounded-1" id="images" multiple accept="image/*" onChange={handleImageUpload} style={{ borderRadius: "8px" }} />
                                         {uploadedImages.length > 0 && (
@@ -327,7 +399,50 @@ export const DealerAddproduct = () => {
                                                 ))}
                                             </div>
                                         )}
+                                    </div> */}
+
+                                    <div className="col-12 mb-4">
+                                        <label htmlFor="image" className="form-label fw-semibold">Image</label>
+                                        <input
+                                            type="file"
+                                            className="form-control mb-3 rounded-1"
+                                            id="image"
+                                            accept="image/*"
+                                            onChange={handleImageUpload}
+                                            style={{ borderRadius: "8px" }}
+                                        />
+                                        {uploadedImage && (
+                                            <div className="position-relative d-inline-block">
+                                                <img
+                                                    src={URL.createObjectURL(uploadedImage)}
+                                                    alt="Preview"
+                                                    className="img-thumbnail"
+                                                    style={{
+                                                        width: "100px",
+                                                        height: "100px",
+                                                        objectFit: "cover",
+                                                        borderRadius: "8px",
+                                                    }}
+                                                />
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-danger btn-sm position-absolute top-0 end-0"
+                                                    style={{
+                                                        transform: "translate(50%, -50%)",
+                                                        borderRadius: "50%",
+                                                        width: "24px",
+                                                        height: "24px",
+                                                        padding: "0",
+                                                        fontSize: "12px",
+                                                    }}
+                                                    onClick={removeImage}
+                                                >
+                                                    ×
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
+
 
                                     {/* Colors (optional) */}
                                     <div className="col-12 mb-4">

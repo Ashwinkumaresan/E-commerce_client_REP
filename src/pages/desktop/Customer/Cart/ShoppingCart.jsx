@@ -15,14 +15,14 @@ export default function ShoppingCart() {
 
     const getToken = () => {
         const tokenOfDealerAdmin = localStorage.getItem("accessTokenDealer")
-        const tokenOfCustomer  = localStorage.getItem("accessTokenCustomer")
+        const tokenOfCustomer = localStorage.getItem("accessTokenCustomer")
         if (!tokenOfDealerAdmin && !tokenOfCustomer) {
-            navigate("/")
+            navigate("/customer-signin")
         }
     }
-    useEffect(()=>{
+    useEffect(() => {
         getToken()
-    },[])
+    }, [])
 
     const fetchCartItems = async () => {
         try {
@@ -33,15 +33,15 @@ export default function ShoppingCart() {
                 "https://api.lancer.drmcetit.com/api/Snapdeal/cart/list/",
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`, 
+                        Authorization: `Bearer ${token}`,
                     },
                 }
             )
             console.log(res.data);
             if (res.data?.error === "Nothing in cart") {
-                setCartItems([]); 
+                setCartItems([]);
             } else {
-                setCartItems(res.data); 
+                setCartItems(res.data);
             }
         } catch (error) {
             console.error("Error fetching cart items:", error)
@@ -64,8 +64,23 @@ export default function ShoppingCart() {
         )
     }
 
-    const removeItem = (id) => {
-        setCartItems((items) => items.filter((item) => item.id !== id))
+    const removeItem = async (id) => {
+        try {
+            const token = localStorage.getItem("accessTokenCustomer");
+            const res = await axios.delete(
+                `https://api.lancer.drmcetit.com/api/Snapdeal/cart/delete/${id}/`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            console.log("Delete response:", res.data);
+            fetchCartItems()
+        } catch (error) {
+            console.error("Error deleting item:", error);
+        }
     }
 
     const calculateSubtotal = () => {
@@ -87,7 +102,7 @@ export default function ShoppingCart() {
     }
 
     if (loading) return <CartLoading />
-    if (cartItems.length === 0) return <CartEmpty/>
+    if (cartItems.length === 0) return <CartEmpty />
 
     return (
         <div className="min-vh-100">
@@ -123,7 +138,7 @@ export default function ShoppingCart() {
                                                 <p className="text-muted mb-2">${item.price.toFixed(2)}</p>
                                                 <button
                                                     className="btn btn-link text-danger p-0 text-decoration-none"
-                                                    onClick={() => removeItem(item.id)}
+                                                    onClick={() => removeItem(item.productId)}
                                                 >
                                                     Remove
                                                 </button>

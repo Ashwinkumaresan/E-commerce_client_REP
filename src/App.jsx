@@ -32,6 +32,7 @@ import { MCustomerLogin } from "./pages/mobile/Customer/Customer_Signin/MCustome
 import { MCustomerSignup } from "./pages/mobile/Customer/Customer_Signup/MCustomerSignup";
 import { MCustomerOTP } from "./pages/mobile/Customer/Customer_Signup/MCustomerOTP";
 import { MCustomerSetpassword } from "./pages/mobile/Customer/Customer_Signup/MCustomerSetpassword";
+import { ChatbotMain } from "./pages/component/Chatbot/ChatbotMain";
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
+      <ChatbotMain/>
       <Routes>
         {deviceType === "mobile" ? (
           <>

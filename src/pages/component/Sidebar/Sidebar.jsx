@@ -4,6 +4,7 @@ export default function Sidebar({ onNavigate, activePage }) {
   const navigationItems = [
     { name: "Dashboard", id: "dashboard" },
     { name: "Products", id: "products" },
+    { name: "Products Add", id: "productsAdd" },
     { name: "Orders", id: "orders" },
     { name: "Customers", id: "customers" },
     { name: "Analytics", id: "analytics" },

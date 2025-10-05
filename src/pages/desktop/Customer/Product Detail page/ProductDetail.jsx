@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { ShoppingCart, Star, StarHalf } from "lucide-react"
 import { useNavigate, useParams } from "react-router-dom"
 import ProductDetailLoading from "../../../component/Loading/ProductDetailLoading"
+import ProductNotFound from "../../../component/Product Not Found/ProductNotFound "
 
 export default function ProductDetail() {
     const { id } = useParams()
@@ -23,7 +24,7 @@ export default function ProductDetail() {
             console.log("Full API response:", res.data)
 
             // Pick the first product in the array
-            const productData = res.data[0]
+            const productData = res.data
 
             console.log("Fetched product title:", productData.title)
             setProduct(productData)
@@ -41,25 +42,23 @@ export default function ProductDetail() {
 
     const handleAddToCart = async () => {
         try {
-            setCartLoading(true); // start loading
-
-            const token = localStorage.getItem("accessTokenDealer");
-
+            setCartLoading(true); 
+            const token = localStorage.getItem("accessTokenCustomer");
             const res = await axios.post(
-                `https://api.lancer.drmcetit.com/api/Snapdeal/cart/add/${id}/`,
+                `https://api.lancer.drmcetit.com/api/Snapdeal/cart/add/${id}/`,{quantity},
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
+                        "Content-Type" : "application/json"
                     },
                 }
             );
-
             console.log("Add to Cart response:", res.data);
             navigate("/shopping-cart");
         } catch (error) {
             console.error("Error adding to cart:", error);
         } finally {
-            setCartLoading(false); // stop loading
+            setCartLoading(false);
         }
     };
 
@@ -90,7 +89,7 @@ export default function ProductDetail() {
     }
 
     if (!product) {
-        return <div className="text-center py-5 text-danger">Product not found.</div>
+        return <ProductNotFound/>
     }
 
     return (
