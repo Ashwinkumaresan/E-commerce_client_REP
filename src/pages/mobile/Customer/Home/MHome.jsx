@@ -440,10 +440,13 @@ export const MHome = () => {
 
                                     {/* Action Buttons */}
                                     <div className="d-flex align-items-center justify-content-end gap-2 gap-md-3">
-                                        <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2" onClick={() => navigate("/product-orders")}>
-                                            <i className="bi bi-box-seam me-1"></i>
-                                            <span className="d-none d-lg-inline">Orders</span>
-                                        </button>
+
+                                        <Link to={"/product-orders"}>
+                                            <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2">
+                                                <i className="bi bi-box-seam me-1"></i>
+                                                <span className="d-none d-lg-inline">Orders</span>
+                                            </button>
+                                        </Link>
 
                                         <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2" onClick={() => localStorage.clear()}>
                                             <i className="bi bi-heart me-1"></i>

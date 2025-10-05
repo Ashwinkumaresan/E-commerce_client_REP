@@ -34,6 +34,7 @@ import { MCustomerOTP } from "./pages/mobile/Customer/Customer_Signup/MCustomerO
 import { MCustomerSetpassword } from "./pages/mobile/Customer/Customer_Signup/MCustomerSetpassword";
 import { ChatbotMain } from "./pages/component/Chatbot/ChatbotMain";
 import Orders from "./pages/desktop/Customer/My Orders/Orders";
+import { MainHome } from "./pages/desktop/Home/MainHome";
 
 
 function App() {
@@ -63,10 +64,12 @@ function App() {
             <Route path="/product-detail/:id" element={<ProductDetail />} />
             <Route path="/product-checkout/:id" element={<CheckoutPage />} />
             <Route path="/product-order-placed" element={<OrderPlacedPage />} />
+            <Route path="/product-orders" element={<Orders />} />
           </>
         ) : (
           <>
             <Route path="/" element={<Home />} />
+            <Route path="/home" element={<MainHome />} />
             <Route path="/dealer-signup" element={<DealerSignup />} />
             <Route path="/dealer-signup-otp" element={<DealerOTP />} />
             <Route path="/dealer-signup-setpassword" element={<DealerSetpassword />} />
