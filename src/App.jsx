@@ -33,6 +33,7 @@ import { MCustomerSignup } from "./pages/mobile/Customer/Customer_Signup/MCustom
 import { MCustomerOTP } from "./pages/mobile/Customer/Customer_Signup/MCustomerOTP";
 import { MCustomerSetpassword } from "./pages/mobile/Customer/Customer_Signup/MCustomerSetpassword";
 import { ChatbotMain } from "./pages/component/Chatbot/ChatbotMain";
+import Orders from "./pages/desktop/Customer/My Orders/Orders";
 
 
 function App() {
@@ -60,7 +61,7 @@ function App() {
 
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/product-detail/:id" element={<ProductDetail />} />
-            <Route path="/product-cart-checkout" element={<CheckoutPage />} />
+            <Route path="/product-checkout/:id" element={<CheckoutPage />} />
             <Route path="/product-order-placed" element={<OrderPlacedPage />} />
           </>
         ) : (
@@ -80,8 +81,9 @@ function App() {
 
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/product-detail/:id" element={<ProductDetail />} />
-            <Route path="/product-cart-checkout" element={<CheckoutPage />} />
+            <Route path="/product-checkout/:id" element={<CheckoutPage />} />
             <Route path="/product-order-placed" element={<OrderPlacedPage />} />
+            <Route path="/product-orders" element={<Orders />} />
           </>
         )}
 

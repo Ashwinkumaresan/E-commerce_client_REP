@@ -5,7 +5,7 @@ import axios from "axios"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./checkout.css"
 import CheckoutLoading from "../../../component/Loading/CheckoutLoading"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import OrderPlacedPage from "../Order Place/OrderPlacedPage"
 
 // Dummy API functions
@@ -42,6 +42,9 @@ const placeOrderApi = async (orderData) => {
 }
 
 export default function CheckoutPage() {
+    const { id } = useParams()
+    const location = useLocation();
+    const { quantity } = location.state || {};
     const navigate = useNavigate()
     const [deliveryOption, setDeliveryOption] = useState("standard")
     const [paymentMethod, setPaymentMethod] = useState("credit-card")
@@ -49,20 +52,49 @@ export default function CheckoutPage() {
     const [loading, setLoading] = useState(true)
     const [placingOrder, setPlacingOrder] = useState(false)
     const [orderPlaced, setOrderPlaced] = useState(false)
+    const [buynowRes, setBuynowRes] = useState([])
+
+    // useEffect(() => {
+    //     const fetchCart = async () => {
+    //         setLoading(true)
+    //         try {
+    //             const items = await getCartItems()
+    //             setCartItems(items)
+    //         } catch (error) {
+    //             console.error("Error fetching cart items:", error)
+    //         } finally {
+    //             setLoading(false)
+    //         }
+    //     }
+    //     fetchCart()
+    // }, [])
+
+    const fetchBuyNow = async () => {
+        setLoading(true)
+        const token = localStorage.getItem("accessTokenCustomer")
+        if (!token) navigate("/customer-signin")
+        try {
+            const token = localStorage.getItem("accessTokenCustomer");
+            const res = await axios.post(
+                `https://api.lancer.drmcetit.com/api/Snapdeal/buynow/${id}/`, { quantity },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                }
+            );
+            console.log("Add to buy now response:", res.data);
+            setBuynowRes(res.data)
+        } catch (error) {
+            console.error("Error adding to cart:", error);
+        } finally {
+            setLoading(false)
+        }
+    };
 
     useEffect(() => {
-        const fetchCart = async () => {
-            setLoading(true)
-            try {
-                const items = await getCartItems()
-                setCartItems(items)
-            } catch (error) {
-                console.error("Error fetching cart items:", error)
-            } finally {
-                setLoading(false)
-            }
-        }
-        fetchCart()
+        fetchBuyNow()
     }, [])
 
     const calculateSubtotal = () => {
@@ -70,24 +102,23 @@ export default function CheckoutPage() {
     }
 
     const handlePlaceOrder = async () => {
-        setPlacingOrder(true)
+        const token = localStorage.getItem("accessTokenCustomer")
+        if (!token) navigate("/customer-signin")
         try {
-            const orderData = {
-                cartItems,
-                deliveryOption,
-                paymentMethod,
-                total: calculateSubtotal(),
-            }
-            const res = await placeOrderApi(orderData)
-            //alert(res.message)
-            setCartItems([]) // clear cart after order
-            //navigate("/product-order-placed")
+            const token = localStorage.getItem("accessTokenCustomer");
+            const res = await axios.post(
+                `https://api.lancer.drmcetit.com/api/Snapdeal/order/place/${id}/`, { quantity },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                }
+            );
+            console.log("Add to buy now response:", res.data);
             setOrderPlaced(true)
         } catch (error) {
-            console.error("Error placing order:", error)
-            alert("Failed to place order")
-        } finally {
-            setPlacingOrder(false)
+            console.error("Error adding to cart:", error);
         }
     }
 
@@ -244,7 +275,7 @@ export default function CheckoutPage() {
                                 <div className="card-body">
                                     <h2 className="h4 mb-4">Order Summary</h2>
 
-                                    {cartItems.map((item) => (
+                                    {/* {cartItems.map((item) => (
                                         <div
                                             key={item.id}
                                             className="d-flex justify-content-between mb-2"
@@ -252,7 +283,30 @@ export default function CheckoutPage() {
                                             <span>{item.name} x {item.quantity}</span>
                                             <span>${(item.price * item.quantity).toFixed(2)}</span>
                                         </div>
-                                    ))}
+                                    ))} */}
+                                    <div className="d-flex justify-content-between mb-2">
+                                        <span>Product</span>
+                                        <span>{buynowRes.title}</span>
+                                    </div>
+                                    <div className="d-flex justify-content-between mb-2">
+                                        <span>Quantity</span>
+                                        <span>{quantity}</span>
+                                    </div>
+                                    <div className="d-flex justify-content-between mb-2">
+                                        <span>Price</span>
+                                        <span>Rs. {buynowRes.price}</span>
+                                    </div>
+                                    <div className="d-flex justify-content-between mb-2">
+                                        <span>Offer Price</span>
+                                        <span>Rs. {buynowRes.offerPrice}</span>
+                                    </div>
+                                    <hr/>
+                                    <div className="d-flex justify-content-between mb-2">
+                                        <span>Final Price</span>
+                                        <span>Rs. {buynowRes.finalPrice}</span>
+                                    </div>
+
+                                    {/* <span>${(item.price * item.quantity).toFixed(2)}</span>
 
                                     <div className="d-flex justify-content-between mb-3 pb-3 border-bottom">
                                         <span className="text-muted">Subtotal</span>
@@ -262,7 +316,7 @@ export default function CheckoutPage() {
                                     <div className="d-flex justify-content-between mb-4">
                                         <span className="h5 mb-0">Total</span>
                                         <span className="h5 mb-0 fw-bold">${calculateSubtotal().toFixed(2)}</span>
-                                    </div>
+                                    </div> */}
 
                                     <button
                                         className="btn btn-dark w-100 py-2"

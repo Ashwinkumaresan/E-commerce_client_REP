@@ -89,7 +89,7 @@ export const CustomerLogin = () => {
                                 type="text"
                                 className={`form-control rounded-1 ${usernameError ? "is-invalid" : ""}`}
                                 id="username"
-                                placeholder="Enter your username"
+                                placeholder="Enter your email"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 required

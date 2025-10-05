@@ -440,6 +440,10 @@ export const MHome = () => {
 
                                     {/* Action Buttons */}
                                     <div className="d-flex align-items-center justify-content-end gap-2 gap-md-3">
+                                        <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2" onClick={() => navigate("/product-orders")}>
+                                            <i className="bi bi-box-seam me-1"></i>
+                                            <span className="d-none d-lg-inline">Orders</span>
+                                        </button>
 
                                         <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2" onClick={() => localStorage.clear()}>
                                             <i className="bi bi-heart me-1"></i>
@@ -637,7 +641,7 @@ export const MHome = () => {
                                     {/* <i className="bi bi-search fs-1 text-muted"></i>
                                     <h5 className="mt-3 text-muted">No products found</h5>
                                     <p className="text-muted">Try adjusting your filters or search query</p> */}
-                                    <ProductNotFound/>
+                                    <ProductNotFound />
                                 </div>
                             ) : (
                                 <div className={viewMode === "grid" ? "row g-3 g-md-4" : "row g-3"}>
@@ -717,7 +721,7 @@ export const MHome = () => {
                                                             )}
                                                         </div>
                                                         <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${product.productId}`)}>
-                                                            Buy Now
+                                                            Add to cart
                                                         </button>
                                                     </div>
                                                 </div>

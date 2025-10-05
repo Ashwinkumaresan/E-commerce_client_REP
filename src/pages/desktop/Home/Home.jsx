@@ -458,7 +458,7 @@ export const Home = () => {
                             {/* Action Buttons */}
                             <div className="col-12 col-md-auto">
                                 <div className="d-flex align-items-center justify-content-end justify-content-md-start gap-2 gap-md-3">
-                                    <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2">
+                                    <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2" onClick={()=>navigate("/product-orders")}>
                                         <i className="bi bi-box-seam me-1"></i>
                                         <span className="d-none d-lg-inline">Orders</span>
                                     </button>
@@ -690,7 +690,7 @@ export const Home = () => {
                                                             )}
                                                         </div>
                                                         <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${product.productId}`)}>
-                                                            Buy Now
+                                                            Add to cart
                                                         </button>
                                                     </div>
                                                 </div>

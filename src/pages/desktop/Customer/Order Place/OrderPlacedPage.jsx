@@ -92,7 +92,7 @@ export default function OrderPlacedPage() {
                         transition={{ duration: 0.5, delay: 0.7 }}
                         className="btn btn-dark fw-bold"
                         onClick={() => {
-                            navigate("/shopping-cart"); 
+                            navigate("/"); 
                             window.location.reload();   
                         }}
 

@@ -15,8 +15,6 @@ export default function ProductDetail() {
     const [loading, setLoading] = useState(true)
     const [cartLoading, setCartLoading] = useState(false);
 
-
-
     const fetchProduct = async () => {
         try {
             setLoading(true)
@@ -35,23 +33,22 @@ export default function ProductDetail() {
         }
     }
 
-
     useEffect(() => {
         fetchProduct()
     }, [id])
 
     const handleAddToCart = async () => {
-        const token  = localStorage.getItem("accessTokenCustomer")
-        if(!token) navigate("/customer-signin")
+        const token = localStorage.getItem("accessTokenCustomer")
+        if (!token) navigate("/customer-signin")
         try {
-            setCartLoading(true); 
+            setCartLoading(true);
             const token = localStorage.getItem("accessTokenCustomer");
             const res = await axios.post(
-                `https://api.lancer.drmcetit.com/api/Snapdeal/cart/add/${id}/`,{quantity},
+                `https://api.lancer.drmcetit.com/api/Snapdeal/cart/add/${id}/`, { quantity },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        "Content-Type" : "application/json"
+                        "Content-Type": "application/json"
                     },
                 }
             );
@@ -64,10 +61,12 @@ export default function ProductDetail() {
         }
     };
 
-
     const handleBuyNow = () => {
-        navigate("/product-cart-checkout")
-    }
+        navigate(`/product-checkout/${id}`, {
+            state: { quantity },
+        });
+    };
+
 
     const renderStars = (rating) => {
         const stars = []
@@ -91,7 +90,7 @@ export default function ProductDetail() {
     }
 
     if (!product) {
-        return <ProductNotFound/>
+        return <ProductNotFound />
     }
 
     return (

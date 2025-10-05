@@ -20,6 +20,7 @@ export const ChatbotMain = () => {
         );
 
         setProductInfo(res.data);
+        console.log(res.data)
 
         const formatted = res.data
           .map(
@@ -113,9 +114,9 @@ Owner: ${item.ownername}`
     <div className={`container ${showChatbot ? "show-chatbot" : ""}`}>
       <button
         onClick={() => setShowChatbot((prev) => !prev)}
-        className="chatbot-toggler"
+        className="chatbot-toggler border border-3"
       >
-        <span><ChatbotIcon /></span>
+        <span ><ChatbotIcon /></span>
         <span><X /></span>
       </button>
 
