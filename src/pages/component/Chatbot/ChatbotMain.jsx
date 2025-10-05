@@ -8,11 +8,10 @@ import { X } from "lucide-react";
 export const ChatbotMain = () => {
   const [chatHistory, setChatHistory] = useState([]);
   const [showChatbot, setShowChatbot] = useState(false);
-  const [productInfo, setProductInfo] = useState("");
-  const [products, setProducts] = useState([]);
+  const [productInfo, setProductInfo] = useState([]);
   const chatBodyRef = useRef();
 
-  // 🧠 1️⃣ Fetch product data
+  // 1️⃣ Fetch product data from API
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -20,7 +19,7 @@ export const ChatbotMain = () => {
           "https://api.lancer.drmcetit.com/api/Snapdeal/product/"
         );
 
-        setProducts(res.data);
+        setProductInfo(res.data);
 
         const formatted = res.data
           .map(
@@ -33,18 +32,16 @@ Offer: ${item.offer}%
 Offer Price: ₹${item.offerPrice}
 Description: ${item.description}
 Color: ${item.color}
-Owner: ${item.ownername}
-`
+Owner: ${item.ownername}`
           )
           .join("\n----------------------\n");
 
-        setProductInfo(formatted);
-
+        // Initial bot message with product context
         setChatHistory([
           {
             hideInChat: true,
             role: "model",
-            text: `You are Snapdeal's shopping assistant. Here are the product details:\n${formatted}`,
+            text: `You are Snapdeal's shopping assistant. Here are some product details:\n${formatted}`,
           },
         ]);
       } catch (error) {
@@ -55,8 +52,6 @@ Owner: ${item.ownername}
     fetchProducts();
   }, []);
 
-  // ⚙️ 2️⃣ Generate bot response + append product link if relevant
-  // 🔥 Corrected generateBotResponse
   const generateBotResponse = async (history) => {
     const updateHistory = (text, isError = false) => {
       setChatHistory((prev) => [
@@ -70,54 +65,41 @@ Owner: ${item.ownername}
       parts: [{ text }],
     }));
 
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-goog-api-key": import.meta.env.VITE_API_KEY,
-      },
-      body: JSON.stringify({ contents: formattedHistory }),
-    };
-
     try {
-      const response = await fetch(import.meta.env.VITE_API_URL, requestOptions);
-      const data = await response.json();
-
-      if (!response.ok)
-        throw new Error(data.error?.message || "Something went wrong!");
-
-      let apiResponseText = data.candidates[0].content.parts[0].text
-        .replace(/\*\*(.*?)\*\*/g, "$1")
-        .trim();
-
-      // 🔍 Loop through all products and append a button after the product title
-      products.forEach((p) => {
-        const regex = new RegExp(`(${p.title})`, "i"); // case-insensitive match
-        if (regex.test(apiResponseText)) {
-          const productButton = `
-          <div>
-            <a href="https://e-commerce-client-rep.vercel.app/#/product-detail/${p.productId}" 
-               target="_blank" 
-               class="btn btn-dark text-white" 
-               style="text-decoration:none;">
-               🔗 View ${p.title}
-            </a>
-          </div>
-        `;
-          // Replace only the first occurrence of the title
-          apiResponseText = apiResponseText.replace(regex, `$1${productButton}`);
-        }
+      const response = await fetch(import.meta.env.VITE_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": import.meta.env.VITE_API_KEY,
+        },
+        body: JSON.stringify({ contents: formattedHistory }),
       });
 
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.error?.message || "Something went wrong!");
+
+      let apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
+
+      // Split response into lines and check for product mentions
+      const lines = apiResponseText.split("\n").map((line) => {
+        const matched = productInfo.find((p) =>
+          line.toLowerCase().includes(p.title.toLowerCase())
+        );
+        if (matched) {
+          return `${line} <br/><a href="https://e-commerce-client-rep.vercel.app/#/product-detail/${matched.productId}" target="_blank" class="btn btn-dark mt-2 text-white" style="text-decoration:none;">🔗 View ${matched.title}</a>`;
+        }
+        return line;
+      });
+
+      apiResponseText = lines.join("<br/>");
       updateHistory(apiResponseText);
     } catch (error) {
       updateHistory(error.message, true);
     }
   };
 
-
-
-  // 🧭 3️⃣ Auto-scroll
+  // 3️⃣ Auto-scroll chat
   useEffect(() => {
     if (chatBodyRef.current) {
       chatBodyRef.current.scrollTo({
@@ -133,27 +115,23 @@ Owner: ${item.ownername}
         onClick={() => setShowChatbot((prev) => !prev)}
         className="chatbot-toggler"
       >
-        <span>
-          <ChatbotIcon />
-        </span>
-        <span>
-          <X />
-        </span>
+        <span><ChatbotIcon /></span>
+        <span><X /></span>
       </button>
 
       <div className="chatbot-popup">
-        {/* Chatbot header */}
+        {/* Chat header */}
         <div className="chat-header">
           <div className="header-info">
             <ChatbotIcon />
             <h2 className="logo-text">Snapdeal Assistant</h2>
           </div>
-          <button onClick={() => setShowChatbot((prev) => !prev)}>
+          <button onClick={() => setShowChatbot(false)}>
             <X />
           </button>
         </div>
 
-        {/* Chatbot body */}
+        {/* Chat body */}
         <div ref={chatBodyRef} className="chat-body">
           <div className="message bot-message">
             <ChatbotIcon />
@@ -171,7 +149,7 @@ Owner: ${item.ownername}
           )}
         </div>
 
-        {/* Chatbot footer */}
+        {/* Chat footer */}
         <div className="chat-footer">
           <ChatForm
             chatHistory={chatHistory}
