@@ -131,7 +131,7 @@ export default function ShoppingCart() {
                                                     className="mb-1 fw-semibold"
                                                     style={{ cursor: "pointer", color: "#000" }}
                                                     // onClick={() => navigate("/product-detail")}
-                                                    onClick={() => navigate(`/product-detail/${encodeURIComponent(product.title)}`, {
+                                                    onClick={() => navigate(`/product-detail/${encodeURIComponent(item.title)}`, {
                                                         state: { id: item.productId }
                                                     })}
                                                 >
