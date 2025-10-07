@@ -5,8 +5,8 @@ import axios from "axios"
 import ProductNotFound from "../../component/Product Not Found/ProductNotFound "
 
 export const CategoryList = () => {
-    const { name } = useParams();       
-    const { state } = useLocation();    
+    const { name } = useParams();
+    const { state } = useLocation();
     const id = state?.id;
 
     const navigate = useNavigate("")
@@ -35,6 +35,7 @@ export const CategoryList = () => {
     const [commonToken, setCommonToken] = useState(true)
 
     const [cartCount, setCartCount] = useState("0")
+    const [categoryAPI, setCategoryAPI] = useState([])
 
     useEffect(() => {
         if (openPopUp) {
@@ -148,11 +149,24 @@ export const CategoryList = () => {
         }
     }
 
+    const fetchCategory = async () => {
+        try {
+            const res = await axios.get(
+                "https://api.lancer.drmcetit.com/api/Snapdeal/category/"
+            );
+            console.log(res.data);
+            setCategoryAPI(res.data);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     useEffect(() => {
         getToken()
         fetchProducts()
         fetchCartCount()
-    }, [])
+        fetchCategory()
+    }, [id])
 
     const filteredProducts = useMemo(() => {
         const filtered = [...products].filter((product) => {
@@ -531,12 +545,21 @@ export const CategoryList = () => {
                     <div className="container-fluid">
                         <div className="d-flex justify-content-between align-items-center py-2">
                             <div className="overflow-auto flex-grow-1">
-                                <ul className="nav flex-nowrap">
-                                    {categories.map((category) => (
-                                        <li className="nav-item" key={category}>
-                                            <a className="nav-link text-dark text-nowrap" href="#">
-                                                {category}
-                                            </a>
+                                <ul className="nav flex-nowrap d-flex align-items-center">
+                                    <li className="nav-item">
+                                        <Link to={"/"} className="nav-link text-dark">
+                                            All
+                                        </Link>
+                                    </li>
+                                    {categoryAPI.map((category) => (
+                                        <li className="nav-item" key={category.id}>
+                                            <Link
+                                                className="nav-link text-dark text-nowrap"
+                                                to={`/product-detail/category/${category.category}`}
+                                                state={{ id: category.id }}
+                                            >
+                                                {category.category}
+                                            </Link>
                                         </li>
                                     ))}
                                 </ul>
@@ -677,7 +700,9 @@ export const CategoryList = () => {
 
                                                         <h6
                                                             className="card-title text-start"
-                                                            onClick={() => navigate(`/product-detail/${product.productId}`)}
+                                                            onClick={() => navigate(`/product-detail/${encodeURIComponent(product.title)}`, {
+                                                                state: { id: product.productId }
+                                                            })}
                                                         >
                                                             {product.title || "Unnamed Product"}
                                                         </h6>
@@ -714,7 +739,9 @@ export const CategoryList = () => {
                                                                 <small className="text-danger d-block">Out of Stock</small>
                                                             )}
                                                         </div>
-                                                        <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${product.productId}`)}>
+                                                        <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${encodeURIComponent(product.title)}`, {
+                                                            state: { id: product.productId }
+                                                        })}>
                                                             Add to cart
                                                         </button>
                                                     </div>

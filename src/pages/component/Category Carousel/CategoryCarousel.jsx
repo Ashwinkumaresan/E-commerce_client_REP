@@ -8,7 +8,6 @@ export function CategoryCarousel() {
     const scrollContainerRef = useRef(null);
     const [categories, setCategories] = useState([]);
 
-    // Fetch categories from API
     const fetchCategory = async () => {
         try {
             const res = await axios.get(
@@ -25,7 +24,6 @@ export function CategoryCarousel() {
         fetchCategory();
     }, []);
 
-    // Scroll function
     const scroll = (direction) => {
         if (scrollContainerRef.current) {
             const scrollAmount = 300;
@@ -42,7 +40,6 @@ export function CategoryCarousel() {
 
     return (
         <div className="container py-4 position-relative mt-5">
-            {/* Left Scroll Button */}
             <button
                 onClick={() => scroll("left")}
                 className="btn position-absolute top-50 start-0 translate-middle-y"
@@ -52,7 +49,6 @@ export function CategoryCarousel() {
                 <ChevronLeft className="h-5 w-5" />
             </button>
 
-            {/* Scrollable Categories */}
             <div
                 ref={scrollContainerRef}
                 className="d-flex overflow-auto flex-nowrap gap-3 scroll-smooth ms-5 ps-5"
@@ -86,7 +82,6 @@ export function CategoryCarousel() {
                 ))}
             </div>
 
-            {/* Right Scroll Button */}
             <button
                 onClick={() => scroll("right")}
                 className="btn position-absolute top-50 end-0 translate-middle-y"
@@ -96,7 +91,6 @@ export function CategoryCarousel() {
                 <ChevronRight className="h-5 w-5" />
             </button>
 
-            {/* Optional: Hide scrollbar for Webkit browsers */}
             <style>{`
         .d-flex::-webkit-scrollbar {
           display: none;

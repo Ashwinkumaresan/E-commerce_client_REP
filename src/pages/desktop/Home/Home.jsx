@@ -31,6 +31,7 @@ export const Home = () => {
     const [commonToken, setCommonToken] = useState(true)
 
     const [cartCount, setCartCount] = useState("0")
+    const [categoryAPI, setCategoryAPI] = useState([])
 
     useEffect(() => {
         if (openPopUp) {
@@ -141,10 +142,23 @@ export const Home = () => {
         }
     }
 
+    const fetchCategory = async () => {
+        try {
+            const res = await axios.get(
+                "https://api.lancer.drmcetit.com/api/Snapdeal/category/"
+            );
+            console.log(res.data);
+            setCategoryAPI(res.data);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     useEffect(() => {
         getToken()
         fetchProducts()
         fetchCartCount()
+        fetchCategory()
     }, [])
 
     const filteredProducts = useMemo(() => {
@@ -524,11 +538,15 @@ export const Home = () => {
                         <div className="d-flex justify-content-between align-items-center py-2">
                             <div className="overflow-auto flex-grow-1">
                                 <ul className="nav flex-nowrap">
-                                    {categories.map((category) => (
-                                        <li className="nav-item" key={category}>
-                                            <a className="nav-link text-dark text-nowrap" href="#">
-                                                {category}
-                                            </a>
+                                    {categoryAPI.map((category) => (
+                                        <li className="nav-item" key={category.id}>
+                                            <Link
+                                                className="nav-link text-dark text-nowrap"
+                                                to={`/product-detail/category/${category.category}`}
+                                                state={{ id: category.id }}
+                                            >
+                                                {category.category}
+                                            </Link>
                                         </li>
                                     ))}
                                 </ul>
@@ -544,11 +562,11 @@ export const Home = () => {
                 <div className="container-fluid py-4">
                     <div className="row">
                         {/* Filter Sidebar */}
-                        <div className="col-lg-3 col-md-4 mb-4 d-none d-md-block">
+                        {/* <div className="col-lg-3 col-md-4 mb-4 d-none d-md-block">
                             <div className="bg-white p-4 rounded shadow-sm">
                                 <FilterSection />
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Mobile Offcanvas Filter */}
                         <div
@@ -569,7 +587,7 @@ export const Home = () => {
                         {showFilters && <div className="offcanvas-backdrop fade show" onClick={() => setShowFilters(false)}></div>}
 
                         {/* Product Grid */}
-                        <div className="col-lg-9 col-md-8">
+                        <div className="col-lg-12 col-md-12">
                             <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
                                 {/* <h6 className="mb-0">
                                 <span>Found {filteredProducts.length} results</span>
@@ -638,7 +656,7 @@ export const Home = () => {
                                         return (
                                             <div
                                                 key={product.productId}
-                                                className={viewMode === "grid" ? "col-12 col-sm-6 col-lg-4" : "col-12"}
+                                                className={viewMode === "grid" ? "col-12 col-sm-6 col-lg-3" : "col-12"}
                                             >
                                                 <div className="card h-100 position-relative">
                                                     {product.offer > 0 && (

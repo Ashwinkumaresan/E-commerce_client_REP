@@ -31,6 +31,7 @@ export const MHome = () => {
     const [commonToken, setCommonToken] = useState(true)
 
     const [cartCount, setCartCount] = useState("0")
+    const [categoryAPI, setCategoryAPI] = useState([])
 
     useEffect(() => {
         if (openPopUp) {
@@ -146,10 +147,23 @@ export const MHome = () => {
         }
     }
 
+    const fetchCategory = async () => {
+        try {
+            const res = await axios.get(
+                "https://api.lancer.drmcetit.com/api/Snapdeal/category/"
+            );
+            console.log(res.data);
+            setCategoryAPI(res.data);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     useEffect(() => {
         getToken()
         fetchProducts()
         fetchCartCount()
+        fetchCategory()
     }, [])
 
     const filteredProducts = useMemo(() => {
@@ -562,11 +576,15 @@ export const MHome = () => {
                         <div className="d-flex justify-content-between align-items-center py-2">
                             <div className="overflow-auto flex-grow-1">
                                 <ul className="nav flex-nowrap">
-                                    {categories.map((category) => (
-                                        <li className="nav-item" key={category}>
-                                            <a className="nav-link text-dark text-nowrap" href="#">
-                                                {category}
-                                            </a>
+                                    {categoryAPI.map((category) => (
+                                        <li className="nav-item" key={category.id}>
+                                            <Link
+                                                className="nav-link text-dark text-nowrap"
+                                                to={`/product-detail/category/${category.category}`}
+                                                state={{ id: category.id }}
+                                            >
+                                                {category.category}
+                                            </Link>
                                         </li>
                                     ))}
                                 </ul>
@@ -582,11 +600,11 @@ export const MHome = () => {
                 <div className="container-fluid py-4">
                     <div className="row">
                         {/* Filter Sidebar */}
-                        <div className="col-lg-3 col-md-4 mb-4 d-none d-md-block">
+                        {/* <div className="col-lg-3 col-md-4 mb-4 d-none d-md-block">
                             <div className="bg-white p-4 rounded shadow-sm">
                                 <FilterSection />
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Mobile Offcanvas Filter */}
                         <div
