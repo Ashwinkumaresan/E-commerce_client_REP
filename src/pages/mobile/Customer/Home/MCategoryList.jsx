@@ -1,10 +1,13 @@
 import { useState, useMemo, useEffect } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import ProductGrid from "../../../component/Loading/ProductGrid"
 import ProductNotFound from "../../../component/Product Not Found/ProductNotFound "
 
-export const MHome = () => {
+export const MCategoryList = () => {
+    const { name } = useParams();       
+    const { state } = useLocation(); 
+    const id = state?.id
     const navigate = useNavigate("")
     const [viewMode, setViewMode] = useState("grid")
     const [sortBy, setSortBy] = useState("featured")
@@ -117,7 +120,7 @@ export const MHome = () => {
         setError("");
         try {
             const response = await axios.get(
-                "https://api.lancer.drmcetit.com/api/Snapdeal/product/"
+                `https://api.lancer.drmcetit.com/api/Snapdeal/category/${id}`
             );
             console.log(response.data)
             setProducts(response.data);
@@ -688,7 +691,7 @@ export const MHome = () => {
                                                             className="card-title text-start"
                                                             onClick={() => navigate(`/product-detail/${product.productId}`)}
                                                         >
-                                                            {product.title.length > 45 ? product.title.substring(0, 45) + "..." : product.title}
+                                                            {product.title || "Unnamed Product"}
                                                         </h6>
 
                                                         <div className="text-start mb-2">
@@ -723,9 +726,7 @@ export const MHome = () => {
                                                                 <small className="text-danger d-block">Out of Stock</small>
                                                             )}
                                                         </div>
-                                                        <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${product.title}`, {
-                                                            state: { id: product.productId }
-                                                        })}>
+                                                        <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${product.productId}`)}>
                                                             Add to cart
                                                         </button>
                                                     </div>

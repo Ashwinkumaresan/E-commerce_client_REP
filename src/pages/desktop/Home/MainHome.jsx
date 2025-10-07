@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { CategoryCarousel } from '../../component/Category Carousel/CategoryCarousel'
+import axios from "axios"
 
 export const MainHome = () => {
+
     return (
         <div
             style={{
                 backgroundImage: "url('./header.png')",
-                backgroundSize: "cover",       
-                backgroundPosition: "center",  
-                backgroundRepeat: "no-repeat", 
-                width: "100%",                  
-                height: "100vh",                
-                display: "flex",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                width: "100%",
+                height: "100vh",
             }}
         >
             <div className='container'>
@@ -90,7 +92,7 @@ export const MainHome = () => {
                         </div>
                     </div>
                 </header>
-                <h1 className='text-muted fw-bold display-5 mt-5'>We are here to fullfill your <span
+                <h1 className='text-muted fw-bold display-5 my-5'>We are here to fullfill your <span
                     style={{
                         background: "linear-gradient(to bottom right, #001f4d, #00bfff)", // dark blue to light blue
                         WebkitBackgroundClip: "text", // needed for gradient text
@@ -100,8 +102,8 @@ export const MainHome = () => {
                     Needs...
                 </span>
                 </h1>
-                
             </div>
+            <CategoryCarousel />
         </div>
     )
 }

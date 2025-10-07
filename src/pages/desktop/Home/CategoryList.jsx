@@ -1,10 +1,14 @@
 import { useState, useMemo, useEffect } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
+import ProductGrid from "../../component/Loading/ProductGrid"
 import axios from "axios"
-import ProductGrid from "../../../component/Loading/ProductGrid"
-import ProductNotFound from "../../../component/Product Not Found/ProductNotFound "
+import ProductNotFound from "../../component/Product Not Found/ProductNotFound "
 
-export const MHome = () => {
+export const CategoryList = () => {
+    const { name } = useParams();       
+    const { state } = useLocation();    
+    const id = state?.id;
+    
     const navigate = useNavigate("")
     const [viewMode, setViewMode] = useState("grid")
     const [sortBy, setSortBy] = useState("featured")
@@ -20,8 +24,8 @@ export const MHome = () => {
     const [selectedBrands, setSelectedBrands] = useState([])
     const [selectedColors, setSelectedColors] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
-    const [openPopUp, setOpenPopUp] = useState(false)
 
+    const [openPopUp, setOpenPopUp] = useState(false)
 
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
@@ -42,7 +46,6 @@ export const MHome = () => {
             document.body.style.overflow = "auto";
         };
     }, [openPopUp]);
-
 
     const categories = [
         "Best Sellers",
@@ -111,13 +114,12 @@ export const MHome = () => {
         }
     }
 
-
     const fetchProducts = async () => {
         setLoading(true);
         setError("");
         try {
             const response = await axios.get(
-                "https://api.lancer.drmcetit.com/api/Snapdeal/product/"
+                `https://api.lancer.drmcetit.com/api/Snapdeal/category/${id}`
             );
             console.log(response.data)
             setProducts(response.data);
@@ -430,84 +432,69 @@ export const MHome = () => {
                     <div className="container-fluid py-3">
                         <div className="row g-3 align-items-center">
                             {/* Logo and Categories Button */}
-                            <div className="col-12">
+                            <div className="col-12 col-md-auto">
                                 <div className="d-flex align-items-center justify-content-between gap-2">
-
-                                    <div className="gap-1 p-2 d-flex align-items-center">
-                                        <i className="bi bg-dark rounded  bg-opacity-10 p-1 bi-shop text-dark fs-6"></i>
-                                        <h5 className="mb-0 fw-bold fw-6">What a Market!</h5>
-                                    </div>
-
-                                    {/* Action Buttons */}
-                                    <div className="d-flex align-items-center justify-content-end gap-2 gap-md-3">
-
-                                        <Link to={"/product-orders"}>
-                                            <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2">
-                                                <i className="bi bi-box-seam me-1"></i>
-                                                <span className="d-none d-lg-inline">Orders</span>
-                                            </button>
-                                        </Link>
-
-                                        <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2" onClick={() => localStorage.clear()}>
-                                            <i className="bi bi-heart me-1"></i>
-                                            <span className="d-none d-lg-inline">Favorites</span>
-                                        </button>
-
-                                        <Link to={"/shopping-cart"}>
-                                            <button className="btn btn-link text-decoration-none text-secondary position-relative p-1 p-md-2">
-                                                <i className="bi bi-cart3 me-1"></i>
-                                                <span className="d-none d-lg-inline">Cart</span>
-                                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                                    3
-                                                </span>
-                                            </button>
-                                        </Link>
-
-
-                                        {commonToken &&
-                                            <button className="btn btn-dark btn-sm" onClick={() => setOpenPopUp(true)}>
-                                                <span className="d-none d-sm-inline">Sign In</span>
-                                                <i className="bi bi-person d-sm-none"></i>
-                                            </button>
-                                        }
-
+                                    <div className="d-flex align-items-center gap-2">
+                                        <div className="bg-danger bg-opacity-10 p-2 rounded">
+                                            <i className="bi bi-shop text-danger fs-5"></i>
+                                        </div>
+                                        <h5 className="mb-0 fw-bold">What a Market!</h5>
                                     </div>
                                 </div>
+                            </div>
 
-                                {/* Action Buttons */}
-                                <div className="col-1">
-                                    {/* <div className="d-flex align-items-center justify-content-end gap-2 gap-md-3">
+                            {/* Search Bar */}
+                            <div className="col-12 col-md">
+                                <div className="input-group">
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Search products..."
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                    />
+                                    <button className="btn btn-outline-secondary" type="button">
+                                        <i className="bi bi-search"></i>
+                                    </button>
+                                </div>
+                            </div>
 
-                                            <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2">
-                                                <i className="bi bi-heart me-1"></i>
-                                                <span className="d-none d-lg-inline">Favorites</span>
-                                            </button>
+                            {/* Action Buttons */}
+                            <div className="col-12 col-md-auto">
+                                <div className="d-flex align-items-center justify-content-end justify-content-md-start gap-2 gap-md-3">
+                                    <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2" onClick={() => navigate("/product-orders")}>
+                                        <i className="bi bi-box-seam me-1"></i>
+                                        <span className="d-none d-lg-inline">Orders</span>
+                                    </button>
 
-                                            <Link to={"/shopping-cart"}>
-                                                <button className="btn btn-link text-decoration-none text-secondary position-relative p-1 p-md-2">
-                                                    <i className="bi bi-cart3 me-1"></i>
-                                                    <span className="d-none d-lg-inline">Cart</span>
-                                                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                                        3
-                                                    </span>
-                                                </button>
-                                            </Link>
+                                    <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2" onClick={() => localStorage.clear()}>
+                                        <i className="bi bi-heart me-1"></i>
+                                        <span className="d-none d-lg-inline">Favorites</span>
+                                    </button>
+
+                                    <Link to={"/shopping-cart"}>
+                                        <button className="btn btn-link text-decoration-none text-secondary position-relative p-1 p-md-2">
+                                            <i className="bi bi-cart3 me-1"></i>
+                                            <span className="d-none d-lg-inline">Cart</span>
+                                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                3
+                                            </span>
+                                        </button>
+                                    </Link>
 
 
-                                            {!tokenDealerAdmin && <Link to={"/dealer-signin"}>
-                                                <button className="btn btn-dark btn-sm">
-                                                    <span className="d-none d-sm-inline">Sign In</span>
-                                                    <i className="bi bi-person d-sm-none"></i>
-                                                </button>
-                                            </Link>}
+                                    {commonToken &&
+                                        <button className="btn btn-dark btn-sm" onClick={() => setOpenPopUp(true)}>
+                                            <span className="d-none d-sm-inline">Sign In</span>
+                                            <i className="bi bi-person d-sm-none"></i>
+                                        </button>
+                                    }
 
-                                        </div> */}
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Location */}
                     <div className="container-fluid bg-light py-2">
                         <div className="d-flex align-items-center">
                             <button className="btn btn-sm btn-link text-decoration-none text-secondary">
@@ -516,23 +503,6 @@ export const MHome = () => {
                             </button>
                         </div>
                     </div>
-
-                    {/* Search Bar */}
-                    <div className="col-12 col-md">
-                        <div className="input-group">
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Search products..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
-                            <button className="btn btn-outline-secondary" type="button">
-                                <i className="bi bi-search"></i>
-                            </button>
-                        </div>
-                    </div>
-
                 </header>
 
                 {/* Navigation Bar */}
@@ -598,9 +568,14 @@ export const MHome = () => {
                                 )}
                             </h6> */}
 
-                                <div className="row w-100 w-md-auto">
+                                <div className="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-2 w-100 w-md-auto">
+                                    {/* Mobile Filter Button */}
+                                    <button className="btn btn-outline-dark d-md-none" onClick={() => setShowFilters(true)}>
+                                        <i className="bi bi-funnel me-2"></i>
+                                        Filters
+                                    </button>
 
-                                    <div className="d-flex align-items-center gap-2 col-10">
+                                    <div className="d-flex align-items-center gap-2">
                                         <span className="text-muted text-nowrap">Sort by</span>
                                         <select
                                             className="form-select form-select-sm"
@@ -614,27 +589,22 @@ export const MHome = () => {
                                         </select>
                                     </div>
 
-                                    {/* Mobile Filter Button */}
-                                    <button className="btn btn-outline-dark d-md-none p-0 col-2" onClick={() => setShowFilters(true)}>
-                                        <i className="bi bi-funnel fs-6"></i>
-                                    </button>
-
-                                    {/* <div className="btn-group" role="group">
-                                    <button
-                                        type="button"
-                                        className={`btn btn-sm ${viewMode === "grid" ? "btn-dark" : "btn-outline-secondary"}`}
-                                        onClick={() => setViewMode("grid")}
-                                    >
-                                        <i className="bi bi-grid-3x3-gap-fill"></i>
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className={`btn btn-sm ${viewMode === "list" ? "btn-dark" : "btn-outline-secondary"}`}
-                                        onClick={() => setViewMode("list")}
-                                    >
-                                        <i className="bi bi-list"></i>
-                                    </button>
-                                </div> */}
+                                    <div className="btn-group" role="group">
+                                        <button
+                                            type="button"
+                                            className={`btn btn-sm ${viewMode === "grid" ? "btn-dark" : "btn-outline-secondary"}`}
+                                            onClick={() => setViewMode("grid")}
+                                        >
+                                            <i className="bi bi-grid-3x3-gap-fill"></i>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className={`btn btn-sm ${viewMode === "list" ? "btn-dark" : "btn-outline-secondary"}`}
+                                            onClick={() => setViewMode("list")}
+                                        >
+                                            <i className="bi bi-list"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -688,7 +658,7 @@ export const MHome = () => {
                                                             className="card-title text-start"
                                                             onClick={() => navigate(`/product-detail/${product.productId}`)}
                                                         >
-                                                            {product.title.length > 45 ? product.title.substring(0, 45) + "..." : product.title}
+                                                            {product.title || "Unnamed Product"}
                                                         </h6>
 
                                                         <div className="text-start mb-2">
@@ -723,9 +693,7 @@ export const MHome = () => {
                                                                 <small className="text-danger d-block">Out of Stock</small>
                                                             )}
                                                         </div>
-                                                        <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${product.title}`, {
-                                                            state: { id: product.productId }
-                                                        })}>
+                                                        <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${product.productId}`)}>
                                                             Add to cart
                                                         </button>
                                                     </div>
@@ -794,6 +762,7 @@ export const MHome = () => {
                     </div>
                 </div>
             </div>}
+
         </>
     )
 }

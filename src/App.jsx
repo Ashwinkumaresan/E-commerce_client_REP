@@ -35,6 +35,7 @@ import { MCustomerSetpassword } from "./pages/mobile/Customer/Customer_Signup/MC
 import { ChatbotMain } from "./pages/component/Chatbot/ChatbotMain";
 import Orders from "./pages/desktop/Customer/My Orders/Orders";
 import { MainHome } from "./pages/desktop/Home/MainHome";
+import { CategoryList } from "./pages/desktop/Home/CategoryList";
 
 
 function App() {
@@ -43,11 +44,13 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <ChatbotMain/>
+      <ChatbotMain />
       <Routes>
         {deviceType === "mobile" ? (
           <>
             <Route path="/" element={<MHome />} />
+            <Route path="/home" element={<MainHome />} />
+            <Route path="/product-detail/category/:name" element={<CategoryList />} />
             <Route path="/dealer-signup" element={<MDealerSignup />} />
             <Route path="/dealer-signup-otp" element={<MDealerOTP />} />
             <Route path="/dealer-signup-setpassword" element={<MDealerSetpassword />} />
@@ -61,7 +64,7 @@ function App() {
             <Route path="/customer-signup-setpassword" element={<MCustomerSetpassword />} />
 
             <Route path="/shopping-cart" element={<ShoppingCart />} />
-            <Route path="/product-detail/:id" element={<ProductDetail />} />
+            <Route path="/product-detail/:name" element={<ProductDetail />} />
             <Route path="/product-checkout/:id" element={<CheckoutPage />} />
             <Route path="/product-order-placed" element={<OrderPlacedPage />} />
             <Route path="/product-orders" element={<Orders />} />
@@ -70,6 +73,8 @@ function App() {
           <>
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<MainHome />} />
+            {/* <Route path="/product-detail/category/:id" element={<CategoryList />} /> */}
+            <Route path="/product-detail/category/:name" element={<CategoryList />} />
             <Route path="/dealer-signup" element={<DealerSignup />} />
             <Route path="/dealer-signup-otp" element={<DealerOTP />} />
             <Route path="/dealer-signup-setpassword" element={<DealerSetpassword />} />
@@ -83,7 +88,7 @@ function App() {
             <Route path="/customer-signup-setpassword" element={<CustomerSetpassword />} />
 
             <Route path="/shopping-cart" element={<ShoppingCart />} />
-            <Route path="/product-detail/:id" element={<ProductDetail />} />
+            <Route path="/product-detail/:name" element={<ProductDetail />} />
             <Route path="/product-checkout/:id" element={<CheckoutPage />} />
             <Route path="/product-order-placed" element={<OrderPlacedPage />} />
             <Route path="/product-orders" element={<Orders />} />

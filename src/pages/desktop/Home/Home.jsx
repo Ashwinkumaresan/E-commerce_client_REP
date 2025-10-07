@@ -37,7 +37,6 @@ export const Home = () => {
             document.body.style.overflow = "auto";
         }
 
-        // Cleanup when component unmounts
         return () => {
             document.body.style.overflow = "auto";
         };
@@ -654,7 +653,7 @@ export const Home = () => {
                                                             className="card-title text-start"
                                                             onClick={() => navigate(`/product-detail/${product.productId}`)}
                                                         >
-                                                            {product.title || "Unnamed Product"}
+                                                            {product.title.length > 35 ? product.title.substring(0, 35)+ "..." : product.title  }
                                                         </h6>
 
                                                         <div className="text-start mb-2">
@@ -689,7 +688,9 @@ export const Home = () => {
                                                                 <small className="text-danger d-block">Out of Stock</small>
                                                             )}
                                                         </div>
-                                                        <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${product.productId}`)}>
+                                                        <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${product.title}`, {
+                                                            state :{id: product.productId}
+                                                        })}>
                                                             Add to cart
                                                         </button>
                                                     </div>

@@ -2,12 +2,14 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { ShoppingCart, Star, StarHalf } from "lucide-react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import ProductDetailLoading from "../../../component/Loading/ProductDetailLoading"
 import ProductNotFound from "../../../component/Product Not Found/ProductNotFound "
 
 export default function ProductDetail() {
-    const { id } = useParams()
+    const { name } = useParams()
+    const {state} = useLocation()
+    const id = state?.id
     const navigate = useNavigate()
     const [product, setProduct] = useState(null)
     const [quantity, setQuantity] = useState(1)

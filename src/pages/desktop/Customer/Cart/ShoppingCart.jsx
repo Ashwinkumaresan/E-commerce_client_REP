@@ -131,7 +131,9 @@ export default function ShoppingCart() {
                                                     className="mb-1 fw-semibold"
                                                     style={{ cursor: "pointer", color: "#000" }}
                                                     // onClick={() => navigate("/product-detail")}
-                                                    onClick={() => navigate(`/product-detail/${item.productId}`)}
+                                                    onClick={() => navigate(`/product-detail/${item.productTitle}`, {
+                                                        state: { id: item.productId }
+                                                    })}
                                                 >
                                                     {item.productTitle}
                                                 </h5>
