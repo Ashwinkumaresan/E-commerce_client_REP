@@ -707,7 +707,7 @@ export const MHome = () => {
 
                                                         <h6
                                                             className="card-title text-start"
-                                                            onClick={() => navigate(`/product-detail/${product.title}`, {
+                                                            onClick={() => navigate(`/product-detail/${encodeURIComponent(product.title)}`, {
                                                                 state: { id: product.productId }
                                                             })}                                                        >
                                                             {product.title.length > 45 ? product.title.substring(0, 45) + "..." : product.title}
@@ -745,7 +745,7 @@ export const MHome = () => {
                                                                 <small className="text-danger d-block">Out of Stock</small>
                                                             )}
                                                         </div>
-                                                        <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${product.title}`, {
+                                                        <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${encodeURIComponent(product.title)}`, {
                                                             state: { id: product.productId }
                                                         })}>
                                                             Add to cart

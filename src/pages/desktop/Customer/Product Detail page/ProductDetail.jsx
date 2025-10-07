@@ -76,10 +76,10 @@ export default function ProductDetail() {
         const hasHalfStar = rating % 1 !== 0
 
         for (let i = 0; i < fullStars; i++) {
-            stars.push(<Star key={i} size={16} fill="#000" color="#000" />)
+            stars.push(<Star key={i} size={16} fill="#ffc107" color="#ffc107" />)
         }
         if (hasHalfStar) {
-            stars.push(<StarHalf key="half" size={16} fill="#000" color="#000" />)
+            stars.push(<StarHalf key="half" size={16} fill="#ffc107" color="#ffc107" />)
         }
         for (let i = stars.length; i < 5; i++) {
             stars.push(<Star key={i} size={16} color="#d1d5db" />)
@@ -101,12 +101,14 @@ export default function ProductDetail() {
                 <div className="row g-4">
                     {/* Product Images */}
                     <div className="col-lg-6">
-                        <div className="card border-0 shadow-sm mb-3">
+                        {/* <div className="card border-0 shadow-sm mb-3"> */}
+                        <div className="mb-3">
                             <div className="position-relative">
                                 <img
                                     src={product.image ? `https://api.lancer.drmcetit.com${product.image}` : "/placeholder.svg"}
                                     alt={product.title || "Product"}
                                     className="img-fluid my-3"
+                                    style={{maxHeight:"75vh"}}
                                 />
                             </div>
                         </div>

@@ -88,7 +88,6 @@ export const Home = () => {
         };
     }, [products]);
 
-
     if (error)
         return (
             <div className="text-center py-5">
@@ -447,8 +446,8 @@ export const Home = () => {
                             <div className="col-12 col-md-auto">
                                 <div className="d-flex align-items-center justify-content-between gap-2">
                                     <div className="d-flex align-items-center gap-2">
-                                        <div className="bg-danger bg-opacity-10 p-2 rounded">
-                                            <i className="bi bi-shop text-danger fs-5"></i>
+                                        <div className="bg-dark bg-opacity-10 p-2 rounded">
+                                            <i className="bi bi-shop text-dark fs-5"></i>
                                         </div>
                                         <h5 className="mb-0 fw-bold">What a Market!</h5>
                                     </div>
@@ -496,7 +495,6 @@ export const Home = () => {
                                             }
                                         </button>
                                     </Link>
-
 
                                     {commonToken &&
                                         <button className="btn btn-dark btn-sm" onClick={() => setOpenPopUp(true)}>
@@ -671,7 +669,7 @@ export const Home = () => {
 
                                                         <h6
                                                             className="card-title text-start"
-                                                            onClick={() => navigate(`/product-detail/${product.title}`, {
+                                                            onClick={() => navigate(`/product-detail/${encodeURIComponent(product.title)}`, {
                                                                 state: { id: product.productId }
                                                             })}
                                                         >
@@ -710,7 +708,7 @@ export const Home = () => {
                                                                 <small className="text-danger d-block">Out of Stock</small>
                                                             )}
                                                         </div>
-                                                        <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${product.title}`, {
+                                                        <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${encodeURIComponent(product.title)}`, {
                                                             state: { id: product.productId }
                                                         })}>
                                                             Add to cart

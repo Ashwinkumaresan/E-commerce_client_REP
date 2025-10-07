@@ -8,7 +8,7 @@ export const CategoryList = () => {
     const { name } = useParams();       
     const { state } = useLocation();    
     const id = state?.id;
-    
+
     const navigate = useNavigate("")
     const [viewMode, setViewMode] = useState("grid")
     const [sortBy, setSortBy] = useState("featured")
@@ -33,6 +33,8 @@ export const CategoryList = () => {
     const [tokenDealerAdmin, setTokenDealerAdmin] = useState(false)
     const [tokenCustomer, setTokenCustomer] = useState(true)
     const [commonToken, setCommonToken] = useState(true)
+
+    const [cartCount, setCartCount] = useState("0")
 
     useEffect(() => {
         if (openPopUp) {
@@ -131,9 +133,25 @@ export const CategoryList = () => {
         }
     };
 
+    const fetchCartCount = async () => {
+        const token = localStorage.getItem("accessTokenCustomer")
+        try {
+            const response = await axios.get("https://api.lancer.drmcetit.com/api/Snapdeal/cart/count/",
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            )
+            console.log(response.data)
+            setCartCount(response.data.count)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     useEffect(() => {
         getToken()
         fetchProducts()
+        fetchCartCount()
     }, [])
 
     const filteredProducts = useMemo(() => {
@@ -398,7 +416,7 @@ export const CategoryList = () => {
             )}
 
             {/* Category Filter */}
-            {filterOptions.categories?.length > 0 && (
+            {/* {filterOptions.categories?.length > 0 && (
                 <div className="mb-4">
                     <h6 className="fw-bold mb-3">Category</h6>
                     {filterOptions.categories.map((cat) => (
@@ -418,7 +436,7 @@ export const CategoryList = () => {
                         </div>
                     ))}
                 </div>
-            )}
+            )} */}
         </>
     );
 
@@ -435,8 +453,8 @@ export const CategoryList = () => {
                             <div className="col-12 col-md-auto">
                                 <div className="d-flex align-items-center justify-content-between gap-2">
                                     <div className="d-flex align-items-center gap-2">
-                                        <div className="bg-danger bg-opacity-10 p-2 rounded">
-                                            <i className="bi bi-shop text-danger fs-5"></i>
+                                        <div className="bg-dark bg-opacity-10 p-2 rounded">
+                                            <i className="bi bi-shop text-dark fs-5"></i>
                                         </div>
                                         <h5 className="mb-0 fw-bold">What a Market!</h5>
                                     </div>
@@ -476,9 +494,12 @@ export const CategoryList = () => {
                                         <button className="btn btn-link text-decoration-none text-secondary position-relative p-1 p-md-2">
                                             <i className="bi bi-cart3 me-1"></i>
                                             <span className="d-none d-lg-inline">Cart</span>
-                                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                                3
-                                            </span>
+                                            {
+                                                !tokenCustomer &&
+                                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                    {cartCount}
+                                                </span>
+                                            }
                                         </button>
                                     </Link>
 

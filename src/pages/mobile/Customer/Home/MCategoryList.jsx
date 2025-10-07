@@ -5,8 +5,8 @@ import ProductGrid from "../../../component/Loading/ProductGrid"
 import ProductNotFound from "../../../component/Product Not Found/ProductNotFound "
 
 export const MCategoryList = () => {
-    const { name } = useParams();       
-    const { state } = useLocation(); 
+    const { name } = useParams();
+    const { state } = useLocation();
     const id = state?.id
     const navigate = useNavigate("")
     const [viewMode, setViewMode] = useState("grid")
@@ -32,6 +32,8 @@ export const MCategoryList = () => {
     const [tokenDealerAdmin, setTokenDealerAdmin] = useState(false)
     const [tokenCustomer, setTokenCustomer] = useState(true)
     const [commonToken, setCommonToken] = useState(true)
+
+    const [cartCount, setCartCount] = useState("0")
 
     useEffect(() => {
         if (openPopUp) {
@@ -132,9 +134,25 @@ export const MCategoryList = () => {
         }
     };
 
+    const fetchCartCount = async () => {
+        const token = localStorage.getItem("accessTokenCustomer")
+        try {
+            const response = await axios.get("https://api.lancer.drmcetit.com/api/Snapdeal/cart/count/",
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            )
+            console.log(response.data)
+            setCartCount(response.data.count)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     useEffect(() => {
         getToken()
         fetchProducts()
+        fetchCartCount()
     }, [])
 
     const filteredProducts = useMemo(() => {
@@ -460,9 +478,12 @@ export const MCategoryList = () => {
                                             <button className="btn btn-link text-decoration-none text-secondary position-relative p-1 p-md-2">
                                                 <i className="bi bi-cart3 me-1"></i>
                                                 <span className="d-none d-lg-inline">Cart</span>
-                                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                                    3
-                                                </span>
+                                                {
+                                                    !tokenCustomer &&
+                                                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                        {cartCount}
+                                                    </span>
+                                                }
                                             </button>
                                         </Link>
 

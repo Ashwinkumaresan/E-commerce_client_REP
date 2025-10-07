@@ -127,9 +127,9 @@ export default function Orders() {
                                                     <h5
                                                         className="mb-1 fw-semibold"
                                                         style={{ cursor: "pointer", color: "#000" }}
-                                                        onClick={() =>
-                                                            navigate(`/product-detail/${order.product}`)
-                                                        }
+                                                        onClick={() => navigate(`/product-detail/${encodeURIComponent(product.title)}`, {
+                                                            state: { id: order.product }
+                                                        })}
                                                     >
                                                         {product?.title || "Product Name"}
                                                     </h5>
