@@ -30,6 +30,8 @@ export const MHome = () => {
     const [tokenCustomer, setTokenCustomer] = useState(true)
     const [commonToken, setCommonToken] = useState(true)
 
+    const [cartCount, setCartCount] = useState("0")
+
     useEffect(() => {
         if (openPopUp) {
             document.body.style.overflow = "hidden";
@@ -129,9 +131,25 @@ export const MHome = () => {
         }
     };
 
+    const fetchCartCount = async () => {
+        const token = localStorage.getItem("accessTokenCustomer")
+        try {
+            const response = await axios.get("https://api.lancer.drmcetit.com/api/Snapdeal/cart/count/",
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            )
+            console.log(response.data)
+            setCartCount(response.data.count)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     useEffect(() => {
         getToken()
         fetchProducts()
+        fetchCartCount()
     }, [])
 
     const filteredProducts = useMemo(() => {
@@ -457,9 +475,12 @@ export const MHome = () => {
                                             <button className="btn btn-link text-decoration-none text-secondary position-relative p-1 p-md-2">
                                                 <i className="bi bi-cart3 me-1"></i>
                                                 <span className="d-none d-lg-inline">Cart</span>
-                                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                                    3
-                                                </span>
+                                                {
+                                                    !tokenCustomer &&
+                                                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                        {cartCount}
+                                                    </span>
+                                                }
                                             </button>
                                         </Link>
 
@@ -686,8 +707,9 @@ export const MHome = () => {
 
                                                         <h6
                                                             className="card-title text-start"
-                                                            onClick={() => navigate(`/product-detail/${product.productId}`)}
-                                                        >
+                                                            onClick={() => navigate(`/product-detail/${product.title}`, {
+                                                                state: { id: product.productId }
+                                                            })}                                                        >
                                                             {product.title.length > 45 ? product.title.substring(0, 45) + "..." : product.title}
                                                         </h6>
 

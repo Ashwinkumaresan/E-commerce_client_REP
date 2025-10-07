@@ -30,6 +30,8 @@ export const Home = () => {
     const [tokenCustomer, setTokenCustomer] = useState(true)
     const [commonToken, setCommonToken] = useState(true)
 
+    const [cartCount, setCartCount] = useState("0")
+
     useEffect(() => {
         if (openPopUp) {
             document.body.style.overflow = "hidden";
@@ -126,9 +128,25 @@ export const Home = () => {
         }
     };
 
+    const fetchCartCount = async () => {
+        const token = localStorage.getItem("accessTokenCustomer")
+        try {
+            const response = await axios.get("https://api.lancer.drmcetit.com/api/Snapdeal/cart/count/",
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            )
+            console.log(response.data)
+            setCartCount(response.data.count)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     useEffect(() => {
         getToken()
         fetchProducts()
+        fetchCartCount()
     }, [])
 
     const filteredProducts = useMemo(() => {
@@ -457,7 +475,7 @@ export const Home = () => {
                             {/* Action Buttons */}
                             <div className="col-12 col-md-auto">
                                 <div className="d-flex align-items-center justify-content-end justify-content-md-start gap-2 gap-md-3">
-                                    <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2" onClick={()=>navigate("/product-orders")}>
+                                    <button className="btn btn-link text-decoration-none text-secondary p-1 p-md-2" onClick={() => navigate("/product-orders")}>
                                         <i className="bi bi-box-seam me-1"></i>
                                         <span className="d-none d-lg-inline">Orders</span>
                                     </button>
@@ -471,9 +489,12 @@ export const Home = () => {
                                         <button className="btn btn-link text-decoration-none text-secondary position-relative p-1 p-md-2">
                                             <i className="bi bi-cart3 me-1"></i>
                                             <span className="d-none d-lg-inline">Cart</span>
-                                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                                3
-                                            </span>
+                                            {
+                                                !tokenCustomer &&
+                                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                    {cartCount}
+                                                </span>
+                                            }
                                         </button>
                                     </Link>
 
@@ -609,7 +630,7 @@ export const Home = () => {
                                     {/* <i className="bi bi-search fs-1 text-muted"></i>
                                     <h5 className="mt-3 text-muted">No products found</h5>
                                     <p className="text-muted">Try adjusting your filters or search query</p> */}
-                                    <ProductNotFound/>
+                                    <ProductNotFound />
                                 </div>
                             ) : (
                                 <div className={viewMode === "grid" ? "row g-3 g-md-4" : "row g-3"}>
@@ -651,9 +672,11 @@ export const Home = () => {
 
                                                         <h6
                                                             className="card-title text-start"
-                                                            onClick={() => navigate(`/product-detail/${product.productId}`)}
+                                                            onClick={() => navigate(`/product-detail/${product.title}`, {
+                                                                state: { id: product.productId }
+                                                            })}
                                                         >
-                                                            {product.title.length > 35 ? product.title.substring(0, 35)+ "..." : product.title  }
+                                                            {product.title.length > 35 ? product.title.substring(0, 35) + "..." : product.title}
                                                         </h6>
 
                                                         <div className="text-start mb-2">
@@ -689,7 +712,7 @@ export const Home = () => {
                                                             )}
                                                         </div>
                                                         <button className="w-100 my-3 btn btn-dark" onClick={() => navigate(`/product-detail/${product.title}`, {
-                                                            state :{id: product.productId}
+                                                            state: { id: product.productId }
                                                         })}>
                                                             Add to cart
                                                         </button>
