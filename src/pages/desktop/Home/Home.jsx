@@ -96,7 +96,6 @@ export const Home = () => {
             </div>
         )
 
-
     const getToken = () => {
         const tokenOfDealerAdmin = localStorage.getItem("accessTokenDealer")
         if (tokenOfDealerAdmin) {
