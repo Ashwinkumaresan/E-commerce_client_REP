@@ -88,7 +88,7 @@ Owner: ${item.ownername}`
           line.toLowerCase().includes(p.title.toLowerCase())
         );
         if (matched) {
-          return `${line} <br/><a href="https://e-commerce-client-rep.vercel.app/#/product-detail/${matched.productId}" target="_blank" class="btn btn-dark mt-2 text-white" style="text-decoration:none;">🔗 View ${matched.title}</a>`;
+          return `${line} <br/><a href="https://e-commerce-client-rep.vercel.app/#/product-detail/bot/${matched.productId}" target="_blank" class="btn btn-dark mt-2 text-white" style="text-decoration:none;">🔗 View ${matched.title}</a>`;
         }
         return line;
       });

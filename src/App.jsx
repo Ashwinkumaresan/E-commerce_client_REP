@@ -36,6 +36,7 @@ import { ChatbotMain } from "./pages/component/Chatbot/ChatbotMain";
 import Orders from "./pages/desktop/Customer/My Orders/Orders";
 import { MainHome } from "./pages/desktop/Home/MainHome";
 import { CategoryList } from "./pages/desktop/Home/CategoryList";
+import ChatbotProductDetail from "./pages/desktop/Customer/Product Detail page/ChatbotProductDetail";
 
 
 function App() {
@@ -89,6 +90,7 @@ function App() {
 
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/product-detail/:name" element={<ProductDetail />} />
+            <Route path="/product-detail/bot/:id" element={<ChatbotProductDetail />} />
             <Route path="/product-checkout/:id" element={<CheckoutPage />} />
             <Route path="/product-order-placed" element={<OrderPlacedPage />} />
             <Route path="/product-orders" element={<Orders />} />
