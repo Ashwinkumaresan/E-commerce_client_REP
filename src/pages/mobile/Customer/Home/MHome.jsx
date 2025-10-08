@@ -607,7 +607,7 @@ export const MHome = () => {
                         </div> */}
 
                         {/* Mobile Offcanvas Filter */}
-                        <div
+                        {/* <div
                             className={`offcanvas offcanvas-start ${showFilters ? "show" : ""}`}
                             tabIndex={-1}
                             style={{ visibility: showFilters ? "visible" : "hidden" }}
@@ -619,10 +619,10 @@ export const MHome = () => {
                             <div className="offcanvas-body">
                                 <FilterSection />
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Backdrop for mobile offcanvas */}
-                        {showFilters && <div className="offcanvas-backdrop fade show" onClick={() => setShowFilters(false)}></div>}
+                        {/* {showFilters && <div className="offcanvas-backdrop fade show" onClick={() => setShowFilters(false)}></div>} */}
 
                         {/* Product Grid */}
                         <div className="col-lg-9 col-md-8">
@@ -639,7 +639,7 @@ export const MHome = () => {
 
                                 <div className="row w-100 w-md-auto">
 
-                                    <div className="d-flex align-items-center gap-2 col-10">
+                                    <div className="d-flex align-items-center gap-2 col-12">
                                         <span className="text-muted text-nowrap">Sort by</span>
                                         <select
                                             className="form-select form-select-sm"
@@ -654,9 +654,9 @@ export const MHome = () => {
                                     </div>
 
                                     {/* Mobile Filter Button */}
-                                    <button className="btn btn-outline-dark d-md-none p-0 col-2" onClick={() => setShowFilters(true)}>
+                                    {/* <button className="btn btn-outline-dark d-md-none p-0 col-2" onClick={() => setShowFilters(true)}>
                                         <i className="bi bi-funnel fs-6"></i>
-                                    </button>
+                                    </button> */}
 
                                     {/* <div className="btn-group" role="group">
                                     <button

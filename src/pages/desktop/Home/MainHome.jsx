@@ -93,14 +93,14 @@ export const MainHome = () => {
                             </div>
                         </div>
                     </header>
-                    <h1 className='text-muted fw-bold display-5 my-5'>We are here to fullfill your <span
+                    <h1 className='text-muted fw-bold display-5 my-5'>Have any   <span
                         style={{
-                            background: "linear-gradient(to bottom right, #001f4d, #00bfff)", // dark blue to light blue
-                            WebkitBackgroundClip: "text", // needed for gradient text
+                            background: "linear-gradient(to bottom right, #1e56a9ff, #00bfff)",
+                            WebkitBackgroundClip: "text", 
                             WebkitTextFillColor: "transparent",
                         }}
                     >
-                        Needs...
+                        Needs?
                     </span>
                     </h1>
                 </div>

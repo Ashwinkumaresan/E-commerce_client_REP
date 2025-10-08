@@ -37,6 +37,7 @@ import Orders from "./pages/desktop/Customer/My Orders/Orders";
 import { MainHome } from "./pages/desktop/Home/MainHome";
 import { CategoryList } from "./pages/desktop/Home/CategoryList";
 import ChatbotProductDetail from "./pages/desktop/Customer/Product Detail page/ChatbotProductDetail";
+import { MCategoryList } from "./pages/mobile/Customer/Home/MCategoryList";
 
 
 function App() {
@@ -51,7 +52,7 @@ function App() {
           <>
             <Route path="/" element={<MHome />} />
             <Route path="/home" element={<MainHome />} />
-            <Route path="/product-detail/category/:name" element={<CategoryList />} />
+            <Route path="/product-detail/category/:name" element={<MCategoryList />} />
             <Route path="/dealer-signup" element={<MDealerSignup />} />
             <Route path="/dealer-signup-otp" element={<MDealerOTP />} />
             <Route path="/dealer-signup-setpassword" element={<MDealerSetpassword />} />
@@ -66,6 +67,7 @@ function App() {
 
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/product-detail/:name" element={<ProductDetail />} />
+            <Route path="/product-detail/bot/:id" element={<ChatbotProductDetail />} />
             <Route path="/product-checkout/:id" element={<CheckoutPage />} />
             <Route path="/product-order-placed" element={<OrderPlacedPage />} />
             <Route path="/product-orders" element={<Orders />} />
