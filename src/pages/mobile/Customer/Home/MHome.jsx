@@ -749,7 +749,7 @@ export const MHome = () => {
 
                                                         <div className="text-start">
                                                             <small className="text-muted d-block">
-                                                                • {product.category || ""}
+                                                                • {product.category || ""} •{product.subcategory || ""}
                                                             </small>
 
                                                             {product.offer > 0 && (

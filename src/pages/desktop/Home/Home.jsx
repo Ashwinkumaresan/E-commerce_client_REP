@@ -447,8 +447,6 @@ export const Home = () => {
         </>
     );
 
-
-
     return (
         <>
             <div className="min-vh-100 bg-light">
@@ -712,7 +710,7 @@ export const Home = () => {
 
                                                         <div className="text-start">
                                                             <small className="text-muted d-block">
-                                                                • {product.category || ""}
+                                                                • {product.category || ""} •{product.subcategory || ""}
                                                             </small>
 
                                                             {product.offer > 0 && (
@@ -766,7 +764,7 @@ export const Home = () => {
                                 }}
                             >
                                 <h5>Dealer</h5>
-                                <i className="bi bi-shop fs-1"></i> {/* Bootstrap icon, optional */}
+                                <i className="bi bi-shop fs-1"></i> 
                             </div>
                         </div>
 
@@ -780,7 +778,7 @@ export const Home = () => {
                                 }}
                             >
                                 <h5>Customer</h5>
-                                <i className="bi bi-person fs-1"></i> {/* Bootstrap icon, optional */}
+                                <i className="bi bi-person fs-1"></i> 
                             </div>
                         </div>
                     </div>

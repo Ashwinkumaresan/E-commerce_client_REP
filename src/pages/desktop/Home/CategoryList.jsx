@@ -24,6 +24,7 @@ export const CategoryList = () => {
     const [selectedBrands, setSelectedBrands] = useState([])
     const [selectedColors, setSelectedColors] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedSubcategories, setSelectedSubcategories] = useState([]); 
 
     const [openPopUp, setOpenPopUp] = useState(false)
 
@@ -69,6 +70,7 @@ export const CategoryList = () => {
         const brands = new Set();
         const colors = new Set();
         const categories = new Set();
+        const subcategories = new Set();
 
         products.forEach((product) => {
             if (product.others) {
@@ -81,6 +83,7 @@ export const CategoryList = () => {
             if (product.brand) brands.add(product.brand);
             if (product.color) colors.add(product.color);
             if (product.category) categories.add(product.category);
+            if (product.subcategory) subcategories.add(product.subcategory); 
         });
 
         return {
@@ -91,8 +94,10 @@ export const CategoryList = () => {
             brands: Array.from(brands),
             colors: Array.from(colors),
             categories: Array.from(categories),
+            subcategories: Array.from(subcategories),
         };
     }, [products]);
+
 
 
     if (error)
@@ -178,7 +183,8 @@ export const CategoryList = () => {
                     product.description?.toLowerCase().includes(query) ||
                     product.brand?.toLowerCase().includes(query) ||
                     product.category?.toLowerCase().includes(query) ||
-                    product.color?.toLowerCase().includes(query);
+                    product.color?.toLowerCase().includes(query) ||
+                    product.subcategory?.toLowerCase().includes(query); 
                 if (!matchesSearch) return false;
             }
 
@@ -208,6 +214,9 @@ export const CategoryList = () => {
             // 📂 Category filter
             if (selectedCategories.length && !selectedCategories.includes(product.category)) return false;
 
+            // 📁 Subcategory filter ✅ newly added
+            if (selectedSubcategories.length && !selectedSubcategories.includes(product.subcategory)) return false;
+
             return true;
         });
 
@@ -232,8 +241,9 @@ export const CategoryList = () => {
         selectedSleeves,
         selectedPatterns,
         selectedBrands,
-        selectedColors,      // ✅ added dependency
-        selectedCategories,  // ✅ added dependency
+        selectedColors,
+        selectedCategories,
+        selectedSubcategories, // ✅ added dependency
         sortBy,
     ]);
 
@@ -382,6 +392,30 @@ export const CategoryList = () => {
                     ))}
                 </div>
             )}
+
+            {/* Subcategory Filter */}
+            {filterOptions.subcategories?.length > 0 && (
+                <div className="mb-4">
+                    <h6 className="fw-bold mb-3">Subcategory</h6>
+                    {filterOptions.subcategories.map((subcategory) => (
+                        <div className="form-check mb-2" key={subcategory}>
+                            <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id={`subcategory-${subcategory}`}
+                                checked={selectedSubcategories.includes(subcategory)}
+                                onChange={() =>
+                                    toggleFilter(subcategory, selectedSubcategories, setSelectedSubcategories)
+                                }
+                            />
+                            <label className="form-check-label" htmlFor={`subcategory-${subcategory}`}>
+                                {subcategory}
+                            </label>
+                        </div>
+                    ))}
+                </div>
+            )}
+
 
             {/* Brand Filter */}
             {filterOptions.brands?.length > 0 && (
@@ -725,7 +759,7 @@ export const CategoryList = () => {
 
                                                         <div className="text-start">
                                                             <small className="text-muted d-block">
-                                                                • {product.category || ""}
+                                                                • {product.category || ""} •{product.subcategory || ""}
                                                             </small>
 
                                                             {product.offer > 0 && (

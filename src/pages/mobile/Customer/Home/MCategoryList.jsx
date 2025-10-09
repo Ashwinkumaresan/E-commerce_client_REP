@@ -21,8 +21,10 @@ export const MCategoryList = () => {
     const [selectedSleeves, setSelectedSleeves] = useState([])
     const [selectedPatterns, setSelectedPatterns] = useState([])
     const [selectedBrands, setSelectedBrands] = useState([])
-    const [selectedColors, setSelectedColors] = useState([]);
-    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedColors, setSelectedColors] = useState([])
+    const [selectedCategories, setSelectedCategories] = useState([])
+    const [selectedSubcategories, setSelectedSubcategories] = useState([])
+
     const [openPopUp, setOpenPopUp] = useState(false)
 
 
@@ -62,37 +64,41 @@ export const MCategoryList = () => {
     ]
 
     const filterOptions = useMemo(() => {
-        const materials = new Set();
-        const fits = new Set();
-        const sleeves = new Set();
-        const patterns = new Set();
-        const brands = new Set();
-        const colors = new Set();
-        const categories = new Set();
+    const materials = new Set();
+    const fits = new Set();
+    const sleeves = new Set();
+    const patterns = new Set();
+    const brands = new Set();
+    const colors = new Set();
+    const categories = new Set();
+    const subcategories = new Set(); 
 
-        products.forEach((product) => {
-            if (product.others) {
-                if (product.others.material) materials.add(product.others.material);
-                if (product.others.fit) fits.add(product.others.fit);
-                if (product.others.sleeve) sleeves.add(product.others.sleeve);
-                if (product.others.pattern) patterns.add(product.others.pattern);
-            }
+    products.forEach((product) => {
+        if (product.others) {
+            if (product.others.material) materials.add(product.others.material);
+            if (product.others.fit) fits.add(product.others.fit);
+            if (product.others.sleeve) sleeves.add(product.others.sleeve);
+            if (product.others.pattern) patterns.add(product.others.pattern);
+        }
 
-            if (product.brand) brands.add(product.brand);
-            if (product.color) colors.add(product.color);
-            if (product.category) categories.add(product.category);
-        });
+        if (product.brand) brands.add(product.brand);
+        if (product.color) colors.add(product.color);
+        if (product.category) categories.add(product.category);
+        if (product.subcategory) subcategories.add(product.subcategory); 
+    });
 
-        return {
-            materials: Array.from(materials),
-            fits: Array.from(fits),
-            sleeves: Array.from(sleeves),
-            patterns: Array.from(patterns),
-            brands: Array.from(brands),
-            colors: Array.from(colors),
-            categories: Array.from(categories),
-        };
-    }, [products]);
+    return {
+        materials: Array.from(materials),
+        fits: Array.from(fits),
+        sleeves: Array.from(sleeves),
+        patterns: Array.from(patterns),
+        brands: Array.from(brands),
+        colors: Array.from(colors),
+        categories: Array.from(categories),
+        subcategories: Array.from(subcategories), 
+    };
+}, [products]);
+
 
 
     if (error)
@@ -179,7 +185,8 @@ export const MCategoryList = () => {
                     product.description?.toLowerCase().includes(query) ||
                     product.brand?.toLowerCase().includes(query) ||
                     product.category?.toLowerCase().includes(query) ||
-                    product.color?.toLowerCase().includes(query);
+                    product.color?.toLowerCase().includes(query) ||
+                    product.subcategory?.toLowerCase().includes(query); 
                 if (!matchesSearch) return false;
             }
 
@@ -209,6 +216,9 @@ export const MCategoryList = () => {
             // 📂 Category filter
             if (selectedCategories.length && !selectedCategories.includes(product.category)) return false;
 
+            // 📁 Subcategory filter ✅ newly added
+            if (selectedSubcategories.length && !selectedSubcategories.includes(product.subcategory)) return false;
+
             return true;
         });
 
@@ -221,7 +231,7 @@ export const MCategoryList = () => {
             case "rating":
                 return filtered.sort((a, b) => b.rating - a.rating);
             default:
-                return filtered; // "featured" → original order
+                return filtered; 
         }
     }, [
         products,
@@ -233,10 +243,13 @@ export const MCategoryList = () => {
         selectedSleeves,
         selectedPatterns,
         selectedBrands,
-        selectedColors,      // ✅ added dependency
-        selectedCategories,  // ✅ added dependency
+        selectedColors,
+        selectedCategories,
+        selectedSubcategories, // ✅ added dependency
         sortBy,
     ]);
+
+
 
 
 
@@ -758,7 +771,7 @@ export const MCategoryList = () => {
 
                                                         <div className="text-start">
                                                             <small className="text-muted d-block">
-                                                                • {product.category || ""}
+                                                                • {product.category || ""} •{product.subcategory || ""}
                                                             </small>
 
                                                             {product.offer > 0 && (
