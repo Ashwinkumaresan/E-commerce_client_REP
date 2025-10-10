@@ -245,13 +245,9 @@ export const MCategoryList = () => {
         selectedBrands,
         selectedColors,
         selectedCategories,
-        selectedSubcategories, // ✅ added dependency
+        selectedSubcategories, 
         sortBy,
     ]);
-
-
-
-
 
     const toggleFilter = (value, selectedArray, setSelectedArray) => {
         setSelectedArray(prev =>
@@ -273,7 +269,6 @@ export const MCategoryList = () => {
                 stars.push(<i key={i} className="bi bi-star text-warning"></i>);
             }
         }
-
         return stars;
     };
 
@@ -391,6 +386,29 @@ export const MCategoryList = () => {
                             />
                             <label className="form-check-label" htmlFor={`pattern-${pattern}`}>
                                 {pattern}
+                            </label>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {/* Subcategory Filter */}
+            {filterOptions.subcategories?.length > 0 && (
+                <div className="mb-4">
+                    <h6 className="fw-bold mb-3">Subcategory</h6>
+                    {filterOptions.subcategories.map((subcategory) => (
+                        <div className="form-check mb-2" key={subcategory}>
+                            <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id={`subcategory-${subcategory}`}
+                                checked={selectedSubcategories.includes(subcategory)}
+                                onChange={() =>
+                                    toggleFilter(subcategory, selectedSubcategories, setSelectedSubcategories)
+                                }
+                            />
+                            <label className="form-check-label" htmlFor={`subcategory-${subcategory}`}>
+                                {subcategory}
                             </label>
                         </div>
                     ))}
