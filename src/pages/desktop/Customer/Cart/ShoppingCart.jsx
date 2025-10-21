@@ -137,7 +137,7 @@ export default function ShoppingCart() {
                                                 >
                                                     {item.productTitle}
                                                 </h5>
-                                                <p className="text-muted mb-2">${item.offerPrice.toFixed(2)}</p>
+                                                <p className="text-muted mb-2">Rs. {item.offerPrice.toFixed(2)}</p>
                                                 <button
                                                     className="btn btn-link text-danger p-0 text-decoration-none"
                                                     onClick={() => removeItem(item.productId)}

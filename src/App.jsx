@@ -38,6 +38,8 @@ import { MainHome } from "./pages/desktop/Home/MainHome";
 import { CategoryList } from "./pages/desktop/Home/CategoryList";
 import ChatbotProductDetail from "./pages/desktop/Customer/Product Detail page/ChatbotProductDetail";
 import { MCategoryList } from "./pages/mobile/Customer/Home/MCategoryList";
+import ScrollScene from "./pages/3D components/ScrollScene";
+import HeroSection from "./pages/component/HeroSection";
 
 
 function App() {
@@ -75,7 +77,7 @@ function App() {
         ) : (
           <>
             <Route path="/" element={<Home />} />
-            <Route path="/home" element={<MainHome />} />
+            <Route path="/home" element={<HeroSection />} />
             {/* <Route path="/product-detail/category/:id" element={<CategoryList />} /> */}
             <Route path="/product-detail/category/:name" element={<CategoryList />} />
             <Route path="/dealer-signup" element={<DealerSignup />} />

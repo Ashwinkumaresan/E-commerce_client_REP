@@ -108,10 +108,10 @@ export const MainHome = () => {
             </div>
             <div className='section'
             style={{
-                    backgroundImage: "url('./section2.png')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
+                    // backgroundImage: "url('./section2.png')",
+                    // backgroundSize: "cover",
+                    // backgroundPosition: "center",
+                    // backgroundRepeat: "no-repeat",
                     width: "100%",
                     height: "100vh",
                 }}
