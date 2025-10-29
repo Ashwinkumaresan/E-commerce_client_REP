@@ -72,9 +72,9 @@ export default function Orders() {
             setCancelling((prev) => ({ ...prev, [orderId]: true }));
             const token = localStorage.getItem("accessTokenCustomer");
             console.log(orderId)
+            console.log(token)
             const res = await axios.delete(
                 `https://api.lancer.drmcetit.com/api/Snapdeal/order/delete/${orderId}/`,
-                {},
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
