@@ -6,7 +6,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom"
 import ProductDetailLoading from "../../../component/Loading/ProductDetailLoading"
 import ProductNotFound from "../../../component/Product Not Found/ProductNotFound "
 
-export default function ProductDetail() {
+const ProductDetail=()=> {
     const { name } = useParams()
     const {state} = useLocation()
     const id = state?.id
@@ -263,3 +263,6 @@ export default function ProductDetail() {
         </div>
     )
 }
+
+
+export default ProductDetail

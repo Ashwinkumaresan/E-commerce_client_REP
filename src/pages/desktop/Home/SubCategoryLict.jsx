@@ -6,10 +6,11 @@ import ProductNotFound from "../../component/Product Not Found/ProductNotFound "
 import { ImageClassification } from "../Customer/ImageClassification/ImageClassification"
 
 
-export const CategoryList = () => {
+export const SubCategoryList = () => {
     const { name } = useParams();
     const { state } = useLocation();
-    const id = state?.id;
+    const id = s
+    tate?.id;
 
     const navigate = useNavigate("")
     const [viewMode, setViewMode] = useState("grid")
@@ -131,7 +132,7 @@ export const CategoryList = () => {
         setError("");
         try {
             const response = await axios.get(
-                `https://api.lancer.drmcetit.com/api/Snapdeal/category/${id}`
+                `https://api.lancer.drmcetit.com/api/Snapdeal/subcategory/${id}`
             );
             console.log(response.data)
             setProducts(response.data);

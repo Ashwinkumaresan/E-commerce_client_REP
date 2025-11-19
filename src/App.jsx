@@ -40,6 +40,12 @@ import ChatbotProductDetail from "./pages/desktop/Customer/Product Detail page/C
 import { MCategoryList } from "./pages/mobile/Customer/Home/MCategoryList";
 import ScrollScene from "./pages/3D components/ScrollScene";
 import HeroSection from "./pages/component/HeroSection";
+import { ImageClassification } from "./pages/desktop/Customer/ImageClassification/ImageClassification";
+import { SubCategoryList } from "./pages/desktop/Home/SubCategoryLict";
+import AccountSettings from "./pages/desktop/Customer/Account Setting/AccountSettings";
+import { MAccountSettings } from "./pages/mobile/Customer/Account Setting/MAccountSettings";
+import LoginSecurity from "./pages/desktop/Customer/Account Setting/Sub Setting/LoginSecurity";
+import SettingsAddresses from "./pages/desktop/Customer/Account Setting/Sub Setting/SettingsAddresses";
 
 
 function App() {
@@ -73,6 +79,9 @@ function App() {
             <Route path="/product-checkout/:id" element={<CheckoutPage />} />
             <Route path="/product-order-placed" element={<OrderPlacedPage />} />
             <Route path="/product-orders" element={<Orders />} />
+
+            <Route path="/account-setting" element={<MAccountSettings />} />
+
           </>
         ) : (
           <>
@@ -80,6 +89,7 @@ function App() {
             <Route path="/home" element={<HeroSection />} />
             {/* <Route path="/product-detail/category/:id" element={<CategoryList />} /> */}
             <Route path="/product-detail/category/:name" element={<CategoryList />} />
+            <Route path="/product-detail/subcategory/:name" element={<SubCategoryList />} />
             <Route path="/dealer-signup" element={<DealerSignup />} />
             <Route path="/dealer-signup-otp" element={<DealerOTP />} />
             <Route path="/dealer-signup-setpassword" element={<DealerSetpassword />} />
@@ -91,6 +101,8 @@ function App() {
             <Route path="/customer-signup" element={<CustomerSignup />} />
             <Route path="/customer-signup-otp" element={<CustomerOTP />} />
             <Route path="/customer-signup-setpassword" element={<CustomerSetpassword />} />
+            <Route path="/image-clasification" element={<ImageClassification />} />
+
 
             <Route path="/shopping-cart" element={<ShoppingCart />} />
             <Route path="/product-detail/:name" element={<ProductDetail />} />
@@ -98,6 +110,10 @@ function App() {
             <Route path="/product-checkout/:id" element={<CheckoutPage />} />
             <Route path="/product-order-placed" element={<OrderPlacedPage />} />
             <Route path="/product-orders" element={<Orders />} />
+
+            <Route path="/account-setting" element={<AccountSettings />} />
+            <Route path="/settings/login-security" element={<LoginSecurity />} />
+            <Route path="/settings/addresses" element={<SettingsAddresses />} />
           </>
         )}
 

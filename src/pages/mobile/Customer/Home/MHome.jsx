@@ -505,6 +505,11 @@ export const MHome = () => {
                                                 <i className="bi bi-person d-sm-none"></i>
                                             </button>
                                         }
+                                        {!commonToken &&
+                                            <button className="btn btn-dark btn-sm" onClick={() => navigate("/account-setting")}>
+                                                <i className="bi bi-person"></i>
+                                            </button>
+                                        }
 
                                     </div>
                                 </div>

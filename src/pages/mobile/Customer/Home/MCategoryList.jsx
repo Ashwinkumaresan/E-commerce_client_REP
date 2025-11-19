@@ -64,40 +64,40 @@ export const MCategoryList = () => {
     ]
 
     const filterOptions = useMemo(() => {
-    const materials = new Set();
-    const fits = new Set();
-    const sleeves = new Set();
-    const patterns = new Set();
-    const brands = new Set();
-    const colors = new Set();
-    const categories = new Set();
-    const subcategories = new Set(); 
+        const materials = new Set();
+        const fits = new Set();
+        const sleeves = new Set();
+        const patterns = new Set();
+        const brands = new Set();
+        const colors = new Set();
+        const categories = new Set();
+        const subcategories = new Set();
 
-    products.forEach((product) => {
-        if (product.others) {
-            if (product.others.material) materials.add(product.others.material);
-            if (product.others.fit) fits.add(product.others.fit);
-            if (product.others.sleeve) sleeves.add(product.others.sleeve);
-            if (product.others.pattern) patterns.add(product.others.pattern);
-        }
+        products.forEach((product) => {
+            if (product.others) {
+                if (product.others.material) materials.add(product.others.material);
+                if (product.others.fit) fits.add(product.others.fit);
+                if (product.others.sleeve) sleeves.add(product.others.sleeve);
+                if (product.others.pattern) patterns.add(product.others.pattern);
+            }
 
-        if (product.brand) brands.add(product.brand);
-        if (product.color) colors.add(product.color);
-        if (product.category) categories.add(product.category);
-        if (product.subcategory) subcategories.add(product.subcategory); 
-    });
+            if (product.brand) brands.add(product.brand);
+            if (product.color) colors.add(product.color);
+            if (product.category) categories.add(product.category);
+            if (product.subcategory) subcategories.add(product.subcategory);
+        });
 
-    return {
-        materials: Array.from(materials),
-        fits: Array.from(fits),
-        sleeves: Array.from(sleeves),
-        patterns: Array.from(patterns),
-        brands: Array.from(brands),
-        colors: Array.from(colors),
-        categories: Array.from(categories),
-        subcategories: Array.from(subcategories), 
-    };
-}, [products]);
+        return {
+            materials: Array.from(materials),
+            fits: Array.from(fits),
+            sleeves: Array.from(sleeves),
+            patterns: Array.from(patterns),
+            brands: Array.from(brands),
+            colors: Array.from(colors),
+            categories: Array.from(categories),
+            subcategories: Array.from(subcategories),
+        };
+    }, [products]);
 
 
 
@@ -186,7 +186,7 @@ export const MCategoryList = () => {
                     product.brand?.toLowerCase().includes(query) ||
                     product.category?.toLowerCase().includes(query) ||
                     product.color?.toLowerCase().includes(query) ||
-                    product.subcategory?.toLowerCase().includes(query); 
+                    product.subcategory?.toLowerCase().includes(query);
                 if (!matchesSearch) return false;
             }
 
@@ -231,7 +231,7 @@ export const MCategoryList = () => {
             case "rating":
                 return filtered.sort((a, b) => b.rating - a.rating);
             default:
-                return filtered; 
+                return filtered;
         }
     }, [
         products,
@@ -245,7 +245,7 @@ export const MCategoryList = () => {
         selectedBrands,
         selectedColors,
         selectedCategories,
-        selectedSubcategories, 
+        selectedSubcategories,
         sortBy,
     ]);
 
@@ -537,6 +537,11 @@ export const MCategoryList = () => {
                                             <button className="btn btn-dark btn-sm" onClick={() => setOpenPopUp(true)}>
                                                 <span className="d-none d-sm-inline">Sign In</span>
                                                 <i className="bi bi-person d-sm-none"></i>
+                                            </button>
+                                        }
+                                        {!commonToken &&
+                                            <button className="btn btn-dark btn-sm" onClick={() => navigate("/account-setting")}>
+                                                <i className="bi bi-person"></i>
                                             </button>
                                         }
 

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import ProductGrid from "../../component/Loading/ProductGrid"
 import axios from "axios"
 import ProductNotFound from "../../component/Product Not Found/ProductNotFound "
+import { ImageClassification } from "../Customer/ImageClassification/ImageClassification"
 
 export const Home = () => {
     const navigate = useNavigate("")
@@ -22,6 +23,9 @@ export const Home = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
 
     const [openPopUp, setOpenPopUp] = useState(false)
+    const [showPopup, setShowPopup] = useState(false); // image classification
+    const [prediction, setPrediction] = useState('');
+
 
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
@@ -476,6 +480,9 @@ export const Home = () => {
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
                                     />
+                                    <button className="btn btn-outline-secondary" onClick={() => setShowPopup(true)}>
+                                        <i className="bi bi-camera"></i>
+                                    </button>
                                     <button className="btn btn-outline-secondary" type="button">
                                         <i className="bi bi-search"></i>
                                     </button>
@@ -512,6 +519,11 @@ export const Home = () => {
                                         <button className="btn btn-dark btn-sm" onClick={() => setOpenPopUp(true)}>
                                             <span className="d-none d-sm-inline">Sign In</span>
                                             <i className="bi bi-person d-sm-none"></i>
+                                        </button>
+                                    }
+                                    {!commonToken &&
+                                        <button className="btn btn-dark btn-sm" onClick={() => navigate("/account-setting")}>
+                                            <i className="bi bi-person"></i>
                                         </button>
                                     }
 
@@ -764,7 +776,7 @@ export const Home = () => {
                                 }}
                             >
                                 <h5>Dealer</h5>
-                                <i className="bi bi-shop fs-1"></i> 
+                                <i className="bi bi-shop fs-1"></i>
                             </div>
                         </div>
 
@@ -778,7 +790,7 @@ export const Home = () => {
                                 }}
                             >
                                 <h5>Customer</h5>
-                                <i className="bi bi-person fs-1"></i> 
+                                <i className="bi bi-person fs-1"></i>
                             </div>
                         </div>
                     </div>
@@ -795,7 +807,9 @@ export const Home = () => {
                     </div>
                 </div>
             </div>}
-
+            {showPopup && (
+                <ImageClassification onClose={() => setShowPopup(false)}  onResult={(result) =>{ setSearchQuery(result), setShowPopup(false)}} />
+            )}
         </>
     )
 }
