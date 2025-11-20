@@ -1,18 +1,19 @@
 * {
   font-family: 'Poppins', sans-serif;
 }
+
 .btn-pri {
-    outline: none;
-    border: none;
-    border-radius: 8px;
-    background-color: #3B82F6;
-    color: white;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  background-color: #3B82F6;
+  color: white;
 }
 
 .custom-dropdown:active,
 .custom-dropdown.active {
-    background-color: #000 !important;
-    color: #fff !important;
+  background-color: #000 !important;
+  color: #fff !important;
 }
 
 .chatbot-toggler {
@@ -32,25 +33,25 @@
   z-index: 99;
 }
 
-.chatbot-toggler span{
+.chatbot-toggler span {
   position: absolute;
   color: #fff;
 }
 
-.container.show-chatbot .chatbot-toggler{
+.container.show-chatbot .chatbot-toggler {
   transform: rotate(90deg);
 }
 
 .chatbot-toggler span:last-child,
-.container.show-chatbot .chatbot-toggler span:first-child{
+.container.show-chatbot .chatbot-toggler span:first-child {
   opacity: 0;
 }
 
-.container.show-chatbot .chatbot-toggler span:last-child{
+.container.show-chatbot .chatbot-toggler span:last-child {
   opacity: 1;
 }
 
-.chatbot-popup{
+.chatbot-popup {
   position: fixed;
   opacity: 0;
   pointer-events: none;
@@ -68,13 +69,13 @@
   z-index: 9999;
 }
 
-.container.show-chatbot .chatbot-popup{
+.container.show-chatbot .chatbot-popup {
   opacity: 1;
   transform: scale(1);
   pointer-events: auto;
 }
 
-.chatbot-popup .chat-header{
+.chatbot-popup .chat-header {
   display: flex;
   padding: 15px 22px;
   align-items: center;
@@ -82,14 +83,14 @@
   background: #000;
 }
 
-.chat-header .header-info{
+.chat-header .header-info {
   display: flex;
   gap: 10px;
   align-items: center;
 
 }
 
-.header-info svg{
+.header-info svg {
   height: 35px;
   width: 35px;
   padding: 6px;
@@ -99,13 +100,13 @@
   border-radius: 50%;
 }
 
-.header-info .logo-text{
+.header-info .logo-text {
   color: #fff;
   font-size: 1.31rem;
   font-weight: 600;
 }
 
-.chat-header button{
+.chat-header button {
   height: 40px;
   width: 40px;
   border: none;
@@ -120,11 +121,11 @@
   transition: 0.2s ease;
 }
 
-.chat-header button:hover{
+.chat-header button:hover {
   background: #333;
 }
 
-.chat-body{
+.chat-body {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -136,17 +137,17 @@
   scrollbar-color: #ccc transparent;
 }
 
-.chat-body .message{
+.chat-body .message {
   display: flex;
   gap: 11px;
   align-items: center;
 }
 
-.chat-body .message.error .message-text{
+.chat-body .message.error .message-text {
   color: #ff0000;
 }
 
-.chat-body .bot-message svg{
+.chat-body .bot-message svg {
   height: 35px;
   width: 35px;
   padding: 6px;
@@ -158,7 +159,7 @@
   border-radius: 50%;
 }
 
-.chat-body .message .message-text{
+.chat-body .message .message-text {
   padding: 12px 16px;
   max-width: 75%;
   word-wrap: break-word;
@@ -166,23 +167,23 @@
   font-size: 0.95rem;
 }
 
-.chat-body .bot-message .message-text{
+.chat-body .bot-message .message-text {
   background: #ccc;
   border-radius: 13px 13px 13px 3px;
 }
 
-.chat-body .user-message{
+.chat-body .user-message {
   flex-direction: column;
   align-items: flex-end;
 }
 
-.chat-body .user-message .message-text{
+.chat-body .user-message .message-text {
   color: #fff;
   background: #000;
   border-radius: 13px 13px 3px 13px;
 }
 
-.chat-footer{
+.chat-footer {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -190,7 +191,7 @@
   padding: 15px 22px 20px;
 }
 
-.chat-footer .chat-form{
+.chat-footer .chat-form {
   display: flex;
   align-items: center;
   background: #fff;
@@ -199,11 +200,11 @@
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.06);
 }
 
-.chat-footer .chat-form:focus-within{
+.chat-footer .chat-form:focus-within {
   outline: 2px solid #000;
 }
 
-.chat-form .message-input{
+.chat-form .message-input {
   border: none;
   outline: none;
   width: 100%;
@@ -213,7 +214,7 @@
   font-size: 0.95rem;
 }
 
-.chat-form button{
+.chat-form button {
   height: 35px;
   width: 35px;
   border: none;
@@ -229,23 +230,22 @@
   transition: 0.2s ease;
 }
 
-.chat-form button:hover{
+.chat-form button:hover {
   background: #333;
 }
 
-.chat-form .message-input:valid~button{
+.chat-form .message-input:valid~button {
   display: block;
 }
 
 /* responsive for mobile screen */
-@media (max-width: 520px)
-{
-  .chatbot-toggler{
+@media (max-width: 520px) {
+  .chatbot-toggler {
     right: 20px;
     bottom: 20px;
   }
 
-  .chatbot-popup{
+  .chatbot-popup {
     right: 0;
     bottom: 0;
     height: 100%;
@@ -253,16 +253,223 @@
     width: 100%;
   }
 
-  .chatbot-popup .chat-header{
+  .chatbot-popup .chat-header {
     padding: 12px 15px;
   }
 
-  .chat-body{
+  .chat-body {
     height: calc(90% - 55px);
     padding: 25px 15px;
   }
 
-  .chat-footer{
+  .chat-footer {
     padding: 10px 15px 15px;
   }
+}
+
+/* * CSS Grid Definitions for Asymmetrical Layout
+ * This defines the 5x6 grid structure and item placement.
+ */
+
+.grid {
+  width: 55vw;
+  /* Set up the grid with 5 equal columns and 6 equal rows */
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 8px;
+  /* Spacing between grid items */
+}
+
+/* * Grid Item Placement (Mobile & Desktop Default)
+ * These rules map items to specific cells in the 5x6 grid.
+ */
+
+/* Item 1: Starts at column 4, spans 2 columns (4 & 5), and spans 3 rows (1-3) */
+.item-1 {
+  height: 40vh;
+  grid-column: 4 / span 2;
+  grid-row: 1 / span 3;
+}
+
+/* Item 3: Starts at column 1, spans 2 columns (1 & 2), and spans 3 rows (4-6) */
+.item-3 {
+  grid-column: 1 / span 2;
+  grid-row: 4 / span 3;
+}
+
+/* Item 4: Starts at column 3, spans 3 columns (3-5), and spans 3 rows (4-6) */
+.item-4 {
+  grid-column: 3 / span 3;
+  grid-row: 4 / span 3;
+}
+
+/* Item 5: Starts at column 1, spans 3 columns (1-3), and spans 3 rows (1-3) */
+.item-5 {
+  grid-column: 1 / span 3;
+  grid-row: 1 / span 3;
+}
+
+/* * Utility Classes for Responsiveness
+ */
+.mobile-only {
+  display: block;
+  /* Visible by default (mobile) */
+}
+
+.desktop-only {
+  display: none;
+  /* Hidden by default (mobile) */
+}
+
+/* * Media Query for Desktop (min-width: 768px)
+ */
+@media (min-width: 768px) {
+
+  /* Ensure the grid structure remains the same on desktop */
+  .grid {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  /* Toggle visibility classes */
+  .mobile-only {
+    display: none;
+  }
+
+  .desktop-only {
+    display: block;
+  }
+
+  /* Grid Item Placement (Reiterated for desktop, matching the mobile layout in your original code) */
+  .item-1 {
+    grid-column: 4 / span 2;
+    grid-row: 1 / span 3;
+  }
+
+  .item-3 {
+    grid-column: 1 / span 2;
+    grid-row: 4 / span 3;
+  }
+
+  .item-4 {
+    grid-column: 3 / span 3;
+    grid-row: 4 / span 3;
+  }
+
+  .item-5 {
+    grid-column: 1 / span 3;
+    grid-row: 1 / span 3;
+  }
+}
+
+
+
+
+/* HERO SECTION WRAPPER */
+.hero {
+  width: 100vw;
+  height: 100vh;
+  padding: 20px;
+}
+
+/* GRID LAYOUT */
+.hero .grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.hero .item {
+  height: 50vh;
+  background-color: #444;
+  color: #fff;
+  padding: 20px;
+  font-size: 150%;
+}
+
+/* MOBILE DEFAULT */
+.mobile-only {
+  display: block;
+}
+.desktop-only {
+  display: none;
+}
+
+/* GRID POSITIONS */
+.hero .item-0 {
+  grid-column: 1;
+  grid-row: 2 / span 3;
+}
+
+.hero .item-1 {
+  grid-column: 2;
+  grid-row: 1 / span 4;
+}
+
+.hero .item-2 {
+  grid-column: 3;
+  grid-row: 2 / span 3;
+}
+
+/* DESKTOP */
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none;
+  }
+  .desktop-only {
+    display: block;
+  }
+
+  .hero .grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+
+  .hero .item-0 {
+    grid-column: 1;
+    grid-row: 2 / span 3;
+  }
+
+  .hero .item-1 {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+  }
+
+  .hero .item-2 {
+    grid-column: 3;
+    grid-row: 2 / span 3;
+  }
+}
+
+
+
+.student-card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hide content initially */
+.student-card .content-on-hover {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease-in-out;
+}
+
+/* Show content on hover */
+.student-card:hover .content-on-hover {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+.custom-nav {
+  background: rgba(255, 255, 255, 0.2); /* transparent look */
+  backdrop-filter: blur(10px);
+  border-radius: 50px; /* oval shape */
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }

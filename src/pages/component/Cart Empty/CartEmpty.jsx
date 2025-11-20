@@ -74,7 +74,7 @@ const CartEmpty = () => {
                 className="btn btn-dark mt-3"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/product")}
             >
                 Shop Now
             </motion.button>

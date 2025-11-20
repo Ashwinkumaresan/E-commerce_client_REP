@@ -593,7 +593,7 @@ export const CategoryList = () => {
                             <div className="overflow-auto flex-grow-1">
                                 <ul className="nav flex-nowrap d-flex align-items-center">
                                     <li className="nav-item">
-                                        <Link to={"/"} className="nav-link text-dark">
+                                        <Link to={"/product"} className="nav-link text-dark">
                                             All
                                         </Link>
                                     </li>

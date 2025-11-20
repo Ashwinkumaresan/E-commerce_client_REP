@@ -85,8 +85,8 @@ function App() {
           </>
         ) : (
           <>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<HeroSection />} />
+            <Route path="/" element={<MainHome />} />
+            <Route path="/product" element={<Home />} />
             {/* <Route path="/product-detail/category/:id" element={<CategoryList />} /> */}
             <Route path="/product-detail/category/:name" element={<CategoryList />} />
             <Route path="/product-detail/subcategory/:name" element={<SubCategoryList />} />
