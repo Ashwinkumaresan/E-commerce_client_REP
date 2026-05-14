@@ -30,7 +30,7 @@ export const DealerSignup = () => {
     try {
       // Axios request to backend
       await axios.post(
-        "https://api.lancer.drmcetit.com/api/Snapdeal/email/",
+        "http://127.0.0.1:8000/user/email/",
         { email },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -88,9 +88,8 @@ export const DealerSignup = () => {
             <div className="mb-4">
               <input
                 type="email"
-                className={`form-control rounded-1 ${
-                  emailError ? "is-invalid" : ""
-                }`}
+                className={`form-control rounded-1 ${emailError ? "is-invalid" : ""
+                  }`}
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}

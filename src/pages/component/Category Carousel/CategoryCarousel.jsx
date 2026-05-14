@@ -11,7 +11,7 @@ export function CategoryCarousel() {
     const fetchCategory = async () => {
         try {
             const res = await axios.get(
-                "https://api.lancer.drmcetit.com/api/Snapdeal/category/"
+                "http://127.0.0.1:8000/user/category/"
             );
             console.log(res.data);
             setCategories(res.data);
@@ -65,7 +65,7 @@ export function CategoryCarousel() {
                             style={{ height: "150px", transition: "transform 0.2s" }}
                         >
                             <img
-                                src={`https://api.lancer.drmcetit.com${category.image}` || "/placeholder.svg"}
+                                src={`http://127.0.0.1:8000${category.image}` || "/placeholder.svg"}
                                 alt={category.category}
                                 style={{ width: "150px", height: "150px", objectFit: "contain" }}
                             />

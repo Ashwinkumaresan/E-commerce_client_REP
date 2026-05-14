@@ -76,7 +76,7 @@ export const MCustomerSetpassword = () => {
         try {
             const customerType = "buyer"
             const res = await axios.post(
-                "https://api.lancer.drmcetit.com/api/Snapdeal/setPassword/ ",
+                "http://127.0.0.1:8000/user/setPassword/ ",
                 {
                     customerType,
                     password,

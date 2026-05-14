@@ -6,9 +6,9 @@ import { useLocation, useNavigate, useParams } from "react-router-dom"
 import ProductDetailLoading from "../../../component/Loading/ProductDetailLoading"
 import ProductNotFound from "../../../component/Product Not Found/ProductNotFound "
 
-const ProductDetail=()=> {
+const ProductDetail = () => {
     const { name } = useParams()
-    const {state} = useLocation()
+    const { state } = useLocation()
     const id = state?.id
     const navigate = useNavigate()
     const [product, setProduct] = useState(null)
@@ -20,7 +20,7 @@ const ProductDetail=()=> {
     const fetchProduct = async () => {
         try {
             setLoading(true)
-            const res = await axios.get(`https://api.lancer.drmcetit.com/api/Snapdeal/product/${id}`)
+            const res = await axios.get(`http://127.0.0.1:8000/user/product/${id}`)
             console.log("Full API response:", res.data)
 
             // Pick the first product in the array
@@ -46,7 +46,7 @@ const ProductDetail=()=> {
             setCartLoading(true);
             const token = localStorage.getItem("accessTokenCustomer");
             const res = await axios.post(
-                `https://api.lancer.drmcetit.com/api/Snapdeal/cart/add/${id}/`, { quantity },
+                `http://127.0.0.1:8000/user/cart/add/${id}/`, { quantity },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -105,10 +105,10 @@ const ProductDetail=()=> {
                         <div className="mb-3">
                             <div className="position-relative">
                                 <img
-                                    src={product.image ? `https://api.lancer.drmcetit.com${product.image}` : "/placeholder.svg"}
+                                    src={product.image ? `http://127.0.0.1:8000${product.image}` : "/placeholder.svg"}
                                     alt={product.title || "Product"}
                                     className="img-fluid my-3"
-                                    style={{maxHeight:"75vh"}}
+                                    style={{ maxHeight: "75vh" }}
                                 />
                             </div>
                         </div>

@@ -126,7 +126,7 @@ export const DealerAddproduct = () => {
         //setError("");
         try {
             const response = await axios.get(
-                "https://api.lancer.drmcetit.com/api/Snapdeal/product/"
+                "http://127.0.0.1:8000/user/product/"
             );
             console.log(response.data)
             setFetchProduct(response.data);
@@ -252,7 +252,7 @@ export const DealerAddproduct = () => {
 
         try {
             const res = await axios.post(
-                "https://api.lancer.drmcetit.com/api/Snapdeal/product/create/",
+                "http://127.0.0.1:8000/user/product/create/",
                 formData,
                 {
                     headers: {

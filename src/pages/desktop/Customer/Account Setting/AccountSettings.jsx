@@ -49,7 +49,7 @@ export default function AccountSettings() {
         const token = localStorage.getItem("accessTokenCustomer");
         try {
             const response = await axios.get(
-                "https://api.lancer.drmcetit.com/api/Snapdeal/cart/count/",
+                "http://127.0.0.1:8000/user/cart/count/",
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
@@ -67,7 +67,7 @@ export default function AccountSettings() {
     const fetchCategory = async () => {
         try {
             const res = await axios.get(
-                "https://api.lancer.drmcetit.com/api/Snapdeal/category/"
+                "http://127.0.0.1:8000/user/category/"
             );
             setCategoryAPI(res.data);
         } catch (e) {

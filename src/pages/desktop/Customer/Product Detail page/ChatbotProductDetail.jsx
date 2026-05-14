@@ -18,7 +18,7 @@ export default function ChatbotProductDetail() {
     const fetchProduct = async () => {
         try {
             setLoading(true)
-            const res = await axios.get(`https://api.lancer.drmcetit.com/api/Snapdeal/product/${id}`)
+            const res = await axios.get(`http://127.0.0.1:8000/user/product/${id}`)
             console.log("Full API response:", res.data)
 
             // Pick the first product in the array
@@ -44,7 +44,7 @@ export default function ChatbotProductDetail() {
             setCartLoading(true);
             const token = localStorage.getItem("accessTokenCustomer");
             const res = await axios.post(
-                `https://api.lancer.drmcetit.com/api/Snapdeal/cart/add/${id}/`, { quantity },
+                `http://127.0.0.1:8000/user/cart/add/${id}/`, { quantity },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -103,10 +103,10 @@ export default function ChatbotProductDetail() {
                         <div className="mb-3">
                             <div className="position-relative">
                                 <img
-                                    src={product.image ? `https://api.lancer.drmcetit.com${product.image}` : "/placeholder.svg"}
+                                    src={product.image ? `http://127.0.0.1:8000${product.image}` : "/placeholder.svg"}
                                     alt={product.title || "Product"}
                                     className="img-fluid my-3"
-                                    style={{maxHeight:"75vh"}}
+                                    style={{ maxHeight: "75vh" }}
                                 />
                             </div>
                         </div>

@@ -1,7 +1,7 @@
 * {
   font-family: 'Poppins', sans-serif;
 }
-
+/* 
 .btn-pri {
   outline: none;
   border: none;
@@ -238,7 +238,6 @@
   display: block;
 }
 
-/* responsive for mobile screen */
 @media (max-width: 520px) {
   .chatbot-toggler {
     right: 20px;
@@ -265,7 +264,7 @@
   .chat-footer {
     padding: 10px 15px 15px;
   }
-}
+} */
 
 /* * CSS Grid Definitions for Asymmetrical Layout
  * This defines the 5x6 grid structure and item placement.
@@ -472,4 +471,126 @@
   backdrop-filter: blur(10px);
   border-radius: 50px; /* oval shape */
   border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+
+
+
+
+
+.chat-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: black;
+  color: white;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  border: none;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.chat-window {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 400px;
+  height: 600px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.chat-header {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-body {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.chat-body::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-input {
+  display: flex;
+  border-top: 1px solid #eee;
+}
+
+.chat-input input {
+  flex: 1;
+  border: none;
+  padding: 12px;
+  outline: none;
+}
+
+.chat-input button {
+  border: none;
+  background: black;
+  color: white;
+  padding: 0 15px;
+}
+
+.user-msg {
+  display: inline-block;
+  background: black;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 18px;
+  max-width: 75%;
+  word-wrap: break-word;
+}
+
+.bot-msg {
+  background: #f3f3f3;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+.product-card {
+  border: 1px solid #eee;
+  border-radius: 15px;
+  padding: 15px;
+  background: white;
+}
+
+.compare-card {
+  border: 1px solid #eee;
+  border-radius: 15px;
+  padding: 10px;
+  background: white;
+}
+
+.dark-theme {
+  background: #111;
+  color: white;
+}
+
+.dark-theme .bot-msg {
+  background: #222;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
 }

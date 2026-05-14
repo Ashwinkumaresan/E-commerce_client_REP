@@ -20,11 +20,11 @@ export const CustomerOTP = () => {
     const email = localStorage.getItem("email")
 
     //Redirect to email page if no email is found
-      useEffect(() => {
+    useEffect(() => {
         if (!email) {
-          navigate("/customer-signup")
+            navigate("/customer-signup")
         }
-      }, [email, navigate])
+    }, [email, navigate])
 
     useEffect(() => {
         let interval;
@@ -88,7 +88,7 @@ export const CustomerOTP = () => {
         try {
             // Send request to backend for OTP verification
             const res = await axios.post(
-                "https://api.lancer.drmcetit.com/api/Snapdeal/otp/",
+                "http://127.0.0.1:8000/user/otp/",
                 { otp, email },
                 {
                     headers: { "Content-Type": "application/json" },
@@ -131,7 +131,7 @@ export const CustomerOTP = () => {
 
                 // API call to request a new OTP
                 const res = await axios.post(
-                    "https://api.lancer.drmcetit.com/api/Snapdeal/email/",
+                    "http://127.0.0.1:8000/user/email/",
                     { email, purpose },
                     {
                         headers: { "Content-Type": "application/json" },

@@ -76,7 +76,7 @@ export default function CheckoutPage() {
         try {
             const token = localStorage.getItem("accessTokenCustomer");
             const res = await axios.post(
-                `https://api.lancer.drmcetit.com/api/Snapdeal/buynow/${id}/`, { quantity },
+                `http://127.0.0.1:8000/user/buynow/${id}/`, { quantity },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -107,7 +107,7 @@ export default function CheckoutPage() {
         try {
             const token = localStorage.getItem("accessTokenCustomer");
             const res = await axios.post(
-                `https://api.lancer.drmcetit.com/api/Snapdeal/order/place/${id}/`, { quantity },
+                `http://127.0.0.1:8000/user/order/place/${id}/`, { quantity },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -300,7 +300,7 @@ export default function CheckoutPage() {
                                         <span>Offer Price</span>
                                         <span>Rs. {buynowRes.offerPrice}</span>
                                     </div>
-                                    <hr/>
+                                    <hr />
                                     <div className="d-flex justify-content-between mb-2">
                                         <span>Final Price</span>
                                         <span>Rs. {buynowRes.finalPrice}</span>

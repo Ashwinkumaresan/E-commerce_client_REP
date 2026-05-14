@@ -129,7 +129,7 @@ export const MCategoryList = () => {
         setError("");
         try {
             const response = await axios.get(
-                `https://api.lancer.drmcetit.com/api/Snapdeal/category/${id}`
+                `http://127.0.0.1:8000/user/category/${id}`
             );
             console.log(response.data)
             setProducts(response.data);
@@ -144,7 +144,7 @@ export const MCategoryList = () => {
     const fetchCartCount = async () => {
         const token = localStorage.getItem("accessTokenCustomer")
         try {
-            const response = await axios.get("https://api.lancer.drmcetit.com/api/Snapdeal/cart/count/",
+            const response = await axios.get("http://127.0.0.1:8000/user/cart/count/",
                 {
                     headers: { Authorization: `Bearer ${token}` }
                 }
@@ -159,7 +159,7 @@ export const MCategoryList = () => {
     const fetchCategory = async () => {
         try {
             const res = await axios.get(
-                "https://api.lancer.drmcetit.com/api/Snapdeal/category/"
+                "http://127.0.0.1:8000/user/category/"
             );
             console.log(res.data);
             setCategoryAPI(res.data);
@@ -761,7 +761,7 @@ export const MCategoryList = () => {
 
                                                     <div className="card-body text-center">
                                                         <img
-                                                            src={product.image ? `https://api.lancer.drmcetit.com${product.image}` : "/placeholder.svg"}
+                                                            src={product.image ? `http://127.0.0.1:8000${product.image}` : "/placeholder.svg"}
                                                             alt={product.title || "Product"}
                                                             className="img-fluid mb-3"
                                                             style={{ maxHeight: "200px", objectFit: "fit" }}

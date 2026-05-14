@@ -41,7 +41,7 @@ export const MCustomerLogin = () => {
 
       // Axios request to backend
       const res = await axios.post(
-        "https://api.lancer.drmcetit.com/api/login/",
+        "http://127.0.0.1:8000/accesstoken/",
         { username, password },
         { headers: { "Content-Type": "application/json" } }
       );

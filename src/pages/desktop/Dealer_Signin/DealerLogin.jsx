@@ -31,7 +31,7 @@ export const DealerLogin = () => {
 
         try {
             const res = await axios.post(
-                "https://api.lancer.drmcetit.com/api/login/",
+                "http://127.0.0.1:8000/accesstoken/",
                 { username, password },
                 { headers: { "Content-Type": "application/json" } }
             );
@@ -62,7 +62,7 @@ export const DealerLogin = () => {
     const handleGoogleSuccess = async (credentialResponse) => {
         try {
             const id_token = credentialResponse.credential;
-            const res = await axios.post("http://192.168.43.56:8000/token/", { id_token });
+            const res = await axios.post("http://127.0.0.1:8000/accesstoken/", { id_token });
 
             console.log("Google Login Response:", res.data);
 

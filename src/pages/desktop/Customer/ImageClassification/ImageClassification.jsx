@@ -18,7 +18,7 @@ export const ImageClassification = ({ onClose, onResult }) => {
 
     try {
       setLoading(true);
-      const res = await axios.post('http://10.207.58.70:8000/user/dlview/', formData, {
+      const res = await axios.post('http://10.214.129.70:8000/user/dlview/', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       console.log(res.data.prediction)

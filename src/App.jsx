@@ -46,6 +46,7 @@ import AccountSettings from "./pages/desktop/Customer/Account Setting/AccountSet
 import { MAccountSettings } from "./pages/mobile/Customer/Account Setting/MAccountSettings";
 import LoginSecurity from "./pages/desktop/Customer/Account Setting/Sub Setting/LoginSecurity";
 import SettingsAddresses from "./pages/desktop/Customer/Account Setting/Sub Setting/SettingsAddresses";
+import ChatBot from "./pages/LLM Chat/ChatBot";
 
 
 function App() {
@@ -54,7 +55,8 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <ChatbotMain />
+      {/* <ChatbotMain /> */}
+      <ChatBot/>
       <Routes>
         {deviceType === "mobile" ? (
           <>

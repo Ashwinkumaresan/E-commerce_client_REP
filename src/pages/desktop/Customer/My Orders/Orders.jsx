@@ -29,7 +29,7 @@ export default function Orders() {
             setLoading(true);
             const token = localStorage.getItem("accessTokenCustomer");
             const res = await axios.get(
-                "https://api.lancer.drmcetit.com/api/Snapdeal/order/list/",
+                "http://127.0.0.1:8000/user/order/list/",
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
@@ -42,7 +42,7 @@ export default function Orders() {
                 orderData.map(async (order) => {
                     try {
                         const productRes = await axios.get(
-                            `https://api.lancer.drmcetit.com/api/Snapdeal/product/${order.product}/`
+                            `http://127.0.0.1:8000/user/product/${order.product}/`
                         );
                         return {
                             ...order,
@@ -74,7 +74,7 @@ export default function Orders() {
             console.log(orderId)
             console.log(token)
             const res = await axios.delete(
-                `https://api.lancer.drmcetit.com/api/Snapdeal/order/delete/${orderId}/`,
+                `http://127.0.0.1:8000/user/order/delete/${orderId}/`,
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
@@ -112,7 +112,7 @@ export default function Orders() {
                                                     <img
                                                         src={
                                                             product?.image
-                                                                ? `https://api.lancer.drmcetit.com${product.image}`
+                                                                ? `http://127.0.0.1:8000${product.image}`
                                                                 : "/placeholder.svg"
                                                         }
                                                         alt={product?.title || "Product"}

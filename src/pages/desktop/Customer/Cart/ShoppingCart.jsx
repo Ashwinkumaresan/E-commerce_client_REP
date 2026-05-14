@@ -30,7 +30,7 @@ export default function ShoppingCart() {
             const token = localStorage.getItem("accessTokenCustomer")
             console.log("Access Token:", token)
             const res = await axios.get(
-                "https://api.lancer.drmcetit.com/api/Snapdeal/cart/list/",
+                "http://127.0.0.1:8000/user/cart/list/",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -68,7 +68,7 @@ export default function ShoppingCart() {
         try {
             const token = localStorage.getItem("accessTokenCustomer");
             const res = await axios.delete(
-                `https://api.lancer.drmcetit.com/api/Snapdeal/cart/delete/${id}/`,
+                `http://127.0.0.1:8000/user/cart/delete/${id}/`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -120,7 +120,7 @@ export default function ShoppingCart() {
                                                 style={{ width: "100px", height: "100px" }}
                                             >
                                                 <img
-                                                    src={item.image ? `https://api.lancer.drmcetit.com${item.image}` : "/placeholder.svg"}
+                                                    src={item.image ? `http://127.0.0.1:8000${item.image}` : "/placeholder.svg"}
                                                     alt={item.productTitle}
                                                     className="img-fluid rounded-3"
                                                     style={{ width: "100%", height: "100%", objectFit: "cover" }}

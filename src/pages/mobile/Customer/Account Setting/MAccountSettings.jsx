@@ -39,7 +39,7 @@ export const MAccountSettings = () => {
 
     const fetchCategory = async () => {
         try {
-            const res = await axios.get("https://api.lancer.drmcetit.com/api/Snapdeal/category/");
+            const res = await axios.get("http://127.0.0.1:8000/user/category/");
             setCategoryAPI(res.data);
         } catch (e) {
             console.log(e);
@@ -52,7 +52,7 @@ export const MAccountSettings = () => {
 
         try {
             const res = await axios.get(
-                "https://api.lancer.drmcetit.com/api/Snapdeal/cart/count/",
+                "http://127.0.0.1:8000/user/cart/count/",
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setCartCount(res.data.count);

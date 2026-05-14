@@ -28,7 +28,7 @@ export const MDealerSignup = () => {
 
     try {
       const res = await axios.post(
-        "https://api.lancer.drmcetit.com/api/Snapdeal/email/",
+        "http://127.0.0.1:8000/user/email/",
         { email },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -54,7 +54,7 @@ export const MDealerSignup = () => {
       const id_token = credentialResponse.credential;
 
       // Send Google ID token to backend to create account or get JWT
-      const res = await axios.post("http://127.0.0.1:8000/token/", { id_token });
+      const res = await axios.post("http://127.0.0.1:8000/accesstoken/", { id_token });
 
       console.log("Google signup response:", res.data);
 
